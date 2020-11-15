@@ -8,6 +8,10 @@ public class Tauler {
     private int col;
     private int fil;
 
+    public Tauler() {
+    	casellas = null;
+    }
+    
     public Tauler(Casella[][] casellas) {
         this.casellas = casellas;
         col = casellas[0].length;

@@ -6,14 +6,11 @@ public class Solver {
 		
 	}
 	
-	public void solve(Tauler t) {
-		if(solucionar(t.getCasellas(), 0, 0)) {
-			System.out.println("Solució trobada: " + nsol);
-			System.out.println(t.toString());
+	public int solve(Tauler t) {
+		if(!solucionar(t.getCasellas(), 0, 0)) {
+			return nsol;
 		}
-		else {
-			System.out.println("No te solució: " + nsol);
-		}
+		return -1;
 	}
 	
 	public boolean solucionar(Casella[][] taula, int fila, int columna) {
@@ -23,8 +20,9 @@ public class Solver {
 		
 		if(fila == nfil) {
 			++nsol;
-			Tauler t = new Tauler(taula);
-			System.out.println(t.toString());
+			//System.out.println("Hola");
+			/*Tauler t = new Tauler(taula);
+			System.out.println(t.toString());*/
 			return true; 							//Si arribem a una fila invàlida, vol dir que hem resolt el kakuro
 		}
 		
