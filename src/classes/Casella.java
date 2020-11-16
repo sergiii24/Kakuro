@@ -8,5 +8,12 @@ public abstract class Casella {
 	public boolean isBlanc() {
 		return this instanceof Blanc;
 	}
-	
+
+	public boolean isEmpty() {
+		return false;
+	}
+
+	public boolean isValid() {
+		return false;
+	}
 }

@@ -13,7 +13,7 @@ public class Reader {
         this.nom = nom;
     }
 
-    public void llegirFitxer() {
+    public Casella[][] llegirFitxer() {
 
         try (BufferedReader br = new BufferedReader(new FileReader(new File(nom)))) {
 
@@ -35,17 +35,14 @@ public class Reader {
 
             }
 
-            Tauler t = new Tauler(casellas);
-            System.out.println(t.toString());
-            Solver s = new Solver();
-            s.solve(t);
+            return casellas;
 
         } catch (IOException ioException) {
             ioException.printStackTrace();
 
         }
 
-
+        return null;
     }
 
     private Casella[] filaFormat(String linea, int c) {

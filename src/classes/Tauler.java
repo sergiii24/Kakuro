@@ -42,18 +42,18 @@ public class Tauler {
                 		s = s.concat("C" + ((Negre)casellas[i][j]).getColumna() + "F" + ((Negre)casellas[i][j]).getFila()+"\t" );
                 	}
                 	else if(((Negre)casellas[i][j]).getColumna() != 0) {
-                		s = s.concat("C" + ((Negre)casellas[i][j]).getColumna() + "\t");
+                		s = s.concat("C" + ((Negre)casellas[i][j]).getColumna() + "\t\t");
                 	}
                 	else if(((Negre)casellas[i][j]).getFila() != 0) {
-                		s = s.concat("F" + ((Negre)casellas[i][j]).getFila() + "\t");
+                		s = s.concat("F" + ((Negre)casellas[i][j]).getFila() + "\t\t");
                 	}
                 	else {
-                		s = s.concat("*\t");
+                		s = s.concat("*\t\t");
                 	}
                 }
                 else {
-                	if(((Blanc)casellas[i][j]).getNum() == 0) s = s.concat("?\t");
-                	else s = s.concat(((Blanc)casellas[i][j]).getNum() + "\t");
+                	if(((Blanc)casellas[i][j]).getNum() == 0) s = s.concat("?\t\t");
+                	else s = s.concat(((Blanc)casellas[i][j]).getNum() + "\t\t");
                 }
             }
         s = s.concat("\n");

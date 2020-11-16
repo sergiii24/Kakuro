@@ -1,9 +1,11 @@
 package classes;
 
 public class Solver {
-	private int nsol = 0;
+
+	private int nsol;
+
 	public Solver() {
-		
+		nsol=0;
 	}
 	
 	public void solve(Tauler t) {

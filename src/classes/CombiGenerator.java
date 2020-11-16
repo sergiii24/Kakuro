@@ -1,0 +1,50 @@
+package classes;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class CombiGenerator {
+
+        public static List<List<Integer>> combinationSum2(int[] candidates, int target, int digits) {
+            Arrays.sort(candidates);
+            List<List<Integer>> result = new ArrayList<List<Integer>>();
+            List<Integer> list = new ArrayList<Integer>();
+
+            backTrack(result, list, candidates, target, 0, digits);
+
+            return result;
+        }
+
+        private static void backTrack(List<List<Integer>> result,
+                               List<Integer> list, int[] candidates, int target,
+                               int position, int digits) {
+
+            int sum = 0;
+            for (int x: list) {
+                sum += x;
+            }
+
+            if (sum == target && list.size() == digits) {
+                result.add(new ArrayList<Integer>(list));
+                return;
+            }
+
+            if (sum < target && list.size() < digits)
+            {
+                for (int i = position; i < candidates.length; i++)
+                {
+                    if(position != i
+                            && candidates[i] == candidates[i-1])
+                    {
+                        continue;
+                    }
+                    list.add(candidates[i]);
+                    backTrack(result, list, candidates, target, i+1, digits);
+                    list.remove(list.size() - 1);
+                }
+            }
+        }
+    }
+
+

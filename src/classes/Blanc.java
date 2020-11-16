@@ -1,5 +1,7 @@
 package classes;
 
+import java.util.List;
+
 public class Blanc extends Casella {
 
     int num;
@@ -15,12 +17,21 @@ public class Blanc extends Casella {
     public int getNum() {
         return num;
     }
-    
+
     public void setNum(int num) {
-    	this.num = num;
+        this.num = num;
     }
-    
+
     public boolean isBlanc() {
-    	return this instanceof Blanc;
+        return true;
     }
+
+    public boolean isEmpty() {
+        return num == 0;
+    }
+
+    public boolean isValid() {
+        return true;
+    }
+
 }
