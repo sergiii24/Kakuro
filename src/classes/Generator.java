@@ -6,13 +6,13 @@ import java.util.Random;
 public class Generator {
 
     public Casella[][] getCasseles(int a, int b) {
-
+        
         Casella[][] c = obteBasic(a,b);
         System.out.println(1);
         genNumCaselles(c,a,b);
         System.out.println(2);
         fillKakuro(c, a, b);
-        System.out.println(3);
+        System.out.println(new Tauler(c).toString());
         suma(c,a,b);
         System.out.println(4);
         return generar(c,a,b);
@@ -55,26 +55,26 @@ public class Generator {
     }
 
 
-    private Casella[][] genNumCaselles(Casella[][] c, int a, int b) {
+    private void genNumCaselles(Casella[][] c, int a, int b) {
 
         Random random = new Random();
-        int num =  random.nextInt((int)(a*b*0.4)-(int)(a*b*0.2))+(int)(a*b*0.2);
-        System.out.println(num);
+        int num =  random.nextInt((int)(a*b*0.6)-(int)(a*b*0.4))+(int)(a*b*0.4);
         int row, col;
+        int aux = 0;
 
-        for (int i = 0; i < num;) {
+        for (int i = 0; i < num && aux < 100;) {
 
             row = random.nextInt(a);
             col = random.nextInt(b);
+            aux++;
 
             if (c[row][col].isBlanc() && checkConstraints(c, row, col, a, b) && isConnected(c,a,b,new Position(row,col),((a-1)*(b-1)-i))) {
                 c[row][col] = new Negre();
                 i++;
+                aux=0;
             }
 
         }
-
-        return c;
 
     }
 

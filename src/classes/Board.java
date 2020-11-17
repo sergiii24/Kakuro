@@ -9,7 +9,7 @@ public class Board {
     private int col;
     private int fil;
     private List<List<Integer>>[][] possibility;
-    HashMap<Position, HashSet<Integer>> possibilities;
+    private HashMap<Position, HashSet<Integer>> possibilities;
     private List<Position> columnes;
     private List<Position> files;
 
