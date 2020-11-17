@@ -15,8 +15,13 @@ public class kakurosolver {
         Tauler t = r.llegirFitxer();
         
         Solver s = new Solver();
+        long l1 = System.currentTimeMillis();
         int n = s.solve(t);
-        if(n >= 2) System.out.println(2);
+        System.out.println(System.currentTimeMillis() - l1);
+        if(n >= 2) {
+        	System.out.println(2);
+        	//System.out.println(t.toString());
+        }
         else if(n == 1) System.out.println(1);
         else System.out.println(0);
         /*Generador gen = new Generador();

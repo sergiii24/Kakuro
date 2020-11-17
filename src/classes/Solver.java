@@ -21,8 +21,8 @@ public class Solver {
 		if(fila == nfil) {
 			++nsol;
 			//System.out.println("Hola");
-			/*Tauler t = new Tauler(taula);
-			System.out.println(t.toString());*/
+			Tauler t = new Tauler(taula);
+			System.out.println(t.toString());
 			return true; 							//Si arribem a una fila invàlida, vol dir que hem resolt el kakuro
 		}
 		
