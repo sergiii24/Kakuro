@@ -17,15 +17,13 @@ public class Reader {
 
         try (BufferedReader br = new BufferedReader(new FileReader(new File(nom)))) {
 
-            String linea = br.readLine();
-            int f = Character.getNumericValue(linea.charAt(0));
-            int c = Character.getNumericValue(linea.charAt(2));
-
-            System.out.println(f + " " + c);
-
+            String[] primera_linea;
+            primera_linea = br.readLine().split(",");
+            int f = Integer.parseInt(primera_linea[0]);
+            int c = Integer.parseInt(primera_linea[1]);
             Casella[][] casellas = new Casella[f][c];
-
-            int i = 0, j = 0;
+            int i = 0;
+            String linea;
 
             while (br.ready()) {
 

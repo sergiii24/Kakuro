@@ -31,6 +31,6 @@ public class Negre extends Casella {
     }
     
     public boolean isNegre() {
-    	return this instanceof Negre;
+    	return true;
     }
 }
