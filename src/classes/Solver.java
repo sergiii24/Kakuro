@@ -2,15 +2,17 @@ package classes;
 
 public class Solver {
 	private int nsol = 0;
+	private Casella[][] solucio;
 	public Solver() {
 		
 	}
 	
-	public int solve(Tauler t) {
+	public Solucio solve(Tauler t) {
 		if(!solucionar(t.getCasellas(), 0, 0)) {
-			return nsol;
+			Solucio sol = new Solucio(nsol, solucio);
+			return sol;
 		}
-		return -1;
+		return null;
 	}
 	
 	public boolean solucionar(Casella[][] taula, int fila, int columna) {
@@ -21,6 +23,7 @@ public class Solver {
 		if(fila == nfil) {
 			++nsol;
 			//System.out.println("Hola");
+			solucio = taula;
 			Tauler t = new Tauler(taula);
 			System.out.println(t.toString());
 			return true; 							//Si arribem a una fila invàlida, vol dir que hem resolt el kakuro

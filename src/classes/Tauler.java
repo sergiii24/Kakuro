@@ -5,29 +5,85 @@ import java.util.Arrays;
 public class Tauler {
 
     private Casella[][] casellas;
+    private Casella[][] solucio;
+    private int nsol;
     private int col;
     private int fil;
+    private TipusDificultat dificultat; //encara no creada
+    private boolean acabat;
+    private boolean publi;
+    
 
     public Tauler() {
     	casellas = null;
+    	solucio = null;
     }
     
     public Tauler(Casella[][] casellas) {
+    	this.casellas = casellas;
+    	solucio = null;
+    }
+    
+    public Tauler(Casella[][] casellas, TipusDificultat dificultat, boolean acabat, boolean publi) {
         this.casellas = casellas;
+        solucio = null;
         col = casellas[0].length;
         fil = casellas.length;
+        this.dificultat = dificultat;
+        this.acabat = acabat;
+        this.publi = publi; 
     }
 
     public Casella[][] getCasellas() {
         return casellas;
     }
 
+    public Casella[][] getSolucio() {
+    	if(solucio == null) {
+    		Tauler t = new Tauler(casellas, dificultat, acabat, publi);
+    		Solver s = new Solver();
+    		Solucio sol = s.solve(t);
+    		if(sol == null) System.out.println("No hi ha solució");
+    		else {
+    			nsol = sol.getNumSol();
+    			solucio = sol.getSolucio();
+    		}
+    	}
+        return solucio;
+    }
+    
+    public int getNumSol() {
+    	if(solucio == null) {
+    		Tauler t = new Tauler(casellas, dificultat, acabat, publi);
+    		Solver s = new Solver();
+    		Solucio sol = s.solve(t);
+    		if(sol == null) System.out.println("No hi ha solució");
+    		else {
+    			nsol = sol.getNumSol();
+    			solucio = sol.getSolucio();
+    		}
+    	}
+        return nsol;
+    }
+    
     public int getCol() {
         return col;
     }
 
     public int getFil() {
         return fil;
+    }
+    
+    public TipusDificultat getDificultat() {
+    	return dificultat;
+    }
+    
+    public boolean isAcabat() {
+    	return acabat;
+    }
+    
+    public boolean isPublic() {
+    	return publi;
     }
 
     public Tauler(int f, int c) {
@@ -65,4 +121,5 @@ public class Tauler {
 
         return "Tauler casellas=\n" + s;
     }
+    
 }
