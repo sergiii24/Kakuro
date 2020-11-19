@@ -18,6 +18,20 @@ public class Registrat extends Usuari {
 		kakuro_resolts = 0;
 	}
 	
+	public Registrat(String id, String contrasenya, int puntuacio_total, int kakuro_resolts) {
+		this.id = id;
+		this.contrasenya = contrasenya;
+		this.puntuacio_total = puntuacio_total;
+		this.kakuro_resolts = kakuro_resolts;
+	}
+	
+	public Registrat(Registrat r) {
+		this.id = r.id;
+		this.contrasenya = r.contrasenya;
+		this.puntuacio_total = r.puntuacio_total;
+		this.kakuro_resolts = r.kakuro_resolts;
+	}
+	
 	public void setId(String newId) {
 		id = newId;
 	}
@@ -30,20 +44,20 @@ public class Registrat extends Usuari {
 		contrasenya = newContra;
 	}
 	
-	public void setPuntuacioTot(int punt) {
-		puntuacio_total = punt;
-	}
-	
 	public int getPuntuacioTotal() {
 		return puntuacio_total;
 	}
 	
-	public void setKakuroResolts(int kak) {
-		kakuro_resolts = kak;
+	public void setPuntuacioTot(int punt) {
+		puntuacio_total = punt;
 	}
 	
 	public int getKakuroResolts() {
 		return kakuro_resolts;
+	}
+	
+	public void setKakuroResolts(int kak) {
+		kakuro_resolts = kak;
 	}
 	
 	@Override
@@ -59,7 +73,7 @@ public class Registrat extends Usuari {
 			this.id = id;
 			this.contrasenya = contrasenya;
 			iniciat = true;
-			/*iniciat = CtrlUsuari.iniciarSessio(id, contrasenya);
+			/*Mirar si està registrat --> CtrlDmni.iniciarSessio(id, contrasenya);
 			if(iniciat){
 				this.id = id;
 				this.contrasenya = contrasenya;
@@ -76,6 +90,8 @@ public class Registrat extends Usuari {
 		else {
 			this.id = id;
 			this.contrasenya = contra1;
+			this.puntuacio_total = 0;
+			this.kakuro_resolts = 0;
 			registrat = true;
 			/*registrat = CtrlUsuari.registrarUsuari(id, contra1);
 			if(registrat) {

@@ -9,7 +9,12 @@ public class Usuari {
 	
 	public Usuari() {
 		id = null;
-		llista_partides = null;
+		llista_partides = new HashSet<Partida>();
+	}
+	
+	public Usuari(String id) {
+		this.id = id;
+		llista_partides = new HashSet<Partida>();
 	}
 	
 	public Usuari(String id, Set<Partida> llista_partides) {
@@ -21,8 +26,13 @@ public class Usuari {
 		return id;
 	}
 	
+	public boolean equals(Usuari user) {
+		if(this.id.equals(user.getId())) return true;
+		else return false;
+	}
+	
 	public boolean tePartides() {
-		return llista_partides.isEmpty();
+		return !llista_partides.isEmpty();
 	}
 	
 	public boolean contePartida(Partida p) {
@@ -37,14 +47,21 @@ public class Usuari {
 		return llista_partides;
 	}
 	
+	public void buidarPartides() {
+		llista_partides.clear();
+	}
+	
 	public void afegirPartides(Partida p) {
-		llista_partides.add(p);
+		if(!contePartida(p)) llista_partides.add(p);
+		else System.out.println("Malament");
 	}
 	
 	public void borrarPartida(Partida p) {
 		if(contePartida(p)) {
 			llista_partides.remove(p);
+			System.out.println("Borrat");
 		}
+		System.out.println("No hi era.");
 	}
 	
 	public boolean isRegistrat() {

@@ -1,7 +1,4 @@
-import classes.Generador;
-import classes.Reader;
-import classes.Solver;
-import classes.Tauler;
+import classes.*;
 
 import java.util.Scanner;
 

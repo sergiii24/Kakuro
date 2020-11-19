@@ -21,7 +21,7 @@ public class Ranquing {
 		Iterator<PartidaAcabada> it = ranking.iterator();
 		while(it.hasNext()) {
 			PartidaAcabada p = it.next();
-			if(p.getUser() == user && p.getMode() == mode && p.getTauler() == tauler) {
+			if(p.getUser() == user.id && p.getMode() == mode && p.getTauler() == tauler) {
 				return p;
 			}
 		}

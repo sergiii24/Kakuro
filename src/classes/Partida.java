@@ -1,7 +1,7 @@
 package classes;
 
 public class Partida {
-	protected Usuari user;
+	protected String user;
 	protected Mode mode;
 	protected Tauler tauler;
 	protected int temps;
@@ -13,18 +13,25 @@ public class Partida {
 		temps = 0;
 	}
 	
-	public Partida(Usuari user, Mode mode, Tauler tauler, int temps) {
+	public Partida(String user) {
+		this.user = user;
+		mode = null;
+		tauler = null;
+		temps = 0;
+	}
+	
+	public Partida(String user, Mode mode, Tauler tauler, int temps) {
 		this.user = user;
 		this.mode = mode;
 		this.tauler = tauler;
 		this.temps = temps;
 	}
 	
-	public void setUser(Usuari user) {
+	public void setUser(String user) {
 		this.user = user;
 	}
 	
-	public Usuari getUser() {
+	public String getUser() {
 		return user;
 	}
 	

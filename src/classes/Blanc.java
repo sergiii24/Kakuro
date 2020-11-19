@@ -4,12 +4,12 @@ public class Blanc extends Casella {
 
     int num;
 
-    public Blanc(int num) {
-        this.num = num;
-    }
-
     public Blanc() {
         this.num = 0;
+    }
+    
+    public Blanc(int num) {
+        this.num = num;
     }
 
     public int getNum() {
@@ -21,6 +21,6 @@ public class Blanc extends Casella {
     }
     
     public boolean isBlanc() {
-    	return this instanceof Blanc;
+    	return true;
     }
 }
