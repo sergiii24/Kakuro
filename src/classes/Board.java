@@ -5,10 +5,17 @@ import java.util.*;
 
 public class Board {
 
+    public Casella[][] getCasellas() {
+        return casellas;
+    }
+
+    public void setCasellas(Casella[][] casellas) {
+        this.casellas = casellas;
+    }
+
     private Casella[][] casellas;
     private int col;
     private int fil;
-    private List<List<Integer>>[][] possibility;
     private HashMap<Position, HashSet<Integer>> possibilities;
     private List<Position> columnes;
     private List<Position> files;
@@ -145,6 +152,77 @@ public class Board {
         }
 
         return "Board{" + s+                '}';
+    }
+
+
+    public Position bestPosition() {
+
+        int best = 10;
+        int a = 0, b = 0;
+        for (int i = 0; i < fil; i++) {
+            for (int j = 0; j < col; j++) {
+                if (casellas[i][j].isBlanc() && ((Blanc)casellas[i][j]).getPossibles().size() < best) {
+                    a=i;
+                    b=i;
+                    best = ((Blanc)casellas[i][j]).getPossibles().size();
+                }
+            }
+        }
+        return new Position(a,b);
+    }
+
+
+    private void update() {
+
+        int r = 0, s = 0, suma = 0;
+
+        boolean nou = false;
+        for (int i = 0; i < a; i++) {
+            for (int j = 0; j < b; j++) {
+                if(c[i][j].isNegre()){
+                    if(nou) {
+                        ((Negre)c[r][s]).setFila(suma);
+                        suma = 0;
+                        nou = false;
+                    }
+                    r = i;
+                    s = j;
+                } else {
+                    suma+=((Blanc)c[i][j]).getNum();
+                    nou = true;
+                }
+            }
+        }
+
+        if(nou)
+            ((Negre)c[r][s]).setFila(suma);
+
+        r = 0;
+        s = 0;
+        suma = 0;
+        nou = false;
+
+        for (int i = 0; i < b; i++) {
+            for (int j = 0; j < a; j++) {
+                if(c[j][i].isNegre()){
+                    if(nou) {
+                        ((Negre)c[r][s]).setColumna(suma);
+                        suma = 0;
+                        nou = false;
+                    }
+                    r = j;
+                    s = i;
+                } else {
+                    suma+=((Blanc)c[j][i]).getNum();
+                    nou = true;
+                }
+            }
+        }
+
+        if(nou)
+            ((Negre)c[r][s]).setColumna(suma);
+
+
     }
 
 
