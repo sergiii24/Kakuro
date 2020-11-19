@@ -27,7 +27,7 @@ public class kakurosolver {
         /*Generador gen = new Generador();
         gen.llegir_tamany();
         gen.generar();*/
-
+//provando123
 
     }
 
