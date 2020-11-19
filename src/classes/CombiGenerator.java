@@ -1,22 +1,21 @@
 package classes;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class CombiGenerator {
 
-        public static List<List<Integer>> combinationSum2(int[] candidates, int target, int digits) {
+        public static Set<Integer> combinationSum2(int[] candidates, int target, int digits) {
             Arrays.sort(candidates);
-            List<List<Integer>> result = new ArrayList<List<Integer>>();
+            //List<List<Integer>> result = new ArrayList<List<Integer>>();
             List<Integer> list = new ArrayList<Integer>();
+            Set<Integer> result = new HashSet<>();
 
             backTrack(result, list, candidates, target, 0, digits);
 
             return result;
         }
 
-        private static void backTrack(List<List<Integer>> result,
+        private static void backTrack(Set<Integer> result,
                                List<Integer> list, int[] candidates, int target,
                                int position, int digits) {
 
@@ -26,7 +25,7 @@ public class CombiGenerator {
             }
 
             if (sum == target && list.size() == digits) {
-                result.add(new ArrayList<Integer>(list));
+                result.addAll(list);
                 return;
             }
 

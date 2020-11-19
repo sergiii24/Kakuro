@@ -54,7 +54,7 @@ public class Board {
 
     }
 
-    public void updatePossibilities() {
+    /*public void updatePossibilities() {
         int[] nums = {1,2,3,4,5,6,7,8,9};
 
         for (Position p : columnes ) {
@@ -93,7 +93,7 @@ public class Board {
 
 
 
-    }
+    }*/
 
     private int getDigitsC(Position p) {
 
@@ -171,7 +171,7 @@ public class Board {
         return new Position(a,b);
     }
 
-
+/*
     private void update() {
 
         int r = 0, s = 0, suma = 0;
@@ -223,7 +223,7 @@ public class Board {
             ((Negre)c[r][s]).setColumna(suma);
 
 
-    }
+    }*/
 
 
 }
