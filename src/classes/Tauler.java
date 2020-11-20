@@ -3,7 +3,8 @@ package classes;
 import java.util.Arrays;
 
 public class Tauler {
-
+	
+	private int id;
     private Casella[][] casellas;
     private Casella[][] solucio;
     private int nsol;
@@ -33,6 +34,14 @@ public class Tauler {
         this.acabat = acabat;
         this.publi = publi; 
     }
+    
+    public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
     public Casella[][] getCasellas() {
         return casellas;
@@ -40,9 +49,8 @@ public class Tauler {
 
     public Casella[][] getSolucio() {
     	if(solucio == null) {
-    		Tauler t = new Tauler(casellas, dificultat, acabat, publi);
     		Solver s = new Solver();
-    		Solucio sol = s.solve(t);
+    		Solucio sol = s.solve(this);
     		if(sol == null) System.out.println("No hi ha solució");
     		else {
     			nsol = sol.getNumSol();
@@ -121,5 +129,4 @@ public class Tauler {
 
         return "Tauler casellas=\n" + s;
     }
-    
 }

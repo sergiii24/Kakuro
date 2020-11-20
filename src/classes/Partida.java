@@ -54,4 +54,8 @@ public class Partida {
 	public void setTemps(int temps) {
 		this.temps = temps;
 	}
+	
+	public int getTemps() {
+		return this.temps;
+	}
 }

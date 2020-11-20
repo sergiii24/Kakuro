@@ -6,22 +6,34 @@ public class Ranquing {
 	private Set<PartidaAcabada> ranking;
 	
 	public Ranquing() {
-		ranking = null;
+		ranking = new HashSet<PartidaAcabada>();
 	}
 	
 	public Ranquing(Set<PartidaAcabada> ranking) {
 		this.ranking = ranking;
 	}
 	
-	public void afegirPartidaAcabada(PartidaAcabada pa) {
-		ranking.add(pa);
+	public boolean tePartidaAcabada(PartidaAcabada pa) {
+		return ranking.contains(pa);
 	}
 	
-	public PartidaAcabada getPartidaAcabada(Usuari user, Mode mode, Tauler tauler) {
+	public int getNPartidaAcabada() {
+		return ranking.size();
+	}
+	
+	public void afegirPartidaAcabada(PartidaAcabada pa) {
+		if(!tePartidaAcabada(pa)) ranking.add(pa);
+	}
+	
+	public void eliminarPartidaAcabada(PartidaAcabada pa) {
+		if(tePartidaAcabada(pa)) ranking.remove(pa);
+	}
+	
+	public PartidaAcabada getPartidaAcabada(String id, Mode mode, Tauler tauler) {
 		Iterator<PartidaAcabada> it = ranking.iterator();
 		while(it.hasNext()) {
 			PartidaAcabada p = it.next();
-			if(p.getUser() == user.id && p.getMode() == mode && p.getTauler() == tauler) {
+			if(p.getUser() == id && p.getMode().getMode() == mode.getMode() /*&& p.getTauler() == tauler*/) {
 				return p;
 			}
 		}
@@ -30,7 +42,7 @@ public class Ranquing {
 	
 	public Set<PartidaAcabada> filtraModeNormal(){
 		Iterator<PartidaAcabada> it = ranking.iterator();
-		Set<PartidaAcabada> aux = null;
+		Set<PartidaAcabada> aux = new HashSet<PartidaAcabada>();
 		while(it.hasNext()) {
 			PartidaAcabada p = it.next();
 			if(p.getMode().tipus == TipusMode.NORMAL) {
@@ -42,7 +54,7 @@ public class Ranquing {
 	
 	public Set<PartidaAcabada> filtraModeContra(){
 		Iterator<PartidaAcabada> it = ranking.iterator();
-		Set<PartidaAcabada> aux = null;
+		Set<PartidaAcabada> aux = new HashSet<PartidaAcabada>();
 		while(it.hasNext()) {
 			PartidaAcabada p = it.next();
 			if(p.getMode().tipus == TipusMode.CONTRARRELLOTGE) {
