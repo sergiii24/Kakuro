@@ -1,7 +1,6 @@
-package classes;
+package domini;
 
 public class Position {
-
     int i,j;
 
     public Position(int i, int j) {
@@ -24,4 +23,5 @@ public class Position {
     public void setJ(int j) {
         this.j = j;
     }
+
 }

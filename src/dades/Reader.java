@@ -1,29 +1,48 @@
-package classes;
+package dades;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import domini.Blanc;
+import domini.Casella;
+import domini.Negre;
+import domini.Tauler;
+
+import java.io.*;
 
 public class Reader {
 
-    String nom;
 
-    public Reader(String nom) {
-        this.nom = nom;
+    public Tauler llegirFitxer(String nom) throws FileNotFoundException {
+
+        try {
+            return llegir(new FileReader(new File(nom)));
+        } catch (FileNotFoundException f) {
+            f.printStackTrace();
+        }
+        return null;
     }
 
-    public Casella[][] llegirFitxer() {
 
-        try (BufferedReader br = new BufferedReader(new FileReader(new File(nom)))) {
+    public Tauler llegirConsola() {
+
+        return llegir(new InputStreamReader(System.in));
+
+    }
+
+
+    public Tauler llegir(InputStreamReader input) {
+
+    	Tauler t = null;
+        try (BufferedReader br = new BufferedReader(input)) {
 
             String[] primera_linea;
             primera_linea = br.readLine().split(",");
             int f = Integer.parseInt(primera_linea[0]);
             int c = Integer.parseInt(primera_linea[1]);
+            if(f<2 || c <2) throw new Exception("Tamany invalid, no es permet files o columnes més petites que 2");
             Casella[][] casellas = new Casella[f][c];
-            int i = 0;
-            String linea;
+
+            int i = 0, j = 0;
+
+            String linea = "";
 
             while (br.ready()) {
 
@@ -33,14 +52,18 @@ public class Reader {
 
             }
 
-            return casellas;
+            t = new Tauler(casellas);
+
+            return t;
 
         } catch (IOException ioException) {
             ioException.printStackTrace();
 
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return t;
 
-        return null;
     }
 
     private Casella[] filaFormat(String linea, int c) {

@@ -1,33 +1,68 @@
-import classes.*;
+import dades.Reader;
+import dades.Writer;
+import domini.Generador;
+import domini.Tauler;
 
+import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.util.Set;
 
 public class Kakuro {
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args)  {
 
         Scanner scanner = new Scanner(System.in);
-        //Reader r = new Reader("src/data/exemple");
+        Reader r = new Reader();
+        Generador g = new Generador();
+        Writer writer = new Writer();
 
-        //Board b = new Board(r.llegirFitxer());
-        //b.updatePossibilities();
-        int[] nums = {1,2,3,4,5,6,7,8,9};
+        while (true) {
 
-        Set<Integer> set = CombiGenerator.combinationSum2( nums ,  scanner.nextInt() , scanner.nextInt());
-        System.out.println(set.toString());
+            System.out.println("1 - Generar Kakuros Consola\n" +
+                    "2 - Generar Kakuros Fitxer\n" +
+                    "3 - Generar i Solucionar Kakuro\n" +
+                    "4 - Solucionar Kakuro Consola\n" +
+                    "5 - Solucionar Kakuro Exemple\n");
+            int op = scanner.nextInt();
+            switch (op) {
+                case 1:
+                    System.out.println("Introdueix Files i Columnes (Més gran que 2)");
+                    Tauler t = new Tauler(g.generateKakuro(scanner.nextInt(), scanner.nextInt()));
+                    writer.escriureConsola(t);
+                    break;
+                case 2:
+                    System.out.println("Introdueix Files i Columnes (Més gran que 2)");
+                    Tauler tauler = new Tauler(g.generateKakuro(scanner.nextInt(), scanner.nextInt()));
+                    System.out.println("Donam ruta i nom del fitxer:");
+                    writer.escriureFitxer(tauler, scanner.next());
+                    break;
+                case 3:
+                    System.out.println("Introdueix Files i Columnes (Més gran que 2)");
+                    Tauler tau = new Tauler(g.generateKakuro(scanner.nextInt(), scanner.nextInt()));
+                    tau.getSolucio();
+                    writer.escriureSolucioConsola(tau);
+                    break;
+                case 4:
+                    Tauler ta = r.llegirConsola();
+                    ta.getSolucio();
+                    writer.escriureSolucioConsola(ta);
+                    break;
+                case 5:
 
-        //Generator g = new Generator();
-        //Tauler t = new Tauler(g.getCasseles(9,9));
-        //System.out.println(t.toString());
-        //Solver solver = new Solver();
-        //solver.solve(t);
-        //System.out.println(t.toString());
-        /*Generador gen = new Generador();
-        gen.llegir_tamany();
-        gen.generar();*/
+                    try {
+                        System.out.println("Donam ruta del fitxer: /src/data/exempleX on X es 1,2,3,4 o 5");
+                        Tauler b = r.llegirFitxer(scanner.next());
+                        b.getSolucio();
+                        writer.escriureSolucioConsola(b);
+                    } catch (FileNotFoundException fileNotFoundException) {
+                        fileNotFoundException.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
+                    break;
+            }
+
+        }
 
     }
 

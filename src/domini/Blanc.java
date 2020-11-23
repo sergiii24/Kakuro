@@ -1,30 +1,30 @@
-package classes;
+package domini;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Blanc extends Casella {
 
-    int num;
+    private int num;
+    private Set<Integer> possibles;
 
-    public List<Integer> getPossibles() {
+    public Set<Integer> getPossibles() {
         return possibles;
     }
 
-    public void setPossibles(List<Integer> possibles) {
+    public void setPossibles(Set<Integer> possibles) {
         this.possibles = possibles;
     }
 
-    List<Integer> possibles;
 
     public Blanc(int num) {
         this.num = num;
-        possibles = new ArrayList<>();
+        possibles = new HashSet<>();
     }
 
     public Blanc() {
         this.num = 0;
-        possibles = new ArrayList<>();
+        possibles = new HashSet<>();
     }
 
     public int getNum() {
@@ -42,10 +42,6 @@ public class Blanc extends Casella {
 
     public boolean isEmpty() {
         return num == 0;
-    }
-
-    public boolean isValid() {
-        return true;
     }
 
 }
