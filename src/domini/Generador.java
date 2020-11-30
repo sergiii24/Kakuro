@@ -1,5 +1,7 @@
 package domini;
 
+import domini.models.Position;
+
 import java.util.Random;
 
 public class Generador {

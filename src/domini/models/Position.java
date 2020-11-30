@@ -1,7 +1,7 @@
-package domini;
+package domini.models;
 
 public class Position {
-    int i,j;
+    public int i,j;
 
     public Position(int i, int j) {
         this.i = i;
