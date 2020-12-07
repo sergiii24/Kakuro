@@ -2,10 +2,7 @@ package presentacio;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 public class KakuroView {
 
@@ -13,6 +10,7 @@ public class KakuroView {
     private JButton myButton1;
     private JLabel myButton1_Label_E;
     private JLabel myButton1_Label_S;
+    private JPanel panel1;
 
     public KakuroView() {
 

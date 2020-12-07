@@ -10,6 +10,13 @@ import java.text.NumberFormat;
 
 public class ControllerDomini {
 
+    private Usuari user;
+
+    public void iniControlador() {
+        user = new Usuari();
+
+    }
+
     public JPanel getBoardUI(Tauler t) {
         //creating grid of cells
         JTextField[][] cells = new JTextField[t.getFil()][t.getCol()];
@@ -110,6 +117,11 @@ public class ControllerDomini {
         txt.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         txt.setEditable(false);
     }
+
+
+
+
+
 
 
 }
