@@ -1,14 +1,5 @@
 package domini.models;
 
-/*
- * SOURCES
- * Examples on extending JPanel class and using paintComponent method // Examples for textfield formatting
- * http://programmedlessons.org/java5/Notes/chap36/ch36_10.html
- * https://docs.oracle.com/javase/tutorial/uiswing/components/formattedtextfield.html
- * https://docs.oracle.com/javase/8/docs/api/javax/swing/JFormattedTextField.html
- */
-
-
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -20,13 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
-/**
- * Line panel class used to populate non-playable board cells: adds numbers and diagonal line
- * It is also extending JPanel to use the graphics with paintComponent method overriding
- *
- * @author Isabelle Charette
- * Date created: January 27th, 2020
- */
 public class LinePanel extends JPanel {
     /**
      * LinePanel constructor to create the layout, textfield, and to align them when one number in cell

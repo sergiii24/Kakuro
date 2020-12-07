@@ -99,7 +99,7 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 	 */
 	public Sudoku() {
 		setPreferredSize(new Dimension(800, 600));
-		setResizable(false);
+		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 350);
 		setIconImage(new ImageIcon(Sudoku.class.getResource("../assets/img/Logo_Kajugo.png")).getImage());
@@ -1825,4 +1825,6 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 	public JButton getBackLogin() {
 		return backLogin;
 	}
+
+
 }
