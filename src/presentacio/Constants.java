@@ -9,7 +9,10 @@ public class Constants {
     public static final String REGISTER = "Click here to register" ;
     public static final String GUEST = "Click here to enter as a guest" ;
     public static final String SIGNUP = "Sign Up";
-
-
+    public static final String LOGOFF = "Log off";
+    public static final String PLAY = "Play";
+    public static final String PROFILE = "Profile";
+    public static final String CONFIRMPASSWORD = "Confirm Password" ;
+    public static final String GENERATE = "Generar";
 
 }

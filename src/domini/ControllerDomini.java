@@ -21,26 +21,19 @@ public class ControllerDomini {
         //creating grid of cells
         JTextField[][] cells = new JTextField[t.getFil()][t.getCol()];
         JPanel panel = new JPanel(new GridLayout(t.getFil(),t.getCol()));
-        //creating window of the game
 
-
-        NumberFormat numberFormat = NumberFormat.getInstance(); // NumberFormat object reference
+        NumberFormat numberFormat = NumberFormat.getInstance();
         NumberFormatter numberFormatter = new NumberFormatter(numberFormat);
-        //this allows temporary invalid input, particularly to be able to delete and try again
-        //if invalid input, when clicking onto another cell, the input will be deleted
-        //Initialize number formatter
         numberFormatter.setValueClass(Integer.class);
         numberFormatter.setMinimum(1);
         numberFormatter.setMaximum(9);
-        numberFormatter.setAllowsInvalid(true);
+        numberFormatter.setAllowsInvalid(false);
 
-        //identifies type of each cell and populates it
-        //input or non-playable
         for(int row = 0; row < t.getFil(); row++)
         {
             for(int column = 0; column < t.getCol(); column++)
             {
-                JFormattedTextField textField = null;
+                JFormattedTextField textField;
 
                 //tracking the type of each cell
                 Casella cell = t.getCasellas()[row][column];
@@ -51,6 +44,7 @@ public class ControllerDomini {
                 if(cell.isBlanc()) {
 
                     textField = new JFormattedTextField(numberFormatter);
+                    textField.setText(((Blanc)cell).getNum()+"");
                     textField.setHorizontalAlignment(JTextField.CENTER);
                     textField.setBorder(new LineBorder(Color.GRAY,1));
 

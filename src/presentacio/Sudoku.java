@@ -22,11 +22,11 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 
 	//Kakuro
 
-	JButton entrar, signUp, backLogin;
-	JTextField txtUser;
-	JTextField txtPassword;
-	JPanel panelInici, panelRegistrar, panelMenu;
-	JLabel lblRegistrar;
+	private JButton entrar, signUp, backLogin, bLogOff, bPerfil, bJugar;
+	private JTextField txtUser, txtRegUser;
+	private JPasswordField txtPassword, txtRegPassword, txtRegPassword2;
+	private JPanel panelInici, panelRegistrar, panelMenu, panelJugar;
+	private JLabel lblRegistrar, lblGuest;
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -55,7 +55,6 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 	private JLabel lblLevelname;
 	private JList<String> listLevel;
 	JList<String> listModes;
-	//SudokuGenerator sudoku;
 
 
 
@@ -119,12 +118,17 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 		cardLayout = new CardLayout(0, 0);
 		cardPanel.setLayout(cardLayout);
 
-		panelInici = carregaVistaInicial();
+		carregaVistaInicial();
 		cardPanel.add(panelInici, "login");
 
 		panelRegistrar = carregaRegistrar();
 		cardPanel.add(panelRegistrar, "reg");
 
+		panelMenu = carregaVistaMenu();
+		cardPanel.add(panelMenu, "menu");
+
+		panelJugar = carregarVistaJugar();
+		cardPanel.add(panelJugar, "play");
 
 
 		//JPanel panelSelector = new JPanel();
@@ -1594,9 +1598,9 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 	//KAKURO
 
 
-	private JPanel carregaVistaInicial() {
+	private void carregaVistaInicial() {
 
-		JPanel p = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		panelInici = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		Font fBold = new Font("Arial", Font.BOLD, 20);
 		Font fPlain = new Font("Arial", Font.PLAIN, 18);
@@ -1604,7 +1608,7 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 		JPanel panel = new JPanel();
 
 		panel.setBackground(new Color(240, 240, 240));
-		p.add(panel);
+		panelInici.add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
 		Component verticalStrut = Box.createVerticalStrut(20);
@@ -1633,9 +1637,10 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 
 		txtUser = new JTextField();
 		txtUser.setFont(fPlain);
+		txtUser.setEditable(true);
 		txtUser.setToolTipText(Constants.USER);
 		panel_2.add(txtUser);
-		txtUser.setColumns(10);
+		txtUser.setColumns(20);
 
 		Component verticalStrut_3 = Box.createVerticalStrut(20);
 		panel.add(verticalStrut_3);
@@ -1655,7 +1660,7 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 		txtPassword = new JPasswordField();
 		panel_4.add(txtPassword);
 		txtPassword.setFont(fPlain);
-		txtPassword.setColumns(10);
+		txtPassword.setColumns(20);
 
 		Component verticalStrut_2 = Box.createVerticalStrut(20);
 		panel.add(verticalStrut_2);
@@ -1664,6 +1669,7 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 		panel.add(panel_5);
 
 		entrar = new JButton(Constants.LOGIN);
+		entrar.addActionListener(e-> System.out.println("Hoila" + txtUser.getText()));
 		panel_5.add(entrar);
 
 		Component verticalStrut_6 = Box.createVerticalStrut(10);
@@ -1680,11 +1686,9 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 		JPanel panel_7 = new JPanel();
 		panel.add(panel_7);
 
-		JLabel lblNewLabel_4 = new JLabel(Constants.GUEST);
-		lblNewLabel_4.setFont(new Font("Arial", Font.PLAIN, 12));
-		panel_7.add(lblNewLabel_4);
-
-		return p;
+		lblGuest = new JLabel(Constants.GUEST);
+		lblGuest.setFont(new Font("Arial", Font.PLAIN, 12));
+		panel_7.add(lblGuest);
 
 	}
 
@@ -1737,11 +1741,11 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 		JPanel panel_2 = new JPanel();
 		panel.add(panel_2);
 
-		txtUser = new JTextField();
-		txtUser.setFont(fPlain);
-		txtUser.setToolTipText(Constants.USER);
-		panel_2.add(txtUser);
-		txtUser.setColumns(10);
+		txtRegUser = new JTextField();
+		txtRegUser.setFont(fPlain);
+		txtRegUser.setToolTipText(Constants.USER);
+		panel_2.add(txtRegUser);
+		txtRegUser.setColumns(20);
 
 		Component verticalStrut_3 = Box.createVerticalStrut(20);
 		panel.add(verticalStrut_3);
@@ -1756,12 +1760,20 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 		panel_3.add(lblNewLabel_2);
 
 		JPanel panel_4 = new JPanel();
+		panel_4.setLayout(new BorderLayout(0, 0));
 		panel.add(panel_4);
 
-		txtPassword = new JPasswordField();
-		panel_4.add(txtPassword);
-		txtPassword.setFont(fPlain);
-		txtPassword.setColumns(10);
+		txtRegPassword = new JPasswordField();
+		panel_4.add(txtRegPassword, BorderLayout.NORTH);
+		txtRegPassword.setColumns(20);
+
+		JLabel lblNewLabel_5 = new JLabel(Constants.CONFIRMPASSWORD);
+		lblNewLabel_2.setFont(fBold);
+		panel_4.add(lblNewLabel_5, BorderLayout.CENTER);
+
+		txtRegPassword2 = new JPasswordField();
+		panel_4.add(txtRegPassword2, BorderLayout.SOUTH);
+		txtRegPassword2.setColumns(20);
 
 		Component verticalStrut_2 = Box.createVerticalStrut(20);
 		panel.add(verticalStrut_2);
@@ -1786,6 +1798,129 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 		return p;
 
 	}
+
+	//Menu
+
+	private JPanel carregaVistaMenu() {
+
+		JPanel p = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		JPanel panel = new JPanel();
+
+		panel.setBackground(new Color(240, 240, 240));
+		p.add(panel);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+		Component verticalStrut = Box.createVerticalStrut(20);
+		panel.add(verticalStrut);
+
+		ImageIcon imageUser = new ImageIcon(getClass().getResource("../assets/img/Logo_Kajugo.png"));
+		imageUser = scaleImage(imageUser, 128, 128);
+		JLabel lblImage = new JLabel(imageUser);
+		lblImage.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel.add(lblImage);
+
+		Component verticalStrut_1 = Box.createVerticalStrut(50);
+		panel.add(verticalStrut_1);
+
+		JPanel panel_1 = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
+		flowLayout.setAlignment(FlowLayout.CENTER);
+		panel.add(panel_1);
+
+		bJugar = new JButton(Constants.PLAY);
+		bJugar.setPreferredSize(new Dimension(100, 25));
+		panel_1.add(bJugar);
+
+		Component verticalStrut_3 = Box.createVerticalStrut(20);
+		panel.add(verticalStrut_3);
+
+		JPanel panel_3 = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panel_3.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.CENTER);
+		panel.add(panel_3);
+
+		bPerfil = new JButton(Constants.PROFILE);
+		bPerfil.setPreferredSize(new Dimension(100, 25));
+		panel_3.add(bPerfil);
+
+		JPanel panel_4 = new JPanel();
+		panel.add(panel_4);
+
+		Component verticalStrut_2 = Box.createVerticalStrut(20);
+		panel.add(verticalStrut_2);
+
+		JPanel panel_5 = new JPanel();
+		panel.add(panel_5);
+
+		bLogOff = new JButton(Constants.LOGOFF);
+		bLogOff.setPreferredSize(new Dimension(100, 25));
+		panel_5.add(bLogOff);
+
+		return p;
+
+	}
+
+	private JPanel carregarVistaJugar() {
+
+		JPanel p = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		JPanel panel = new JPanel();
+
+		panel.setBackground(new Color(240, 240, 240));
+		p.add(panel);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+		Component verticalStrut = Box.createVerticalStrut(20);
+		panel.add(verticalStrut);
+
+		ImageIcon imageUser = new ImageIcon(getClass().getResource("../assets/img/Logo_Kajugo.png"));
+		imageUser = scaleImage(imageUser, 128, 128);
+		JLabel lblImage = new JLabel(imageUser);
+		lblImage.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel.add(lblImage);
+
+		Component verticalStrut_1 = Box.createVerticalStrut(50);
+		panel.add(verticalStrut_1);
+
+		JPanel panel_1 = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
+		flowLayout.setAlignment(FlowLayout.CENTER);
+		panel.add(panel_1);
+
+		//bGenerate = new JButton(Constants.GENERATE);
+		bJugar.setPreferredSize(new Dimension(100, 25));
+		panel_1.add(bJugar);
+
+		Component verticalStrut_3 = Box.createVerticalStrut(20);
+		panel.add(verticalStrut_3);
+
+		JPanel panel_3 = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panel_3.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.CENTER);
+		panel.add(panel_3);
+
+		bPerfil = new JButton(Constants.PROFILE);
+		bPerfil.setPreferredSize(new Dimension(100, 25));
+		panel_3.add(bPerfil);
+
+		JPanel panel_4 = new JPanel();
+		panel.add(panel_4);
+
+		Component verticalStrut_2 = Box.createVerticalStrut(20);
+		panel.add(verticalStrut_2);
+
+		JPanel panel_5 = new JPanel();
+		panel.add(panel_5);
+
+		bLogOff = new JButton(Constants.BACK);
+		bLogOff.setPreferredSize(new Dimension(100, 25));
+		panel_5.add(bLogOff);
+
+		return p;
+
+	}
+
 
 
 	//Actualitzar Vistes
@@ -1826,5 +1961,20 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 		return backLogin;
 	}
 
+	public JButton getbLogOff() {
+		return bLogOff;
+	}
+
+	public JButton getbPerfil() {
+		return bPerfil;
+	}
+
+	public JButton getbJugar() {
+		return bJugar;
+	}
+
+	public JLabel getLblGuest() {
+		return lblGuest;
+	}
 
 }
