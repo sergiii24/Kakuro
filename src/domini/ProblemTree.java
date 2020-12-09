@@ -17,12 +17,12 @@ public class ProblemTree {
             State nS;
             while(!stack.isEmpty()){
                 State node = stack.pop();
-                current = node;
+
                 if(node.isSatisfied()){
                     current = node;
                     break;
                 }
-                if(node.isPossNode(isForwardChecking)){
+                /*if(node.isPossNode(isForwardChecking)){
                     for (State st : node.nextStates(node)) {
                         if(!checker.contains(st)){
                             st.setParent(node);
@@ -30,7 +30,7 @@ public class ProblemTree {
                             checker.add(st);
                         }
                     }
-                }
+                }*/
 
                 for (State pz : node.getChildren()) {
                     stack.push(pz);

@@ -2,6 +2,7 @@ package presentacio;
 
 import dades.Reader;
 import domini.ControllerDomini;
+import domini.Forward;
 import domini.ProblemTree;
 import domini.Tauler;
 import domini.models.State;
@@ -46,9 +47,16 @@ public class Controller {
         try {
             Tauler b = new Reader().llegirFitxer("src/data/exemple1");
             State start = new State(b.getCasellas());
-            ProblemTree pt = new ProblemTree();
-            pt.dfs(start, true);
-            JPanel panel = controllerDomini.getBoardUI(new Tauler(pt.getCurrent().getBoard()));
+            Forward f = new Forward();
+            long time = System.currentTimeMillis();
+            f.ForwardChecking(start);
+            System.out.println("Forward: "+(System.currentTimeMillis()-time));
+            //ProblemTree pt = new ProblemTree();
+            //pt.dfs(start, true);
+
+            b.getSolucio();
+
+            JPanel panel = controllerDomini.getBoardUI(new Tauler(f.getCurrent().getBoard()));
             view.ficavista(panel);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

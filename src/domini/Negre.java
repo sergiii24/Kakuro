@@ -33,4 +33,12 @@ public class Negre extends Casella {
     public boolean isNegre() {
     	return true;
     }
+
+    @Override
+    public String toString() {
+        return "Negre{" +
+                "columna=" + columna +
+                ", fila=" + fila +
+                '}';
+    }
 }

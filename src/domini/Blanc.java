@@ -44,4 +44,11 @@ public class Blanc extends Casella {
         return num == 0;
     }
 
+    @Override
+    public String toString() {
+        return "Blanc{" +
+                "num=" + num +
+                ", possibles=" + possibles +
+                '}';
+    }
 }
