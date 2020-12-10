@@ -45,6 +45,24 @@ public class State {
 
     }
 
+    public Position bestPosition() {
+
+        if(blank==0) return new Position(0,0);
+        int best = 10;
+        int a = 0, b = 0;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j].isBlanc() && ((Blanc)board[i][j]).getNum()==0 && ((Blanc)board[i][j]).getPossibles().size() < best) {
+                    a=i;
+                    b=j;
+                    best = ((Blanc)board[i][j]).getPossibles().size();
+                }
+            }
+        }
+        return new Position(a,b);
+    }
+
+
 
     public boolean isPossNode(boolean isForwardChecking){
         //forward checking

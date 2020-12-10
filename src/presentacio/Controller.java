@@ -45,12 +45,12 @@ public class Controller {
         view.getbJugar().addActionListener(e -> goView("Play"));*/
 
         try {
-            Tauler b = new Reader().llegirFitxer("src/data/exemple1");
+            Tauler b = new Reader().llegirFitxer("src/data/11x11");
             State start = new State(b.getCasellas());
             Forward f = new Forward();
-            long time = System.currentTimeMillis();
-            f.ForwardChecking(start);
-            System.out.println("Forward: "+(System.currentTimeMillis()-time));
+            //long time = System.currentTimeMillis();
+            //f.ForwardChecking(start);
+            //System.out.println("Forward: "+(System.currentTimeMillis()-time));
             //ProblemTree pt = new ProblemTree();
             //pt.dfs(start, true);
 
