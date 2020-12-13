@@ -1,6 +1,7 @@
 package domini;
 
 import domini.models.INmcsState;
+import domini.models.MonteState;
 import domini.models.Pair;
 
 import java.util.LinkedList;
@@ -9,16 +10,27 @@ import java.util.function.Supplier;
 
 public class NestedMonteCarloSearch {
 
-    public static <TState, TAction> Pair<Double, List<TAction>> executeSearch(INmcsState<TState, TAction> state, final int level, final Supplier<Boolean> isCanceled) {
+    boolean trobat;
+    MonteState solucio;
 
-        if(level <= 0) return state.simulation();
+    public NestedMonteCarloSearch() {
+        this.trobat = false;
+    }
+
+    public <TState, TAction> Pair<Double, List<TAction>> executeSearch(INmcsState<TState, TAction> state, final int level, final Supplier<Boolean> isCanceled) {
+
+        if(level <= 0) {
+
+            return state.simulation();
+
+        }
 
         Pair<Double, List<TAction>> globalBestResult = Pair.of(state.getScore(), new LinkedList<TAction>());
         final List<TAction> visitedNodes = new LinkedList<TAction>();
 
-        while (!state.isTerminalPosition() && !isCanceled.get()) {
+        while (!state.isTerminalPosition() && !isCanceled.get() && !trobat) {
 
-            Pair<Double, List<TAction>> currentBestResult = Pair.of(0.0, new LinkedList<TAction>());
+            Pair<Double, List<TAction>> currentBestResult = Pair.of(Double.MAX_VALUE, new LinkedList<TAction>());
             TAction currentBestAction = null;
 
             for(TAction action : state.findAllLegalActions()) {
@@ -27,13 +39,13 @@ public class NestedMonteCarloSearch {
 
                 final Pair<Double, List<TAction>> simulationResult = executeSearch(currentState, level - 1, isCanceled);
 
-                if (simulationResult.item1 >= currentBestResult.item1) {
+                if (simulationResult.item1 <= currentBestResult.item1) {
                     currentBestAction = action;
                     currentBestResult = simulationResult;
                 }
             }
 
-            if (currentBestResult.item1 >= globalBestResult.item1) {
+            if (currentBestResult.item1 <= globalBestResult.item1) {
                 visitedNodes.add(currentBestAction);
                 globalBestResult = currentBestResult;
                 globalBestResult.item2.addAll(0, visitedNodes);
@@ -44,6 +56,11 @@ public class NestedMonteCarloSearch {
 
             state = state.takeAction(currentBestAction);
 
+        }
+
+        if(state.getScore()==0 && state.isTerminalPosition()) {
+            solucio = (MonteState) state;
+            trobat = true;
         }
 
         return globalBestResult;

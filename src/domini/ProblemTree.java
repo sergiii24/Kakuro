@@ -32,9 +32,9 @@ public class ProblemTree {
                     }
                 }*/
 
-                for (State pz : node.getChildren()) {
-                    stack.push(pz);
-                }
+               // for (State pz : node.getChildren()) {
+                 //   stack.push(pz);
+                //}
             }
         }
 

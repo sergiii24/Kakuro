@@ -11,11 +11,14 @@ import java.text.NumberFormat;
 public class ControllerDomini {
 
     private Usuari user;
+    CtrlDominiGestioUsuari ctrlDominiGestioUsuari;
 
     public void iniControlador() {
         user = new Usuari();
-
+        ctrlDominiGestioUsuari = CtrlFactory.getcDUsuariInstance();
     }
+
+
 
     public JPanel getBoardUI(Tauler t) {
         //creating grid of cells

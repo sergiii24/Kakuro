@@ -1,5 +1,6 @@
 package domini;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,8 +13,12 @@ public class Blanc extends Casella {
         return possibles;
     }
 
+
+
     public void setPossibles(Set<Integer> possibles) {
-        this.possibles = possibles;
+        for (int n : possibles) {
+            this.possibles.add(n);
+        }
     }
 
 

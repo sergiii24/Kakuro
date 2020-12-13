@@ -23,7 +23,7 @@ public class DriverRegistrat {
         System.out.println("\t 14) void registrarUsuari(String id, String contra1, String contra2), Param -> 1 id, 2 contra.");
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		String classe = "Registrat";
 		System.out.println("Driver " + classe + ":");
 		
@@ -125,5 +125,5 @@ public class DriverRegistrat {
 		catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
-	}
+	}*/
 }

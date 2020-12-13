@@ -27,9 +27,6 @@ public class Forward {
 
         for (State n : r.nextStates(pos)) {
 
-            n.setParent(r);
-            r.addChildren(n);
-            i++;
             if (keepPlaying(n.getBoard(), pos.i, pos.j))
                 if (ForwardChecking (n))
                     return true;

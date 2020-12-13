@@ -3,6 +3,7 @@ package presentacio;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.undo.CannotRedoException;
@@ -22,11 +23,15 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 
 	//Kakuro
 
-	private JButton entrar, signUp, backLogin, bLogOff, bPerfil, bJugar;
+	private JButton entrar, signUp, backLogin, bLogOff, bPerfil, bJugar, b2Jugar, bKakuroManagement, bStadistics, bBackPerfil;
+	private JButton bBackJugar, bContinue, bCrear, bPlay, bBackJugar2;
 	private JTextField txtUser, txtRegUser;
 	private JPasswordField txtPassword, txtRegPassword, txtRegPassword2;
-	private JPanel panelInici, panelRegistrar, panelMenu, panelJugar;
+	private JPanel panelInici, panelRegistrar, panelMenu, panelJugar, panelPerfil, panelJugar2;
 	private JLabel lblRegistrar, lblGuest;
+	private JList<String> listPublic, listUser;
+	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
+
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -129,6 +134,12 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 
 		panelJugar = carregarVistaJugar();
 		cardPanel.add(panelJugar, "play");
+
+		panelPerfil = carregaVistaPerfil();
+		cardPanel.add(panelPerfil, "perfil");
+
+		panelJugar2 = carregarVistaJugar2();
+		cardPanel.add(panelJugar2, "play2");
 
 
 		//JPanel panelSelector = new JPanel();
@@ -328,94 +339,6 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 
 		Component verticalGlue = Box.createVerticalGlue();
 		panelUser.add(verticalGlue);
-
-		JPanel infoPanel = new JPanel();
-		cardPanel.add(infoPanel, "Login");
-		infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
-
-		JPanel panel = new JPanel();
-		infoPanel.add(panel);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-		JLabel label = new JLabel("MIDOKU");
-		label.setFont(new Font("Tahoma", Font.PLAIN, 40));
-		label.setAlignmentX(0.5f);
-		panel.add(label);
-
-		Component verticalStrut_7 = Box.createVerticalStrut(20);
-		panel.add(verticalStrut_7);
-
-		lblImageUser = new JLabel("");
-		lblImageUser.setAlignmentX(Component.CENTER_ALIGNMENT);
-		lblImageUser.setIcon(imageUser);
-		panel.add(lblImageUser);
-
-		Component verticalStrut_6 = Box.createVerticalStrut(20);
-		verticalStrut_6.setPreferredSize(new Dimension(0, 50));
-		panel.add(verticalStrut_6);
-
-		JPanel panelInfo = new JPanel();
-		panelInfo.setPreferredSize(new Dimension(300, 110));
-		panelInfo.setMinimumSize(new Dimension(300, 100));
-		panelInfo.setMaximumSize(new Dimension(300, 100));
-		panel.add(panelInfo);
-
-		JLabel lblUsername = new JLabel("Username:");
-		lblUsername.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblUsername.setMinimumSize(new Dimension(75, 14));
-		lblUsername.setPreferredSize(new Dimension(100, 20));
-		lblUsername.setMaximumSize(new Dimension(75, 14));
-		panelInfo.add(lblUsername);
-
-		lblUsernameinfo = new JLabel("");
-		lblUsernameinfo.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblUsernameinfo.setPreferredSize(new Dimension(100, 16));
-		panelInfo.add(lblUsernameinfo);
-
-		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblPassword.setMaximumSize(new Dimension(75, 14));
-		lblPassword.setMinimumSize(new Dimension(75, 14));
-		lblPassword.setPreferredSize(new Dimension(100, 20));
-		panelInfo.add(lblPassword);
-
-		lblPasswordinfo = new JLabel("");
-		lblPasswordinfo.setPreferredSize(new Dimension(100, 20));
-		lblPasswordinfo.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panelInfo.add(lblPasswordinfo);
-
-		JLabel lblName = new JLabel("Name:");
-		lblName.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblName.setPreferredSize(new Dimension(100, 20));
-		panelInfo.add(lblName);
-
-		lblNameinfo = new JLabel("");
-		lblNameinfo.setPreferredSize(new Dimension(100, 20));
-		lblNameinfo.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panelInfo.add(lblNameinfo);
-
-		JLabel lblSurname = new JLabel("Surname:");
-		lblSurname.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblSurname.setPreferredSize(new Dimension(100, 20));
-		panelInfo.add(lblSurname);
-
-		lblSurnameinfo = new JLabel("");
-		lblSurnameinfo.setPreferredSize(new Dimension(100, 20));
-		lblSurnameinfo.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panelInfo.add(lblSurnameinfo);
-
-		Component verticalGlue_3 = Box.createVerticalGlue();
-		panel.add(verticalGlue_3);
-
-		JButton btnGoBack = new JButton("Go Back ");
-		btnGoBack.setActionCommand("Back");
-		btnGoBack.addActionListener(this);
-		btnGoBack.setAlignmentX(Component.CENTER_ALIGNMENT);
-		panel.add(btnGoBack);
-
-		Component verticalGlue_4 = Box.createVerticalGlue();
-		panel.add(verticalGlue_4);
-
 
 		sudokuCard = new JPanel();
 		cardPanel.add(sudokuCard, "Sudoku");
@@ -1640,7 +1563,7 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 		txtUser.setEditable(true);
 		txtUser.setToolTipText(Constants.USER);
 		panel_2.add(txtUser);
-		txtUser.setColumns(20);
+		txtUser.setColumns(14);
 
 		Component verticalStrut_3 = Box.createVerticalStrut(20);
 		panel.add(verticalStrut_3);
@@ -1660,7 +1583,7 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 		txtPassword = new JPasswordField();
 		panel_4.add(txtPassword);
 		txtPassword.setFont(fPlain);
-		txtPassword.setColumns(20);
+		txtPassword.setColumns(14);
 
 		Component verticalStrut_2 = Box.createVerticalStrut(20);
 		panel.add(verticalStrut_2);
@@ -1669,7 +1592,7 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 		panel.add(panel_5);
 
 		entrar = new JButton(Constants.LOGIN);
-		entrar.addActionListener(e-> System.out.println("Hoila" + txtUser.getText()));
+		entrar.setPreferredSize(new Dimension(200, 25));
 		panel_5.add(entrar);
 
 		Component verticalStrut_6 = Box.createVerticalStrut(10);
@@ -1745,7 +1668,7 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 		txtRegUser.setFont(fPlain);
 		txtRegUser.setToolTipText(Constants.USER);
 		panel_2.add(txtRegUser);
-		txtRegUser.setColumns(20);
+		txtRegUser.setColumns(14);
 
 		Component verticalStrut_3 = Box.createVerticalStrut(20);
 		panel.add(verticalStrut_3);
@@ -1765,7 +1688,7 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 
 		txtRegPassword = new JPasswordField();
 		panel_4.add(txtRegPassword, BorderLayout.NORTH);
-		txtRegPassword.setColumns(20);
+		txtRegPassword.setColumns(14);
 
 		JLabel lblNewLabel_5 = new JLabel(Constants.CONFIRMPASSWORD);
 		lblNewLabel_2.setFont(fBold);
@@ -1773,7 +1696,7 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 
 		txtRegPassword2 = new JPasswordField();
 		panel_4.add(txtRegPassword2, BorderLayout.SOUTH);
-		txtRegPassword2.setColumns(20);
+		txtRegPassword2.setColumns(14);
 
 		Component verticalStrut_2 = Box.createVerticalStrut(20);
 		panel.add(verticalStrut_2);
@@ -1782,6 +1705,7 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 		panel.add(panel_5);
 
 		signUp = new JButton(Constants.SIGNUP);
+		signUp.setPreferredSize(new Dimension(200, 25));
 		panel_5.add(signUp);
 
 		Component verticalStrut_6 = Box.createVerticalStrut(10);
@@ -1792,6 +1716,7 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 		panel_6.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		backLogin = new JButton(Constants.BACK);
+		backLogin.setPreferredSize(new Dimension(200, 25));
 		panel_6.add(backLogin);
 
 
@@ -1820,8 +1745,22 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 		lblImage.setAlignmentX(Component.CENTER_ALIGNMENT);
 		panel.add(lblImage);
 
-		Component verticalStrut_1 = Box.createVerticalStrut(50);
+		Component verticalStrut_1 = Box.createVerticalStrut(30);
 		panel.add(verticalStrut_1);
+
+		JPanel panel_0 = new JPanel();
+		FlowLayout flowLayout0 = (FlowLayout) panel_0.getLayout();
+		flowLayout0.setAlignment(FlowLayout.CENTER);
+		panel.add(panel_0);
+
+		JLabel lblNewLabel = new JLabel(Constants.MAIN);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel.setForeground(SystemColor.activeCaption);
+		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 33));
+		panel_0.add(lblNewLabel);
+
+		Component verticalStrut_0 = Box.createVerticalStrut(30);
+		panel.add(verticalStrut_0);
 
 		JPanel panel_1 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
@@ -1829,11 +1768,23 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 		panel.add(panel_1);
 
 		bJugar = new JButton(Constants.PLAY);
-		bJugar.setPreferredSize(new Dimension(100, 25));
+		bJugar.setPreferredSize(new Dimension(200, 25));
 		panel_1.add(bJugar);
 
-		Component verticalStrut_3 = Box.createVerticalStrut(20);
+		Component verticalStrut_3 = Box.createVerticalStrut(10);
 		panel.add(verticalStrut_3);
+
+		JPanel panel_2 = new JPanel();
+		FlowLayout flowLayout_2 = (FlowLayout) panel_2.getLayout();
+		flowLayout_2.setAlignment(FlowLayout.CENTER);
+		panel.add(panel_2);
+
+		bKakuroManagement = new JButton(Constants.MANAGEMENT);
+		bKakuroManagement.setPreferredSize(new Dimension(200, 25));
+		panel_2.add(bKakuroManagement);
+
+		Component verticalStrut_6 = Box.createVerticalStrut(10);
+		panel.add(verticalStrut_6);
 
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel_3.getLayout();
@@ -1841,20 +1792,29 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 		panel.add(panel_3);
 
 		bPerfil = new JButton(Constants.PROFILE);
-		bPerfil.setPreferredSize(new Dimension(100, 25));
+		bPerfil.setPreferredSize(new Dimension(200, 25));
 		panel_3.add(bPerfil);
 
-		JPanel panel_4 = new JPanel();
-		panel.add(panel_4);
-
-		Component verticalStrut_2 = Box.createVerticalStrut(20);
+		Component verticalStrut_2 = Box.createVerticalStrut(10);
 		panel.add(verticalStrut_2);
+
+		JPanel panel_6 = new JPanel();
+		FlowLayout flowLayout_4 = (FlowLayout) panel_6.getLayout();
+		flowLayout_4.setAlignment(FlowLayout.CENTER);
+		panel.add(panel_6);
+
+		bStadistics = new JButton(Constants.STADISTICS);
+		bStadistics.setPreferredSize(new Dimension(200, 25));
+		panel_6.add(bStadistics);
+
+		Component verticalStrut_4 = Box.createVerticalStrut(10);
+		panel.add(verticalStrut_4);
 
 		JPanel panel_5 = new JPanel();
 		panel.add(panel_5);
 
 		bLogOff = new JButton(Constants.LOGOFF);
-		bLogOff.setPreferredSize(new Dimension(100, 25));
+		bLogOff.setPreferredSize(new Dimension(200, 25));
 		panel_5.add(bLogOff);
 
 		return p;
@@ -1880,46 +1840,298 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 		lblImage.setAlignmentX(Component.CENTER_ALIGNMENT);
 		panel.add(lblImage);
 
-		Component verticalStrut_1 = Box.createVerticalStrut(50);
+		Component verticalStrut_1 = Box.createVerticalStrut(30);
 		panel.add(verticalStrut_1);
+
+		JPanel panel_0 = new JPanel();
+		FlowLayout flowLayout0 = (FlowLayout) panel_0.getLayout();
+		flowLayout0.setAlignment(FlowLayout.CENTER);
+		panel.add(panel_0);
+
+		JLabel lblNewLabel = new JLabel(Constants.MAIN);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel.setForeground(SystemColor.activeCaption);
+		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 33));
+		panel_0.add(lblNewLabel);
+
+		Component verticalStrut_0 = Box.createVerticalStrut(30);
+		panel.add(verticalStrut_0);
 
 		JPanel panel_1 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
 		flowLayout.setAlignment(FlowLayout.CENTER);
 		panel.add(panel_1);
 
-		//bGenerate = new JButton(Constants.GENERATE);
-		bJugar.setPreferredSize(new Dimension(100, 25));
-		panel_1.add(bJugar);
+		bContinue = new JButton(Constants.CONTINUE);
+		bContinue.setPreferredSize(new Dimension(200, 25));
+		panel_1.add(bContinue);
 
-		Component verticalStrut_3 = Box.createVerticalStrut(20);
+		Component verticalStrut_3 = Box.createVerticalStrut(10);
 		panel.add(verticalStrut_3);
+
+		JPanel panel_2 = new JPanel();
+		FlowLayout flowLayout_2 = (FlowLayout) panel_2.getLayout();
+		flowLayout_2.setAlignment(FlowLayout.CENTER);
+		panel.add(panel_2);
+
+		b2Jugar = new JButton(Constants.PLAY);
+		b2Jugar.setPreferredSize(new Dimension(200, 25));
+		panel_2.add(b2Jugar);
+
+		Component verticalStrut_6 = Box.createVerticalStrut(10);
+		panel.add(verticalStrut_6);
 
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel_3.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.CENTER);
 		panel.add(panel_3);
 
-		bPerfil = new JButton(Constants.PROFILE);
-		bPerfil.setPreferredSize(new Dimension(100, 25));
-		panel_3.add(bPerfil);
+		bCrear = new JButton(Constants.CREAR);
+		bCrear.setPreferredSize(new Dimension(200, 25));
+		panel_3.add(bCrear);
 
-		JPanel panel_4 = new JPanel();
-		panel.add(panel_4);
-
-		Component verticalStrut_2 = Box.createVerticalStrut(20);
+		Component verticalStrut_2 = Box.createVerticalStrut(10);
 		panel.add(verticalStrut_2);
 
 		JPanel panel_5 = new JPanel();
-		panel.add(panel_5);
+		FlowLayout flowLayout_4 = (FlowLayout) panel_5.getLayout();
+		flowLayout_4.setAlignment(FlowLayout.CENTER);
+		panel.add(panel_3);
 
-		bLogOff = new JButton(Constants.BACK);
-		bLogOff.setPreferredSize(new Dimension(100, 25));
-		panel_5.add(bLogOff);
+		bBackJugar = new JButton(Constants.BACK);
+		bBackJugar.setPreferredSize(new Dimension(200, 25));
+		panel_5.add(bBackJugar);
 
 		return p;
 
 	}
+
+	private JPanel carregarVistaJugar2() {
+
+		JPanel p = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		JPanel panel = new JPanel();
+
+		panel.setBackground(new Color(240, 240, 240));
+		p.add(panel);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+		Component verticalStrut = Box.createVerticalStrut(20);
+		panel.add(verticalStrut);
+
+		ImageIcon imageUser = new ImageIcon(getClass().getResource("../assets/img/Logo_Kajugo.png"));
+		imageUser = scaleImage(imageUser, 128, 128);
+		JLabel lblImage = new JLabel(imageUser);
+		lblImage.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel.add(lblImage);
+
+		Component verticalStrut_1 = Box.createVerticalStrut(30);
+		panel.add(verticalStrut_1);
+
+		JPanel panel_0 = new JPanel();
+		FlowLayout flowLayout0 = (FlowLayout) panel_0.getLayout();
+		flowLayout0.setAlignment(FlowLayout.CENTER);
+		panel.add(panel_0);
+
+		JLabel lblNewLabel = new JLabel(Constants.PLAY);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel.setForeground(SystemColor.activeCaption);
+		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 33));
+		panel_0.add(lblNewLabel);
+
+		Component verticalStrut_0 = Box.createVerticalStrut(30);
+		panel.add(verticalStrut_0);
+
+		JPanel pareLlistes = new JPanel();
+		pareLlistes.setLayout(new BorderLayout(0,0));
+		panel.add(pareLlistes);
+
+		JPanel panel_4 = new JPanel();
+		panel_4.setBorder(new TitledBorder(null, Constants.PUBLIC, TitledBorder.RIGHT, TitledBorder.TOP, null, null));
+		pareLlistes.add(panel_4, BorderLayout.WEST);
+		panel_4.setLayout(new BoxLayout(panel_4, BoxLayout.X_AXIS));
+
+		listPublic = new JList(); //data has type Object[]
+		listPublic.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listPublic.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		listPublic.setVisibleRowCount(-1);
+
+		JScrollPane listScroller = new JScrollPane(listPublic);
+		listScroller.setPreferredSize(new Dimension(250, 80));
+		panel_4.add(listScroller);
+
+		Component verticalStrut_4 = Box.createVerticalStrut(30);
+		panel.add(verticalStrut_4);
+
+
+		JPanel panel_3 = new JPanel();
+		panel_3.setBorder(new TitledBorder(null, Constants.YOURS, TitledBorder.RIGHT, TitledBorder.TOP, null, null));
+		pareLlistes.add(panel_3, BorderLayout.EAST);
+		panel_3.setLayout(new BoxLayout(panel_3, BoxLayout.X_AXIS));
+
+		listUser = new JList(); //data has type Object[]
+		listUser.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listUser.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		listUser.setVisibleRowCount(-1);
+
+		JScrollPane listScroller2 = new JScrollPane(listUser);
+		listScroller2.setPreferredSize(new Dimension(250, 80));
+		panel_3.add(listScroller2);
+
+		JPanel panel_5 = new JPanel();
+		panel_5.setBorder(new TitledBorder(null, Constants.PUBLIC, TitledBorder.RIGHT, TitledBorder.TOP, null, null));
+		pareLlistes.add(panel_5, BorderLayout.SOUTH);
+		panel_5.setLayout(new BoxLayout(panel_5, BoxLayout.X_AXIS));
+
+		JPanel panel_8 = new JPanel();
+		panel_5.add(panel_8);
+		panel_8.setLayout(new BoxLayout(panel_8, BoxLayout.Y_AXIS));
+
+		JRadioButton rdbtnNewRadioButton_3 = new JRadioButton("Training");
+		buttonGroup_1.add(rdbtnNewRadioButton_3);
+		rdbtnNewRadioButton_3.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel_8.add(rdbtnNewRadioButton_3);
+
+		Component verticalStrut_2 = Box.createVerticalStrut(5);
+		panel_8.add(verticalStrut_2);
+
+		JRadioButton rdbtnNormal = new JRadioButton("Normal");
+		buttonGroup_1.add(rdbtnNormal);
+		rdbtnNormal.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel_8.add(rdbtnNormal);
+
+		Component verticalStrut_3 = Box.createVerticalStrut(5);
+		panel_8.add(verticalStrut_3);
+
+		JRadioButton rdbtnNewRadioButton_4 = new JRadioButton("Time Trial");
+		buttonGroup_1.add(rdbtnNewRadioButton_4);
+		rdbtnNewRadioButton_4.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel_8.add(rdbtnNewRadioButton_4);
+
+		JPanel panel_2 = new JPanel();
+		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.X_AXIS));
+		panel.add(panel_2);
+
+		bPlay = new JButton(Constants.PLAY);
+		bPlay.setMinimumSize(new Dimension(200, 25));
+		panel_2.add(bPlay);
+
+		Component verticalStrut_6 = Box.createHorizontalStrut(10);
+		panel_2.add(verticalStrut_6);
+
+
+		bBackJugar2 = new JButton(Constants.BACK);
+		bBackJugar2.setMinimumSize(new Dimension(200, 25));
+		panel_2.add(bBackJugar2);
+
+
+		return p;
+
+	}
+
+
+
+	private JPanel carregaVistaPerfil() {
+
+		JPanel p = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		JPanel panel = new JPanel();
+
+		panel.setBackground(new Color(240, 240, 240));
+		p.add(panel);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+		Component verticalStrut = Box.createVerticalStrut(20);
+		panel.add(verticalStrut);
+
+		ImageIcon imageUser = new ImageIcon(getClass().getResource("../assets/img/Logo_Kajugo.png"));
+		imageUser = scaleImage(imageUser, 128, 128);
+		JLabel lblImage = new JLabel(imageUser);
+		lblImage.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel.add(lblImage);
+
+		Component verticalStrut_1 = Box.createVerticalStrut(30);
+		panel.add(verticalStrut_1);
+
+		JPanel panel_0 = new JPanel();
+		FlowLayout flowLayout0 = (FlowLayout) panel_0.getLayout();
+		flowLayout0.setAlignment(FlowLayout.CENTER);
+		panel.add(panel_0);
+
+		JLabel lblNewLabel = new JLabel(Constants.PROFILE);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel.setForeground(SystemColor.activeCaption);
+		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 33));
+		panel_0.add(lblNewLabel);
+
+		Component verticalStrut_0 = Box.createVerticalStrut(30);
+		panel.add(verticalStrut_0);
+
+		JPanel panelInfo = new JPanel();
+		panelInfo.setPreferredSize(new Dimension(300, 110));
+		panelInfo.setMinimumSize(new Dimension(300, 100));
+		panelInfo.setMaximumSize(new Dimension(300, 100));
+		panel.add(panelInfo);
+
+		JLabel lblUsername = new JLabel("Username:");
+		lblUsername.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblUsername.setMinimumSize(new Dimension(75, 14));
+		lblUsername.setPreferredSize(new Dimension(100, 20));
+		lblUsername.setMaximumSize(new Dimension(75, 14));
+		panelInfo.add(lblUsername);
+
+		lblUsernameinfo = new JLabel("");
+		lblUsernameinfo.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblUsernameinfo.setPreferredSize(new Dimension(100, 16));
+		panelInfo.add(lblUsernameinfo);
+
+		JLabel lblPassword = new JLabel("Password:");
+		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblPassword.setMaximumSize(new Dimension(75, 14));
+		lblPassword.setMinimumSize(new Dimension(75, 14));
+		lblPassword.setPreferredSize(new Dimension(100, 20));
+		panelInfo.add(lblPassword);
+
+		lblPasswordinfo = new JLabel("");
+		lblPasswordinfo.setPreferredSize(new Dimension(100, 20));
+		lblPasswordinfo.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelInfo.add(lblPasswordinfo);
+
+		JLabel lblName = new JLabel("Name:");
+		lblName.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblName.setPreferredSize(new Dimension(100, 20));
+		panelInfo.add(lblName);
+
+		lblNameinfo = new JLabel("");
+		lblNameinfo.setPreferredSize(new Dimension(100, 20));
+		lblNameinfo.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelInfo.add(lblNameinfo);
+
+		JLabel lblSurname = new JLabel("Surname:");
+		lblSurname.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblSurname.setPreferredSize(new Dimension(100, 20));
+		panelInfo.add(lblSurname);
+
+		lblSurnameinfo = new JLabel("");
+		lblSurnameinfo.setPreferredSize(new Dimension(100, 20));
+		lblSurnameinfo.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelInfo.add(lblSurnameinfo);
+
+		Component verticalStrut_4 = Box.createVerticalStrut(10);
+		panel.add(verticalStrut_4);
+
+		JPanel panel_5 = new JPanel();
+		panel.add(panel_5);
+
+		bBackPerfil = new JButton(Constants.BACK);
+		bBackPerfil.setPreferredSize(new Dimension(200, 25));
+		panel_5.add(bBackPerfil);
+
+		return p;
+
+	}
+
+
 
 
 
@@ -1932,6 +2144,33 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 				null, new Object[]{"Exit"}, JOptionPane.CANCEL_OPTION);
 
 	}
+
+	public void setDataPerfil(String id, int nKakurosResolts, int puntuacio) {
+
+		System.out.println(id);
+		lblUsernameinfo.setText(id);
+		lblPasswordinfo.setText(""+nKakurosResolts);
+		lblNameinfo.setText(""+puntuacio);
+
+	}
+
+	public void vistaRegistrat() {
+
+		bPerfil.setVisible(true);
+		bKakuroManagement.setVisible(true);
+
+	}
+
+	public void vistaGuest() {
+
+		bPerfil.setVisible(false);
+		bKakuroManagement.setVisible(false);
+
+	}
+
+
+
+
 
 	public void changeScreen(String screen) {
 		cardLayout.show(cardPanel, screen);
@@ -1976,5 +2215,31 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 	public JLabel getLblGuest() {
 		return lblGuest;
 	}
+
+	public JTextField getTxtRegUser() {
+		return txtRegUser;
+	}
+
+	public JPasswordField getTxtRegPassword() {
+		return txtRegPassword;
+	}
+
+	public JPasswordField getTxtRegPassword2() {
+		return txtRegPassword2;
+	}
+
+	public JButton getbBackPerfil() {
+		return bBackPerfil;
+	}
+
+	public JButton getbBackJugar() {
+		return bBackJugar2;
+	}
+
+	public JButton getB2Jugar() {
+		return b2Jugar;
+	}
+
+	public JButton getbPlay() { return bPlay; }
 
 }

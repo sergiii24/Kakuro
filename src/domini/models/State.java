@@ -12,32 +12,34 @@ import java.util.Set;
 
 public class State {
 
-    public static final int BSIZE = 7;
     private int blank;
     private Casella[][] board;
-    private State parent;
-    private ArrayList<State> children;
+
+    public State() {}
+
+    public void setBlank(int blank) {
+        this.blank = blank;
+    }
+
+    public void setBoard(Casella[][] board) {
+        this.board = board;
+    }
 
     public State(Casella[][] board) {
 
         this.board = new Casella[board.length][board[0].length];
-        this.children = new ArrayList<>();
         this.blank = 0;
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
-                if(board[i][j].isNegre()){
-                    this.board[i][j] = new Negre(((Negre)board[i][j]).getColumna(),((Negre)board[i][j]).getFila());
-                } else {
-                    this.board[i][j] = new Blanc(((Blanc)board[i][j]).getNum());
-                }
-            }
-        }
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                if(this.board[i][j].isBlanc() && ((Blanc)this.board[i][j]).getNum() == 0) {
-                    this.blank++;
-                    ((Blanc)this.board[i][j]).setPossibles(evalDomain(i, j));
+                if (board[i][j].isNegre()) {
+                    this.board[i][j] = new Negre(((Negre) board[i][j]).getColumna(), ((Negre) board[i][j]).getFila());
+                } else {
+                    this.board[i][j] = new Blanc(((Blanc) board[i][j]).getNum());
+                    if(((Blanc)this.board[i][j]).getNum()==0) {
+                        ((Blanc) this.board[i][j]).setPossibles(((Blanc) board[i][j]).getPossibles());
+                        blank++;
+                    }
                 }
             }
         }
@@ -62,37 +64,70 @@ public class State {
         return new Position(a,b);
     }
 
+    private boolean isValidMove(Casella[][] c, int a, int b, int n) {
 
+        return validColumna(c,a,b,n)&&validFila(c,a,b,n);
 
-    public boolean isPossNode(boolean isForwardChecking){
-        //forward checking
-        if(isForwardChecking){
-            for (int i = 0; i < BSIZE; i++) {
-                for (int j = 0; j < BSIZE; j++) {
-                    if(this.board[i][j].isBlanc() && ((Blanc)board[i][j]).getNum() == 0){
-                        if(evalDomain(i, j).isEmpty()){
-                            return false;
-                        }
-                    }
-                }
-            }
-        }
-        if(this.blank > 1) return true;
-        return false;
     }
 
-    private Casella[][] clonar(Casella[][] casellas) {
-        Casella[][] v = new Casella[casellas.length][casellas[0].length]; //copy of board
-        for (int i = 0; i < casellas.length; i++) {
-            for (int j = 0; j < casellas[0].length; j++) {
-                if (casellas[i][j].isNegre()) {
-                    v[i][j] = new Negre(((Negre) casellas[i][j]).getColumna(), ((Negre) casellas[i][j]).getFila());
+    private boolean validColumna(Casella[][] c , int i, int j, int num) {
+
+        int aux = i;
+
+        while(c[aux][j].isBlanc()) aux--;
+        int total = ((Negre)c[aux][j]).getColumna();
+        aux++;
+        int blanc = 0;
+        int suma = 0;
+        while (aux<c.length && c[aux][j].isBlanc()) {
+            if(((Blanc)c[aux][j]).getNum()!=0) suma += ((Blanc)c[aux][j]).getNum();
+            else blanc++;
+            aux++;
+        }
+
+        if(blanc==1) return total==suma+num;
+        return (total-suma) >= num;
+
+    }
+
+    private boolean validFila(Casella[][] c , int i, int j, int num) {
+
+        int aux = j;
+
+        while(c[i][aux].isBlanc()) aux--;
+        int total = ((Negre)c[i][aux]).getFila();
+        aux++;
+        int blanc = 0;
+        int suma = 0;
+        while (aux<c[0].length && c[i][aux].isBlanc()) {
+            if(((Blanc)c[i][aux]).getNum()!=0) suma += ((Blanc)c[i][aux]).getNum();
+            else blanc++;
+            aux++;
+        }
+        if(blanc==1) return total==suma+num;
+        return (total-suma) >= num;
+
+    }
+
+
+
+    private Casella[][] clonar (Casella[][] c) {
+
+        Casella[][] casellas = new Casella[c.length][c[0].length];
+
+        for (int i = 0; i < c.length; i++) {
+            for (int j = 0; j < c[0].length; j++) {
+                if (c[i][j].isNegre()) {
+                    casellas[i][j] = new Negre(((Negre) c[i][j]).getColumna(), ((Negre) c[i][j]).getFila());
                 } else {
-                    v[i][j] = new Blanc(((Blanc) casellas[i][j]).getNum());
+                    casellas[i][j] = new Blanc(((Blanc) c[i][j]).getNum());
+                    if(((Blanc)casellas[i][j]).getNum()==0) ((Blanc) casellas[i][j]).setPossibles(((Blanc) c[i][j]).getPossibles());
                 }
             }
         }
-        return v;
+
+        return casellas;
+
     }
 
     private void setPos(Casella[][] casellas) {
@@ -116,12 +151,12 @@ public class State {
 
         for (int k : ((Blanc)this.board[r.getI()][r.getJ()]).getPossibles()) {
 
-            //Casella[][] v = clonar(this.board); //copy of board
-            ((Blanc)this.board[r.getI()][r.getJ()]).setNum(k);
-            //setPos(v);
-            //update(v, r.getI(), r.getJ(), k);
-            nSs.add(new State(this.getBoard()));
-
+            if(isValidMove(this.board, r.i, r.j, k)) {
+                Casella[][] v = clonar(this.board); //copy of board
+                ((Blanc) v[r.getI()][r.getJ()]).setNum(k);
+                update(v, r.getI(), r.getJ(), k);
+                nSs.add(new State(v));
+            }
         }
 
         return nSs;
@@ -175,8 +210,9 @@ public class State {
         }
 
 
-
     }
+
+
 
 
     public Set<Integer> evalDomain(int i, int j){
@@ -288,6 +324,85 @@ public class State {
 
         return set;
     }
+
+    public boolean isTerminalPosition() {
+        if (blank != 0) return false;
+        if (emptyDomain()) return false;
+        if (!inconsitent()) return false;
+        return true;
+    }
+
+    private boolean inconsitent() {
+
+        int r = 0, s = 0, suma = 0;
+        boolean nou = false;
+
+        for (int i = 0; i < this.board.length; i++) {
+            for (int j = 0; j < this.board[0].length; j++) {
+                if (this.board[i][j].isNegre()) {
+
+                    if (nou) {
+                        if (((Negre) this.board[r][s]).getFila() != suma) return false;
+                        suma = 0;
+                        nou = false;
+                    }
+
+                    r = i;
+                    s = j;
+
+                } else {
+                    suma += ((Blanc) this.board[i][j]).getNum();
+                    nou = true;
+                }
+            }
+        }
+
+        if (nou)
+            if (((Negre) this.board[r][s]).getFila() != suma) return false;
+
+        r = 0;
+        s = 0;
+        suma = 0;
+        nou = false;
+
+        for (int i = 0; i < this.board[0].length; i++) {
+            for (int j = 0; j < this.board.length; j++) {
+                if (this.board[j][i].isNegre()) {
+                    if (nou) {
+                        if (((Negre) this.board[r][s]).getColumna() != suma) return false;
+                        suma = 0;
+                        nou = false;
+                    }
+                    r = j;
+                    s = i;
+                } else {
+                    suma += ((Blanc) this.board[j][i]).getNum();
+                    nou = true;
+                }
+            }
+        }
+
+        if (nou)
+            if (((Negre) this.board[r][s]).getColumna() != suma) return false;
+
+
+        return true;
+
+    }
+
+
+    private boolean emptyDomain() {
+
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j].isBlanc() && ((Blanc) board[i][j]).getNum() == 0 && ((Blanc) board[i][j]).getPossibles().isEmpty()) return true;
+            }
+        }
+
+        return false;
+
+    }
+
 
 
     private boolean keepPlaying(Casella[][] board, int a, int b) {
@@ -424,21 +539,7 @@ public class State {
         return board;
     }
 
-    public void setParent(State parent) {
-        this.parent = parent;
-    }
 
-    public State getParent() {
-        return parent;
-    }
-
-    public void addChildren(State st){
-        this.children.add(st);
-    }
-
-    public ArrayList<State> getChildren() {
-        return children;
-    }
 
     @Override
     public int hashCode() {
@@ -463,8 +564,8 @@ public class State {
         if (this.blank != other.blank) {
             return false;
         }
-        for (int k = 0; k < BSIZE; k++) {
-            for (int l = 0; l < BSIZE; l++) {
+        for (int k = 0; k < this.board.length; k++) {
+            for (int l = 0; l < this.board[0].length; l++) {
                 if(this.board[k][l].isBlanc() && ((Blanc)this.board[k][l]).getNum() != ((Blanc)other.board[k][l]).getNum()) return false;
             }
         }

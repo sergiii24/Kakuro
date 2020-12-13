@@ -1,4 +1,5 @@
 import domini.ControllerDomini;
+import domini.CtrlFactory;
 import presentacio.Controller;
 import presentacio.Sudoku;
 import java.awt.*;
@@ -14,7 +15,7 @@ public class Main {
             public void run() {
                 try {
                     Sudoku frame = new Sudoku();
-                    ControllerDomini domini = new ControllerDomini();
+                    ControllerDomini domini = CtrlFactory.getcDDominiInstance();
                     Controller con = new Controller(frame, domini);
                     con.initController();
                     frame.setVisible(true);

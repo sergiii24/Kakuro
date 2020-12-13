@@ -14,5 +14,13 @@ public class Constants {
     public static final String PROFILE = "Profile";
     public static final String CONFIRMPASSWORD = "Confirm Password" ;
     public static final String GENERATE = "Generar";
+    public static final String MANAGEMENT = "Kakuro Management";
+    public static final String STADISTICS = "Stadistics";
+    public static final String MAIN = "Main Menu";
+    public static final String CREAR = "Crear";
+    public static final String CONTINUE = "Continue";
+
+    public static final String YOURS = "Els teus kakuros";
+    public static final String PUBLIC = "Publics";
 
 }
