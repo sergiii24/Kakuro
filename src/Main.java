@@ -1,7 +1,12 @@
 import domini.ControllerDomini;
 import domini.CtrlFactory;
-import presentacio.Controller;
+import presentacio.ControllerLogin;
+import presentacio.ControllerPresentacio;
+import presentacio.ControllerSignUp;
+import presentacio.views.LoginView;
 import presentacio.Sudoku;
+import presentacio.views.SignUpView;
+
 import java.awt.*;
 
 public class Main {
@@ -14,11 +19,24 @@ public class Main {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    Sudoku frame = new Sudoku();
+
+                    //Views
+                    LoginView loginView = new LoginView();
+                    SignUpView signUpView = new SignUpView();
+
+                    Sudoku frame = new Sudoku(loginView, signUpView);
+
+                    //Controllers
+
                     ControllerDomini domini = CtrlFactory.getcDDominiInstance();
-                    Controller con = new Controller(frame, domini);
+                    ControllerPresentacio con = new ControllerPresentacio(frame, domini);
+                    ControllerLogin controllerLogin = new ControllerLogin(loginView, con);
+                    ControllerSignUp controllerSignUp = new ControllerSignUp(signUpView, con);
                     con.initController();
+                    controllerLogin.initController();
+                    controllerSignUp.initController();
                     frame.setVisible(true);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

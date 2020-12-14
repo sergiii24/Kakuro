@@ -1,5 +1,8 @@
 package presentacio;
 
+import presentacio.views.LoginView;
+import presentacio.views.SignUpView;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -101,7 +104,7 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 	/**
 	 * Create the frame.
 	 */
-	public Sudoku() {
+	public Sudoku(LoginView loginView, SignUpView signUpView) {
 		setPreferredSize(new Dimension(800, 600));
 		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -123,10 +126,10 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 		cardLayout = new CardLayout(0, 0);
 		cardPanel.setLayout(cardLayout);
 
-		carregaVistaInicial();
+		panelInici = loginView;
 		cardPanel.add(panelInici, "login");
 
-		panelRegistrar = carregaRegistrar();
+		panelRegistrar = signUpView;
 		cardPanel.add(panelRegistrar, "reg");
 
 		panelMenu = carregaVistaMenu();
@@ -1519,210 +1522,6 @@ public class Sudoku extends JFrame  implements ActionListener, KeyListener, Prop
 
 
 	//KAKURO
-
-
-	private void carregaVistaInicial() {
-
-		panelInici = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-		Font fBold = new Font("Arial", Font.BOLD, 20);
-		Font fPlain = new Font("Arial", Font.PLAIN, 18);
-
-		JPanel panel = new JPanel();
-
-		panel.setBackground(new Color(240, 240, 240));
-		panelInici.add(panel);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-		Component verticalStrut = Box.createVerticalStrut(20);
-		panel.add(verticalStrut);
-
-		ImageIcon imageUser = new ImageIcon(getClass().getResource("../assets/img/Logo_Kajugo.png"));
-		imageUser = scaleImage(imageUser, 128, 128);
-		JLabel lblImage = new JLabel(imageUser);
-		lblImage.setAlignmentX(Component.CENTER_ALIGNMENT);
-		panel.add(lblImage);
-
-		Component verticalStrut_1 = Box.createVerticalStrut(20);
-		panel.add(verticalStrut_1);
-
-		JPanel panel_1 = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
-		panel.add(panel_1);
-
-		JLabel lblNewLabel = new JLabel(Constants.USER);
-		lblNewLabel.setFont(fBold);
-		panel_1.add(lblNewLabel);
-
-		JPanel panel_2 = new JPanel();
-		panel.add(panel_2);
-
-		txtUser = new JTextField();
-		txtUser.setFont(fPlain);
-		txtUser.setEditable(true);
-		txtUser.setToolTipText(Constants.USER);
-		panel_2.add(txtUser);
-		txtUser.setColumns(14);
-
-		Component verticalStrut_3 = Box.createVerticalStrut(20);
-		panel.add(verticalStrut_3);
-
-		JPanel panel_3 = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) panel_3.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEFT);
-		panel.add(panel_3);
-
-		JLabel lblNewLabel_2 = new JLabel(Constants.PASSWORD);
-		lblNewLabel_2.setFont(fBold);
-		panel_3.add(lblNewLabel_2);
-
-		JPanel panel_4 = new JPanel();
-		panel.add(panel_4);
-
-		txtPassword = new JPasswordField();
-		panel_4.add(txtPassword);
-		txtPassword.setFont(fPlain);
-		txtPassword.setColumns(14);
-
-		Component verticalStrut_2 = Box.createVerticalStrut(20);
-		panel.add(verticalStrut_2);
-
-		JPanel panel_5 = new JPanel();
-		panel.add(panel_5);
-
-		entrar = new JButton(Constants.LOGIN);
-		entrar.setPreferredSize(new Dimension(200, 25));
-		panel_5.add(entrar);
-
-		Component verticalStrut_6 = Box.createVerticalStrut(10);
-		panel.add(verticalStrut_6);
-
-		JPanel panel_6 = new JPanel();
-		panel.add(panel_6);
-		panel_6.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-		lblRegistrar = new JLabel(Constants.REGISTER);
-		lblRegistrar.setFont(new Font("Arial", Font.PLAIN, 12));
-		panel_6.add(lblRegistrar);
-
-		JPanel panel_7 = new JPanel();
-		panel.add(panel_7);
-
-		lblGuest = new JLabel(Constants.GUEST);
-		lblGuest.setFont(new Font("Arial", Font.PLAIN, 12));
-		panel_7.add(lblGuest);
-
-	}
-
-	//Registrar
-	private JPanel carregaRegistrar() {
-
-		JPanel p = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-		Font fBold = new Font("Arial", Font.BOLD, 20);
-		Font fPlain = new Font("Arial", Font.PLAIN, 18);
-
-		JPanel panel = new JPanel();
-
-		panel.setBackground(new Color(240, 240, 240));
-		p.add(panel);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-		Component verticalStrut = Box.createVerticalStrut(20);
-		panel.add(verticalStrut);
-
-		ImageIcon imageUser = new ImageIcon(getClass().getResource("../assets/img/Logo_Kajugo.png"));
-		imageUser = scaleImage(imageUser, 128, 128);
-		JLabel lblImage = new JLabel(imageUser);
-		lblImage.setAlignmentX(Component.CENTER_ALIGNMENT);
-		panel.add(lblImage);
-
-		Component verticalStrut_1 = Box.createVerticalStrut(20);
-		panel.add(verticalStrut_1);
-
-		JPanel panel_0 = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) panel_0.getLayout();
-		flowLayout.setAlignment(FlowLayout.CENTER);
-		panel.add(panel_0);
-
-		JLabel lblNewLabel0 = new JLabel(Constants.SIGNUP);
-		lblNewLabel0.setFont(fBold);
-		panel_0.add(lblNewLabel0);
-
-		Component verticalStrut_0 = Box.createVerticalStrut(20);
-		panel.add(verticalStrut_0);
-
-		JPanel panel_1 = new JPanel();
-		((FlowLayout) panel_1.getLayout()).setAlignment(FlowLayout.LEFT);
-		panel.add(panel_1);
-
-		JLabel lblNewLabel = new JLabel(Constants.USER);
-		lblNewLabel.setFont(fBold);
-		panel_1.add(lblNewLabel);
-
-		JPanel panel_2 = new JPanel();
-		panel.add(panel_2);
-
-		txtRegUser = new JTextField();
-		txtRegUser.setFont(fPlain);
-		txtRegUser.setToolTipText(Constants.USER);
-		panel_2.add(txtRegUser);
-		txtRegUser.setColumns(14);
-
-		Component verticalStrut_3 = Box.createVerticalStrut(20);
-		panel.add(verticalStrut_3);
-
-		JPanel panel_3 = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) panel_3.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEFT);
-		panel.add(panel_3);
-
-		JLabel lblNewLabel_2 = new JLabel(Constants.PASSWORD);
-		lblNewLabel_2.setFont(fBold);
-		panel_3.add(lblNewLabel_2);
-
-		JPanel panel_4 = new JPanel();
-		panel_4.setLayout(new BorderLayout(0, 0));
-		panel.add(panel_4);
-
-		txtRegPassword = new JPasswordField();
-		panel_4.add(txtRegPassword, BorderLayout.NORTH);
-		txtRegPassword.setColumns(14);
-
-		JLabel lblNewLabel_5 = new JLabel(Constants.CONFIRMPASSWORD);
-		lblNewLabel_2.setFont(fBold);
-		panel_4.add(lblNewLabel_5, BorderLayout.CENTER);
-
-		txtRegPassword2 = new JPasswordField();
-		panel_4.add(txtRegPassword2, BorderLayout.SOUTH);
-		txtRegPassword2.setColumns(14);
-
-		Component verticalStrut_2 = Box.createVerticalStrut(20);
-		panel.add(verticalStrut_2);
-
-		JPanel panel_5 = new JPanel();
-		panel.add(panel_5);
-
-		signUp = new JButton(Constants.SIGNUP);
-		signUp.setPreferredSize(new Dimension(200, 25));
-		panel_5.add(signUp);
-
-		Component verticalStrut_6 = Box.createVerticalStrut(10);
-		panel.add(verticalStrut_6);
-
-		JPanel panel_6 = new JPanel();
-		panel.add(panel_6);
-		panel_6.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-		backLogin = new JButton(Constants.BACK);
-		backLogin.setPreferredSize(new Dimension(200, 25));
-		panel_6.add(backLogin);
-
-
-		return p;
-
-	}
 
 	//Menu
 

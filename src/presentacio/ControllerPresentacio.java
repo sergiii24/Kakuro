@@ -15,13 +15,13 @@ import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-public class Controller {
+public class ControllerPresentacio {
 
     Sudoku view;
     ControllerDomini controllerDomini;
     CtrlDominiGestioUsuari ctrlDominiGestioUsuari;
 
-    public Controller(Sudoku view, ControllerDomini controllerDomini) {
+    public ControllerPresentacio(Sudoku view, ControllerDomini controllerDomini) {
         this.view = view;
         this.controllerDomini = controllerDomini;
     }
@@ -31,37 +31,10 @@ public class Controller {
         controllerDomini.iniControlador();
         ctrlDominiGestioUsuari = CtrlFactory.getcDUsuariInstance();
 
-        view.getEntrar().addActionListener(e -> login());
-        view.getLblRegistrar().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                goView("reg");
-            }
-        });
-        view.getLblGuest().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                loginGuest();
-            }
-        });
-        view.getBackLogin().addActionListener(e -> goView("login"));
-        view.getSignUp().addActionListener(e -> registrar());
         view.getbLogOff().addActionListener(e -> logoff());
         view.getbJugar().addActionListener(e -> goView("play"));
         view.getbBackPerfil().addActionListener(e-> goView("menu"));
         view.getbPerfil().addActionListener(e-> goToPerfil());
-        view.getTPassword().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode()==KeyEvent.VK_ENTER) login();
-            }
-        });
-        view.getTUsuari().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode()==KeyEvent.VK_ENTER) login();
-            }
-        });
         view.getB2Jugar().addActionListener(e -> goView("play2"));
         view.getbBackJugar().addActionListener(e -> goView("play"));
         view.getbPlay().addActionListener(e -> jugar());
@@ -117,42 +90,8 @@ public class Controller {
 
     }
 
-    private void login(){
 
-        String user = view.getTUsuari().getText();
-        String password = view.getTPassword().getText();
-        if(user.isEmpty() || password.isEmpty()) view.error("Falten Camps!");
-        else {
-            if(ctrlDominiGestioUsuari.login(user,password)) {
-                view.getTUsuari().setText("");
-                view.getTPassword().setText("");
-                view.vistaRegistrat();
-                goView("menu");
-            }
-            else view.error("Algo ha fallat!");
-        }
 
-    }
-
-    private void registrar() {
-
-        String user = view.getTxtRegUser().getText();
-        String password = view.getTxtRegPassword().getText();
-        String password2 = view.getTxtRegPassword2().getText();
-
-        if(user.isEmpty() || password.isEmpty() || password2.isEmpty()) view.error("Falten Camps!");
-        else if(password.compareTo(password2)!=0) view.error("Passwords no iguals");
-        else {
-            if(ctrlDominiGestioUsuari.register(user,password)) {
-                view.getTxtRegUser().setText("");
-                view.getTxtRegPassword().setText("");
-                view.getTxtRegPassword2().setText("");
-                goView("menu");
-            }
-            else view.error("Algo ha fallat!");
-        }
-
-    }
 
 
     private void logoff() {
@@ -160,7 +99,7 @@ public class Controller {
         view.changeScreen("login");
     }
 
-    private void goView(String vista) {
+    public void goView(String vista) {
         view.changeScreen(vista);
     }
 
@@ -172,12 +111,13 @@ public class Controller {
 
     }
 
-    private void loginGuest() {
-
+    public void loginGuest() {
         view.vistaGuest();
         goView("menu");
+    }
 
-
+    public void error(String error) {
+        view.error(error);
     }
 
 
