@@ -1,0 +1,124 @@
+Aquest document és un mini Tutorial de com funciona els nostres casos 
+de proba de les principals funcionalitats del Kakuro, és a dir, és un 
+mini Tutorial de les funcions de les classes Solver i Generador. Aquestes 
+dos classes el què fan és solucionar un Kakuro i generar un Kakuro respectivament.
+
+Com es podrà veure per consola els nostres casos de proba són 5. 
+
+El primer, que serà l'opció 1, l'unic que fa és que genera un 
+kakuro de qualsevol mida i l'imprimeix per consola. Com funciona
+aquest primer cas de proba?
+
+	1.-Primerament el programa et demanarà que introdueixis
+	   una opció, aquí es premerà la tecla 1.
+	
+	2.-Després el programa et demanarà el nombre de files i
+	   columnes del kakuro, aquí hauràs de introduir un nombre
+	   més gran que 2. En aquesta opció, tant és si poses el 
+	   nombre de columnes i files en una mateixa línia que si
+	   ho fas en linies direfents.
+	   
+	   Ex: 
+	   "Introdueix Files i Columnes (Més gran que 2)"
+	   4 4
+	   
+	3.-Per últim ja veuràs que s'ha generat el kakuro.
+	
+El segon cas de proba és l'opció 2, aquest cas de proba funciona
+practicament de la mateixa manera que el primer cas de proba, lúnic
+que en aquest cas en comptes de escriure el Kakuro generat per consola
+el gardarà dins de un fitxer en un directori determinat.(Es recomana
+fer-ho desde distribucions Unix/Debian, o si ho estàs fent desde algun
+altre sistema operatiu com Windows es recomana guardar el document dins
+de la mateixa carpeta de src).
+
+	1.-Primerament el programa et demanarà que introdueixis
+	   una opció, aquí es premerà la tecla 2.
+	   
+	2.-Després el programa et demanarà el nombre de files i
+	   columnes del kakuro, aquí hauràs de introduir un nombre
+	   més gran que 2. En aquesta opció, tant és si poses el 
+	   nombre de columnes i files en una mateixa línia que si
+	   ho fas en linies direfents.
+	   
+	   Ex: 
+	   "Introdueix Files i Columnes (Més gran que 2)"
+	   4 4
+
+	3.-Un cop fet això el programa et demanarà que li diguis
+	   la ruta exacte i el nom del fitxer on ho vols guardar.
+	  
+	   Ex:
+	   "Donam ruta i nom del fitxer:"
+	   kakuro1
+	   
+	   (Si es posa d'aquesta manera, es guaradrà per
+	    defecte en el directori src/data.solucio).
+	    
+El tercer cas de proba és l'opció 3, el qual funcionarà exactament
+igual que el primer cas però l'unica diferència és que en comptes de 
+treure el kakuro generat, treurà el kakuro solucionat.
+
+	1.-Primerament el programa et demanarà que introdueixis
+	   una opció, aquí es premerà la tecla 3.
+	
+	2.-Després el programa et demanarà el nombre de files i
+	   columnes del kakuro, aquí hauràs de introduir un nombre
+	   més gran que 2. En aquesta opció, tant és si poses el 
+	   nombre de columnes i files en una mateixa línia que si
+	   ho fas en linies direfents.
+	   
+	   Ex: 
+	   "Introdueix Files i Columnes (Més gran que 2)"
+	   4 4
+	   
+	3.-Un cop fet això ja podràs veure la solució per consola.
+	   La sortida estàndard de la solució és sempre la mateixa:
+	   En la primera línia surt el nombre de solucions que té,
+	   si surt el nombre 0, vol dir que no te solució, si surt 
+	   el nombre 1, vol dir que només té una única solució, i si
+	   surt el nombre 2 voldrà dir que té múltiples solucions.
+	   Ja en les següents línies es podrà veure el tauler solucionat.
+	   
+El quart cas de proba és l'opció 4, en aquest cas et demanarà que
+passis per consola un kakuro, és a dir, hauràs de copiar un kakuro
+d'un document i enganxar-lo en la consola, un cop fet això et sortirà
+la solució per pantalla.
+
+	1.-Primerament el programa et demanarà que introdueixis
+	   una opció, aquí es premerà la tecla 4.
+	   
+	2.-Després hauràs de copiar un kakuro i enganxar-lo per
+       consola.
+       
+       Ex:
+       9,9
+	   *,*,C19,C12,*,*,*,C7,C10
+       *,F14,?,?,C4,C11,C17F4,?,?
+       *,C7F36,?,?,?,?,?,?,?
+       F12,?,?,F10,?,?,?,C25,C14
+       F3,?,?,C20,C11F20,?,?,?,?
+       F17,?,?,?,?,C8,F6,?,?
+       *,C11,C7F13,?,?,?,C4F10,?,?
+       F28,?,?,?,?,?,?,?,*
+       F6,?,?,*,*,F8,?,?,*
+      
+ 	3.-Un cop fet això ja et sortirà el kakuro solucionat per pantalla.
+ 	
+ L'últim cas de proba és l'opció 5, aquest cas de proba és molt semblant
+ al tercer cas de proba. L'únic que hauràs de fer és introduir la ruta
+ a un fitxer amb un directori. En aquest projecte, hi ha uns quants exemples
+ al directori src/data/exempleX, on X és 1, 2, 3, 4 o 5. En aquest exemples
+ es proben una mica totes les opcions que ens podrem trobar en un kakuro.
+ 
+ 	1.-Primerament el programa et demanarà que introdueixis
+	   una opció, aquí es premerà la tecla 4.
+	   
+	2.-Després et demanarà que posis la ruta a un fitxer amb algun kakuro
+	   per resoldre.
+	   
+	   Ex:
+	   src/data/exemple1
+	   
+	3.-Un cop fet això et sortirà el kakuro solucionat per pantalla.
+       
