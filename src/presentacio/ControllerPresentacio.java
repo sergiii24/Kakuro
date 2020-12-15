@@ -20,20 +20,46 @@ public class ControllerPresentacio {
     Sudoku view;
     ControllerDomini controllerDomini;
     CtrlDominiGestioUsuari ctrlDominiGestioUsuari;
+    ControllerLogin controllerLogin;
+    ControllerSignUp controllerSignUp;
+    ControllerProfile controllerProfile;
+    ControllerRanking controllerRanking;
+    ControllerMenu controllerMenu;
+    ControllerGame controllerGame;
 
-    public ControllerPresentacio(Sudoku view, ControllerDomini controllerDomini) {
+    public ControllerPresentacio(Sudoku view,
+                                 ControllerDomini controllerDomini,
+                                 ControllerLogin controllerLogin,
+                                 ControllerSignUp controllerSignUp,
+                                 ControllerProfile controllerProfile,
+                                 ControllerRanking controllerRanking,
+                                 ControllerMenu controllerMenu,
+                                 ControllerGame controllerGame)
+    {
         this.view = view;
         this.controllerDomini = controllerDomini;
+        this.controllerLogin = controllerLogin;
+        this.controllerSignUp = controllerSignUp;
+        this.controllerProfile = controllerProfile;
+        this.controllerRanking = controllerRanking;
+        this.controllerMenu = controllerMenu;
+        this.controllerGame = controllerGame;
     }
 
     public void initController() {
 
         controllerDomini.iniControlador();
+        controllerLogin.initController(this);
+        controllerSignUp.initController(this);
+        controllerProfile.initController(this);
+        controllerRanking.iniController();
+        controllerMenu.iniController();
+        controllerGame.iniController();
         ctrlDominiGestioUsuari = CtrlFactory.getcDUsuariInstance();
+
 
         view.getbLogOff().addActionListener(e -> logoff());
         view.getbJugar().addActionListener(e -> goView("play"));
-        view.getbBackPerfil().addActionListener(e-> goView("menu"));
         view.getbPerfil().addActionListener(e-> goToPerfil());
         view.getB2Jugar().addActionListener(e -> goView("play2"));
         view.getbBackJugar().addActionListener(e -> goView("play"));

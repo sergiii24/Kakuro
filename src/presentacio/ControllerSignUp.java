@@ -8,12 +8,12 @@ public class ControllerSignUp {
     SignUpView signupview;
     ControllerPresentacio controllerPresentacio;
 
-    public ControllerSignUp(SignUpView view, ControllerPresentacio controllerPresentacio) {
+    public ControllerSignUp(SignUpView view) {
         signupview = view;
-        this.controllerPresentacio = controllerPresentacio;
     }
 
-    public void initController() {
+    public void initController( ControllerPresentacio controllerPresentacio) {
+        this.controllerPresentacio = controllerPresentacio;
         signupview.getBackLogin().addActionListener(e -> controllerPresentacio.goView("login"));
         signupview.getSignUp().addActionListener(e -> registrar());
     }

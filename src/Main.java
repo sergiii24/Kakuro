@@ -1,11 +1,7 @@
 import domini.ControllerDomini;
 import domini.CtrlFactory;
-import presentacio.ControllerLogin;
-import presentacio.ControllerPresentacio;
-import presentacio.ControllerSignUp;
-import presentacio.views.LoginView;
-import presentacio.Sudoku;
-import presentacio.views.SignUpView;
+import presentacio.*;
+import presentacio.views.*;
 
 import java.awt.*;
 
@@ -23,18 +19,24 @@ public class Main {
                     //Views
                     LoginView loginView = new LoginView();
                     SignUpView signUpView = new SignUpView();
-
-                    Sudoku frame = new Sudoku(loginView, signUpView);
+                    ProfileView profileView = new ProfileView();
+                    MenuView menuView = new MenuView();
+                    GameView gameView = new GameView();
+                    RankingView rankingView = new RankingView();
+                    Sudoku frame = new Sudoku(loginView, signUpView, profileView, menuView, gameView, rankingView);
 
                     //Controllers
 
                     ControllerDomini domini = CtrlFactory.getcDDominiInstance();
-                    ControllerPresentacio con = new ControllerPresentacio(frame, domini);
-                    ControllerLogin controllerLogin = new ControllerLogin(loginView, con);
-                    ControllerSignUp controllerSignUp = new ControllerSignUp(signUpView, con);
+                    ControllerLogin controllerLogin = new ControllerLogin(loginView);
+                    ControllerSignUp controllerSignUp = new ControllerSignUp(signUpView);
+                    ControllerProfile controllerProfile = new ControllerProfile(profileView);
+                    ControllerRanking controllerRanking = new ControllerRanking(rankingView);
+                    ControllerMenu controllerMenu = new ControllerMenu(menuView);
+                    ControllerGame controllerGame = new ControllerGame(gameView);
+
+                    ControllerPresentacio con = new ControllerPresentacio(frame, domini, controllerLogin, controllerSignUp, controllerProfile, controllerRanking, controllerMenu, controllerGame);
                     con.initController();
-                    controllerLogin.initController();
-                    controllerSignUp.initController();
                     frame.setVisible(true);
 
                 } catch (Exception e) {

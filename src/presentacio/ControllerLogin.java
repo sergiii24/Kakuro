@@ -13,12 +13,12 @@ public class ControllerLogin {
     LoginView loginView;
     ControllerPresentacio controllerPresentacio;
 
-    public ControllerLogin(LoginView view, ControllerPresentacio controllerPresentacio) {
+    public ControllerLogin(LoginView view) {
         loginView = view;
-        this.controllerPresentacio = controllerPresentacio;
     }
-    public void initController() {
+    public void initController(ControllerPresentacio controllerPresentacio) {
 
+        this.controllerPresentacio = controllerPresentacio;
         loginView.getEntrar().addActionListener(e -> login());
         loginView.getLblRegistrar().addMouseListener(new MouseAdapter() {
             @Override
