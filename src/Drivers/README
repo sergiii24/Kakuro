@@ -1,0 +1,46 @@
+En aquest directori podras trobar totes les implementacions de Drivers de cada classe de Domini,
+excepte Tauler que el fem per JUnit.
+
+En aquests Drivers trobaràs una implementació de totes les funcions principals de cada classe. Com els
+getters, setters, constructors...
+
+Per a què puguis probar tots aquests Drivers, el mateix programa et dona una llista de les funcions que hi
+ha implementades, tú podràs triar qualsevol de les opcions que et dona aquesta llista, però és recomenable
+fer-ho per ordre ja que sinó et podries trobar amb alguna excepció. Un cop has probat totes aquestes funcions
+de la classe, per sortir, l'únic que hauràs de fer és triar l'opció 0, tot i que en la execució ja ho podràs
+identificar.
+
+Aquestes són les classes les quals tindràn Drivers:
+	Caselles / Mode / Partida / PartidaAcabada / Ranquing / Registrat / Usuari
+
+En el Driver de Caselles, les funcións que veuràs que estàn per probar són: Constructores de Blanc() i Negre(),
+Getters i Setters, i les funcions isBlanc i isNegre.
+
+En el Driver de Mode, les funcions que veuràs que estàn per probar són: Constructores, Getters i Setters de
+alguns dels modes que farem servir: NORMAL, CONTRARRELLOTGE...
+
+En el Driver de Partida, les funcions que estàn per probar són: Constructores, Getters i Setters dels seus diferents
+atributs: Mode, User, Tauler, Temps.
+
+En el Driver de PartidaAcabada, les funcions que estàn per probar són: Constructores i Getters i Setters del seu atribut:
+Puntuació.
+
+En el Driver de Ranquing, les funcions que estan per probar són: Constructores, Getters i Setters dels seus atributs i 
+afegir/eliminar/getPartidaAcabada, que afegeix, elimina o agafa alguna de les Partides que están en el Ranquing. A més a
+més tenim la funció de filtre, que busca partides amb un tipus de mode concret.
+
+En el Driver de Registrat, les funcions que estàn per probar són: Constructores, Getters i Setters dels seus diferents
+atributs, i una funció que mira si aquell Usuari és Registrat: isRegistrat().
+
+En el Driver de Usuari, les funcions que estàn per probar són: Constructores, Getters i Setters dels seus diferents
+atributs, les funcions afegir/borrar que afegeixen i borren una partida del Usuari, les funcions te/conte que 
+miren si aquell usuari té partides i si conté alguna partida determinada, respectivament. També tenim les funcions:
+equals, isRegistrat, borrarPartides que miren si un Usuari és igual a un altre usuari, mira si aquell ususari és 
+Regsitrat i borra totes les partides de l'usuari, respectivament. Per últim tenim la funció getNPartides que retorna
+el número de Partides de l'usuari.
+
+
+
+
+
+
