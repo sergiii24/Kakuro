@@ -1,6 +1,6 @@
 package presentacio;
 
-import domini.CtrlFactory;
+import domini.CtrlFactoryDomini;
 import presentacio.views.SignUpView;
 
 public class ControllerSignUp {
@@ -27,7 +27,7 @@ public class ControllerSignUp {
         if(user.isEmpty() || password.isEmpty() || password2.isEmpty()) controllerPresentacio.error("Falten Camps!");
         else if(password.compareTo(password2)!=0) controllerPresentacio.error("Passwords no iguals");
         else {
-            if(CtrlFactory.getcDUsuariInstance().register(user,password)) {
+            if(CtrlFactoryDomini.getcDUsuariInstance().register(user,password)) {
                 signupview.getTxtRegUser().setText("");
                 signupview.getTxtRegPassword().setText("");
                 signupview.getTxtRegPassword2().setText("");

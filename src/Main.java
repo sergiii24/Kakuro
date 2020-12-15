@@ -1,5 +1,5 @@
 import domini.ControllerDomini;
-import domini.CtrlFactory;
+import domini.CtrlFactoryDomini;
 import presentacio.*;
 import presentacio.views.*;
 
@@ -27,7 +27,7 @@ public class Main {
 
                     //Controllers
 
-                    ControllerDomini domini = CtrlFactory.getcDDominiInstance();
+                    ControllerDomini domini = CtrlFactoryDomini.getcDDominiInstance();
                     ControllerLogin controllerLogin = new ControllerLogin(loginView);
                     ControllerSignUp controllerSignUp = new ControllerSignUp(signUpView);
                     ControllerProfile controllerProfile = new ControllerProfile(profileView);

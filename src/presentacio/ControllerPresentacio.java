@@ -1,19 +1,6 @@
 package presentacio;
 
-import dades.Reader;
 import domini.*;
-import domini.models.MonteState;
-import domini.models.Pair;
-import domini.models.Position;
-import domini.models.State;
-
-import javax.swing.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.FileNotFoundException;
-import java.util.List;
 
 public class ControllerPresentacio {
 
@@ -55,7 +42,7 @@ public class ControllerPresentacio {
         controllerRanking.iniController();
         controllerMenu.iniController();
         controllerGame.iniController();
-        ctrlDominiGestioUsuari = CtrlFactory.getcDUsuariInstance();
+        ctrlDominiGestioUsuari = CtrlFactoryDomini.getcDUsuariInstance();
 
 
         view.getbLogOff().addActionListener(e -> logoff());

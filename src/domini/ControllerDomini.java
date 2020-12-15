@@ -15,7 +15,7 @@ public class ControllerDomini {
 
     public void iniControlador() {
         user = new Usuari();
-        ctrlDominiGestioUsuari = CtrlFactory.getcDUsuariInstance();
+        ctrlDominiGestioUsuari = CtrlFactoryDomini.getcDUsuariInstance();
     }
 
 

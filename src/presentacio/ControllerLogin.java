@@ -1,6 +1,6 @@
 package presentacio;
 
-import domini.CtrlFactory;
+import domini.CtrlFactoryDomini;
 import presentacio.views.LoginView;
 
 import java.awt.event.KeyAdapter;
@@ -58,7 +58,7 @@ public class ControllerLogin {
         String password = loginView.getTxtPassword().getText();
         if(user.isEmpty() || password.isEmpty()) controllerPresentacio.error("Falten Camps!");
         else {
-            if(CtrlFactory.getcDUsuariInstance().login(user,password)) {
+            if(CtrlFactoryDomini.getcDUsuariInstance().login(user,password)) {
                 loginView.getTxtUser().setText("");
                 loginView.getTxtPassword().setText("");
                 controllerPresentacio.goView("menu");

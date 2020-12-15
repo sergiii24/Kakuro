@@ -1,6 +1,6 @@
 package domini;
 
-public class CtrlFactory {
+public class CtrlFactoryDomini {
 
     private static CtrlDominiGestioUsuari cDUsuari = null;
     private static ControllerDomini cDomini = null;
