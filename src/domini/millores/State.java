@@ -1,9 +1,10 @@
-package domini.models;
+package domini.millores;
 
 import domini.Blanc;
 import domini.Casella;
 import domini.CombiGenerator;
 import domini.Negre;
+import domini.models.Position;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -328,8 +329,7 @@ public class State {
     public boolean isTerminalPosition() {
         if (blank != 0) return false;
         if (emptyDomain()) return false;
-        if (!inconsitent()) return false;
-        return true;
+        return inconsitent();
     }
 
     private boolean inconsitent() {
@@ -383,7 +383,7 @@ public class State {
         }
 
         if (nou)
-            if (((Negre) this.board[r][s]).getColumna() != suma) return false;
+            return ((Negre) this.board[r][s]).getColumna() == suma;
 
 
         return true;
@@ -526,7 +526,7 @@ public class State {
         }
 
         if(nou)
-            if(((Negre)this.board[r][s]).getColumna() != suma) return false;
+            return ((Negre) this.board[r][s]).getColumna() == suma;
 
 
             return true;

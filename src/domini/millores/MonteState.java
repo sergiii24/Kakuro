@@ -1,13 +1,11 @@
-package domini.models;
+package domini.millores;
 
-import domini.Blanc;
-import domini.Casella;
-import domini.CombiGenerator;
-import domini.Negre;
+import domini.*;
+import domini.models.Position;
 
 import java.util.*;
 
-public class MonteState implements INmcsState<MonteState, Pair<Position, Integer>> {
+public class MonteState implements INmcsState<Tauler, Pair<Position, Integer>> {
 
     private int blank;
     private final Casella[][] board;
@@ -45,8 +43,7 @@ public class MonteState implements INmcsState<MonteState, Pair<Position, Integer
     public boolean isTerminalPosition() {
         if (blank != 0) return false;
         //if (emptyDomain()) return true;
-        if (!inconsitent()) return false;
-        return true;
+        return inconsitent();
     }
 
     private boolean inconsitent() {
@@ -100,7 +97,7 @@ public class MonteState implements INmcsState<MonteState, Pair<Position, Integer
         }
 
         if (nou)
-            if (((Negre) this.board[r][s]).getColumna() != suma) return false;
+            return ((Negre) this.board[r][s]).getColumna() == suma;
 
 
         return true;
@@ -143,10 +140,10 @@ public class MonteState implements INmcsState<MonteState, Pair<Position, Integer
 
     //TODO
     @Override
-    public INmcsState<MonteState, Pair<Position, Integer>> takeAction(Pair<Position, Integer> action) {
+    public INmcsState<Tauler, Pair<Position, Integer>> takeAction(Pair<Position, Integer> action) {
 
         Casella[][] casellas = clonar(this.board);
-        ((Blanc)casellas[action.item1.i][action.item1.j]).setNum(action.item2);
+        ((Blanc) casellas[action.item1.i][action.item1.j]).setNum(action.item2);
         update(casellas, action.item1.i, action.item1.j, action.item2);
         return new MonteState(casellas);
 

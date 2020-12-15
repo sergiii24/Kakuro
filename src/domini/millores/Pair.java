@@ -1,4 +1,4 @@
-package domini.models;
+package domini.millores;
 
 public class Pair<T1, T2> {
 

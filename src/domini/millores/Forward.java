@@ -1,15 +1,15 @@
-package domini;
+package domini.millores;
 
+import domini.Blanc;
+import domini.Casella;
+import domini.Negre;
 import domini.models.Position;
-import domini.models.State;
 
-import java.util.List;
-import java.util.Set;
 import java.util.Stack;
 
 public class Forward {
 
-    private Stack<State> stack = new Stack<>();
+    private final Stack<State> stack = new Stack<>();
     private State current;
     int i = 0;
     public State getCurrent() {

@@ -1,26 +1,12 @@
 package domini.models;
 
-import java.awt.BasicStroke;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.LayoutManager;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.geom.Line2D;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 
 public class LinePanel extends JPanel {
-    /**
-     * LinePanel constructor to create the layout, textfield, and to align them when one number in cell
-     * @param layout
-     *  - the layout manager of our game
-     * @param textField
-     *  - the textfield view of our game
-     * @param align
-     *  - verifies if our textfield is aligned
-     */
+
     public LinePanel(LayoutManager layout, JTextField textField, Boolean align) {
         super(layout);
         this.setBackground(Color.black);
@@ -35,15 +21,6 @@ public class LinePanel extends JPanel {
         }
     }
 
-    /**
-     * LinePanel constructor to create the layout and textfield when two numbers in cell
-     * @param layout
-     *  - the layout manager of our game
-     * @param textField
-     *  - the textfield view of our game
-     * @param align
-     *  - verifies if our textfield is aligned
-     */
     public LinePanel(LayoutManager layout, JTextField textFieldLEFT, JTextField textFieldRIGHT) {
         super(layout);
         this.setBackground(Color.black);
@@ -59,20 +36,11 @@ public class LinePanel extends JPanel {
 
     }
 
-    /**
-     * Creates the background black and foreground white
-     *
-     * @param txt
-     *  - the JTextField reference
-     */
     public void settingTxt(JTextField txt) {
         txt.setBackground(new Color(0,0,0,0));
         txt.setForeground(Color.white);
     }
 
-    /**
-     * paintComponent method draws the diagonal line in the black cells
-     */
     public void paintComponent(Graphics g) {
 
         super.paintComponent(g);

@@ -1,8 +1,4 @@
-package domini;
-
-import domini.models.INmcsState;
-import domini.models.MonteState;
-import domini.models.Pair;
+package domini.millores;
 
 import java.util.LinkedList;
 import java.util.List;
