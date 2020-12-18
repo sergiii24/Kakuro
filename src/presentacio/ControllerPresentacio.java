@@ -1,10 +1,12 @@
 package presentacio;
 
-import domini.*;
+import domini.ControllerDomini;
+import domini.CtrlDominiGestioUsuari;
+import domini.CtrlFactoryDomini;
 
 public class ControllerPresentacio {
 
-    Sudoku view;
+    KakuroView view;
     ControllerDomini controllerDomini;
     CtrlDominiGestioUsuari ctrlDominiGestioUsuari;
     ControllerLogin controllerLogin;
@@ -14,15 +16,14 @@ public class ControllerPresentacio {
     ControllerMenu controllerMenu;
     ControllerGame controllerGame;
 
-    public ControllerPresentacio(Sudoku view,
+    public ControllerPresentacio(KakuroView view,
                                  ControllerDomini controllerDomini,
                                  ControllerLogin controllerLogin,
                                  ControllerSignUp controllerSignUp,
                                  ControllerProfile controllerProfile,
                                  ControllerRanking controllerRanking,
                                  ControllerMenu controllerMenu,
-                                 ControllerGame controllerGame)
-    {
+                                 ControllerGame controllerGame) {
         this.view = view;
         this.controllerDomini = controllerDomini;
         this.controllerLogin = controllerLogin;
@@ -40,24 +41,21 @@ public class ControllerPresentacio {
         controllerSignUp.initController(this);
         controllerProfile.initController(this);
         controllerRanking.iniController();
-        controllerMenu.iniController();
+        controllerMenu.iniController(this);
         controllerGame.iniController();
         ctrlDominiGestioUsuari = CtrlFactoryDomini.getcDUsuariInstance();
 
 
-        view.getbLogOff().addActionListener(e -> logoff());
-        view.getbJugar().addActionListener(e -> goView("play"));
-        view.getbPerfil().addActionListener(e-> goToPerfil());
-        view.getB2Jugar().addActionListener(e -> goView("play2"));
-        view.getbBackJugar().addActionListener(e -> goView("play"));
-        view.getbPlay().addActionListener(e -> jugar());
 
-        //        try {
-           /* Tauler b = new Reader().llegirFitxer("src/data/7x7");
+
+       /* try {
+
+            Tauler b = new Reader().llegirFitxer("src/data/7x7");
             b.updatePossibilities();
-            State start = new State(b.getCasellas());
+            //State start = new State(b.getCasellas());
             MonteState state = new MonteState(b.getCasellas());
-            Forward f = new Forward();
+
+           // Forward f = new Forward();
 
             //TODO INICIALITZAR LES POSSIBLITATS!!"!!
 
@@ -78,7 +76,7 @@ public class ControllerPresentacio {
             final Pair<Double, List<Pair<Position, Integer>>> result = new NestedMonteCarloSearch().executeSearch(state, level, () -> {
                 return System.currentTimeMillis() > endTimeMs;
             });
-            System.out.println("Forward: "+(System.currentTimeMillis()-time));
+            //System.out.println("Forward: "+(System.currentTimeMillis()-time));
 
             System.out.println(result.item1);
             for ( Pair<Position, Integer> p : result.item2) {
@@ -91,8 +89,7 @@ public class ControllerPresentacio {
             view.ficavista(panel);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-*/
+        }*/
 
 
     }
@@ -105,8 +102,6 @@ public class ControllerPresentacio {
 
 
 
-
-
     private void logoff() {
         //TODO borrar sessio
         view.changeScreen("login");
@@ -116,21 +111,34 @@ public class ControllerPresentacio {
         view.changeScreen(vista);
     }
 
-    private void goToPerfil() {
+    public void goToPerfil() {
 
-        //TODO FALTA ADAPTAR PARA GUEST SENSE USUARI REGISTRAT
-        view.setDataPerfil(ctrlDominiGestioUsuari.getId(), ctrlDominiGestioUsuari.getNKResolts(), ctrlDominiGestioUsuari.getPuntuacio());
+        controllerProfile.updateDataPerfil();
         goView("perfil");
 
     }
 
+    public void login() {
+        controllerMenu.vistaRegistrat();
+        goView("menu");
+    }
+
+
     public void loginGuest() {
-        view.vistaGuest();
+        controllerMenu.vistaGuest();
         goView("menu");
     }
 
     public void error(String error) {
         view.error(error);
+    }
+
+
+    public void play(String nom, String mode, boolean publicKakuro) {
+
+        controllerGame.setUpGame(nom, mode, publicKakuro);
+        view.changeScreen("game");
+
     }
 
 

@@ -23,4 +23,5 @@ public class Constants {
     public static final String YOURS = "Els teus kakuros";
     public static final String PUBLIC = "Publics";
 
+    public static final String MODES = "Modes";
 }

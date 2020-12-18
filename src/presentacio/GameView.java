@@ -40,7 +40,7 @@ public class GameView
     NumberFormatter numberFormatter = new NumberFormatter(numberFormat); // NumberFormatter object reference
 
     */
-/**
+    /**
      * GameView constructor that initializes the game interface
      *
      * @param controller

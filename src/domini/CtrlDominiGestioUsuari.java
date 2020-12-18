@@ -3,8 +3,6 @@ package domini;
 import dades.CtrlFactoryDades;
 import dades.CtrlPersistencia;
 
-import java.util.*;
-
 public class CtrlDominiGestioUsuari {
 
 	private Usuari usuari;
@@ -54,4 +52,7 @@ public class CtrlDominiGestioUsuari {
 		return ((Registrat)usuari).getPuntuacioTotal();
 	}
 
+	public boolean isRegistrat() {
+		return usuari instanceof Registrat;
+	}
 }

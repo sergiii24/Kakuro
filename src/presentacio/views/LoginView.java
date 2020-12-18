@@ -25,8 +25,7 @@ public class LoginView extends JPanel {
         Component verticalStrut = Box.createVerticalStrut(20);
         panel.add(verticalStrut);
 
-        ImageIcon imageUser = new ImageIcon(getClass().getResource("../../assets/img/Logo_Kajugo.png"));
-        imageUser = scaleImage(imageUser, 128, 128);
+        ImageIcon imageUser = new ImageIcon(new ImageIcon(getClass().getResource("../../assets/img/Logo_Kajugo.png")).getImage().getScaledInstance(128, 128, Image.SCALE_SMOOTH));
         JLabel lblImage = new JLabel(imageUser);
         lblImage.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(lblImage);
@@ -103,12 +102,6 @@ public class LoginView extends JPanel {
 
     }
 
-    private ImageIcon scaleImage(ImageIcon imageIcon, int width, int heigth) {
-        Image image = imageIcon.getImage();                                             // transform it
-        Image newimg = image.getScaledInstance(width, heigth, Image.SCALE_SMOOTH);     // scale it the smooth way
-        return new ImageIcon(newimg);
-    }
-
     public JTextField getTxtUser() {
         return txtUser;
     }
@@ -128,4 +121,5 @@ public class LoginView extends JPanel {
     public JLabel getLblGuest() {
         return lblGuest;
     }
+
 }

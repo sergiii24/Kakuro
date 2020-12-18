@@ -1,37 +1,29 @@
 package domini.models;
 
-import java.awt.BasicStroke;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.LayoutManager;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.geom.Line2D;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 
 public class LinePanel extends JPanel {
     /**
      * LinePanel constructor to create the layout, textfield, and to align them when one number in cell
-     * @param layout
-     *  - the layout manager of our game
-     * @param textField
-     *  - the textfield view of our game
-     * @param align
-     *  - verifies if our textfield is aligned
+     *
+     * @param layout    - the layout manager of our game
+     * @param textField - the textfield view of our game
+     * @param align     - verifies if our textfield is aligned
      */
-    public LinePanel(LayoutManager layout, JTextField textField, Boolean align) {
+    public LinePanel(LayoutManager layout, JLabel textField, Boolean align) {
         super(layout);
         this.setBackground(Color.black);
         settingTxt(textField);
 
-        if(align) {
+        if (align) {
             textField.setHorizontalAlignment(JTextField.RIGHT);
-            this.add(textField,BorderLayout.NORTH);
-        }else {
+            this.add(textField, BorderLayout.NORTH);
+        } else {
             textField.setHorizontalAlignment(JTextField.LEFT);
-            this.add(textField,BorderLayout.SOUTH);
+            this.add(textField, BorderLayout.SOUTH);
         }
     }
 
@@ -44,7 +36,7 @@ public class LinePanel extends JPanel {
      * @param align
      *  - verifies if our textfield is aligned
      */
-    public LinePanel(LayoutManager layout, JTextField textFieldLEFT, JTextField textFieldRIGHT) {
+    public LinePanel(LayoutManager layout, JLabel textFieldLEFT, JLabel textFieldRIGHT) {
         super(layout);
         this.setBackground(Color.black);
 
@@ -65,8 +57,8 @@ public class LinePanel extends JPanel {
      * @param txt
      *  - the JTextField reference
      */
-    public void settingTxt(JTextField txt) {
-        txt.setBackground(new Color(0,0,0,0));
+    public void settingTxt(JLabel txt) {
+        txt.setBackground(new Color(0, 0, 0, 0));
         txt.setForeground(Color.white);
     }
 

@@ -1,19 +1,136 @@
 package presentacio;
 
-import presentacio.views.LoginView;
+import domini.CtrlFactoryDomini;
 import presentacio.views.MenuView;
+
+import javax.swing.*;
+import java.util.List;
 
 public class ControllerMenu {
 
     MenuView menuView;
     ControllerPresentacio controllerPresentacio;
+    boolean publicKakuro;
 
     public ControllerMenu(MenuView menuView) {
         this.menuView = menuView;
+        publicKakuro = true;
     }
 
 
-    public void iniController() {}
+    public void iniController(ControllerPresentacio controller) {
+        this.controllerPresentacio = controller;
 
+
+        //Principal
+        menuView.getbJugar().addActionListener(e -> menuView.updateView("jugar"));
+        menuView.getbKakuroManagement().addActionListener(e -> menuView.updateView("management"));
+        menuView.getbPerfil().addActionListener(e -> controllerPresentacio.goToPerfil());
+        menuView.getbStatistics().addActionListener(e -> controllerPresentacio.goView("Ranking"));
+        menuView.getbLogOff().addActionListener(e -> logoff());
+
+        //MenuJugar
+        menuView.getbContinue().addActionListener(e -> continueGame());
+        menuView.getB2Jugar().addActionListener(e -> {
+            carregaLlistes();
+            menuView.updateView("jugar2");
+        });
+        menuView.getbBackJugar().addActionListener(e -> menuView.updateView("principal"));
+
+        //MenuJugar2
+        menuView.getbPlay().addActionListener(e -> jugar());
+        menuView.getbBackJugar2().addActionListener(e -> menuView.updateView("jugar"));
+        menuView.getListPublic().addListSelectionListener(e -> {
+            menuView.getListUser().clearSelection();
+            publicKakuro = true;
+        });
+        menuView.getListUser().addListSelectionListener(e -> {
+            menuView.getListPublic().clearSelection();
+            publicKakuro = false;
+        });
+
+        //MenuKakuroManagement
+
+
+    }
+
+    private void logoff() {
+        controllerPresentacio.goView("login");
+    }
+
+    private void jugar() {
+
+        String nom = "";
+
+        if (publicKakuro) nom = menuView.getListPublic().getSelectedValue().toString();
+        else nom = menuView.getListUser().getSelectedValue().toString();
+
+        String mode = "";
+
+        for (JRadioButton b : menuView.getButtonsModeJugar()) {
+            if (b.isSelected()) mode = b.getName();
+        }
+
+        controllerPresentacio.play(nom, mode, publicKakuro);
+    }
+
+    public void vistaRegistrat() {
+
+        menuView.getbContinue().setVisible(true);
+        menuView.getbCrear().setVisible(false);
+        menuView.getbLogOff().setText(Constants.LOGOFF);
+        menuView.getPanelUserList().setVisible(true);
+        menuView.getbPerfil().setVisible(true);
+        menuView.getbKakuroManagement().setVisible(true);
+
+    }
+
+    public void vistaGuest() {
+
+        menuView.getbCrear().setVisible(true);
+        menuView.getbContinue().setVisible(false);
+        menuView.getbLogOff().setText(Constants.LOGIN);
+        menuView.getPanelUserList().setVisible(false);
+        menuView.getbPerfil().setVisible(false);
+        menuView.getbKakuroManagement().setVisible(false);
+
+    }
+
+    private void continueGame() {
+
+        List<String> partides = CtrlFactoryDomini.getcDKakuroInstance().getNameStartedGames();
+        if (partides.isEmpty()) JOptionPane.showMessageDialog(null, "No started Games!");
+        else {
+            String result = (String) JOptionPane.showInputDialog(
+                    menuView,
+                    "Select one of the color",
+                    "Swing Tester",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    partides.toArray(),
+                    0
+            );
+
+            if (!result.isEmpty()) System.out.println(result);
+
+        }
+
+
+    }
+
+    private void carregaLlistes() {
+
+        List<String> partides = CtrlFactoryDomini.getcDKakuroInstance().getNamePublicGames();
+        menuView.updatePublicList(partides);
+
+        if (CtrlFactoryDomini.getcDUsuariInstance().isRegistrat()) {
+            List<String> p = CtrlFactoryDomini.getcDKakuroInstance().getNameUserGames();
+            menuView.updateUserList(p);
+        }
+
+    }
 
 }
+
+
+

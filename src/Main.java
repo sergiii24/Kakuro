@@ -23,7 +23,7 @@ public class Main {
                     MenuView menuView = new MenuView();
                     GameView gameView = new GameView();
                     RankingView rankingView = new RankingView();
-                    Sudoku frame = new Sudoku(loginView, signUpView, profileView, menuView, gameView, rankingView);
+                    KakuroView frame = new KakuroView(loginView, signUpView, profileView, menuView, gameView, rankingView);
 
                     //Controllers
 

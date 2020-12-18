@@ -13,7 +13,7 @@ public class Reader {
     public Tauler llegirFitxer(String nom) throws FileNotFoundException {
 
         try {
-            return llegir(new FileReader(new File(nom)));
+            return llegir(new FileReader(nom));
         } catch (FileNotFoundException f) {
             f.printStackTrace();
         }

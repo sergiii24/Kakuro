@@ -1,5 +1,7 @@
 package presentacio;
 
+import domini.CtrlDominiGestioUsuari;
+import domini.CtrlFactoryDomini;
 import presentacio.views.ProfileView;
 
 
@@ -7,9 +9,11 @@ public class ControllerProfile {
 
     ProfileView profileView;
     ControllerPresentacio controllerPresentacio;
+    CtrlDominiGestioUsuari ctrlDominiGestioUsuari;
 
     public ControllerProfile(ProfileView view) {
         profileView = view;
+        ctrlDominiGestioUsuari = CtrlFactoryDomini.getcDUsuariInstance();
     }
 
     public void initController(ControllerPresentacio controllerPresentacio ) {
@@ -17,11 +21,11 @@ public class ControllerProfile {
         profileView.getbBackPerfil().addActionListener(e-> controllerPresentacio.goView("menu"));
     }
 
-    public void setDataPerfil(String id, int nKakurosResolts, int puntuacio) {
+    public void updateDataPerfil() {
 
-        profileView.getLblUsernameinfo().setText(id);
-        profileView.getLblNameinfo().setText(""+nKakurosResolts);
-        profileView.getLblPasswordinfo().setText(""+puntuacio);
+        profileView.getLblUsernameinfo().setText(ctrlDominiGestioUsuari.getId());
+        profileView.getLblNameinfo().setText("" + ctrlDominiGestioUsuari.getNKResolts());
+        profileView.getLblPasswordinfo().setText("" + ctrlDominiGestioUsuari.getPuntuacio());
 
     }
 
