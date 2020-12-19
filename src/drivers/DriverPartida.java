@@ -1,8 +1,12 @@
 package drivers;
 
+import domini.Mode;
+import domini.Partida;
+import domini.Tauler;
+import domini.TipusMode;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import domini.*;
 
 public class DriverPartida {
 
@@ -33,11 +37,11 @@ public class DriverPartida {
 			boolean acabar = false;
 			while(!acabar) {
 				opcions();
-				
+
 				String line;
-				String param[];
+				String[] param;
 				String op;
-				
+
 				line = br.readLine();
 				param = line.split(" ");
 				op = param[0];
@@ -63,8 +67,8 @@ public class DriverPartida {
 							System.out.println(s);
 							break;
 						case "6":
-							if(param[1].equals("NORMAL")) P.setMode(new Mode(TipusMode.NORMAL));
-							else if(param[1].equals("CONTRA")) P.setMode(new Mode(TipusMode.CONTRARRELLOTGE));
+							if (param[1].equals("NORMAL")) P.setMode(new Mode(TipusMode.NORMAL));
+							else if (param[1].equals("CONTRA")) P.setMode(new Mode(TipusMode.CONTRARRELLOTGE));
 							else System.out.println("Has de triar entre NORMAL o CONTRA");
 							break;
 						case "7":
@@ -73,7 +77,7 @@ public class DriverPartida {
 							break;
 						case "8":
 							Tauler t1 = new Tauler();
-							t1.setId(Integer.parseInt(param[1]));
+							t1.setId(param[1]);
 							P.setTauler(t1);
 							break;
 						case "9":

@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
+import java.io.File;
 import java.text.NumberFormat;
 
 public class CtrlDominiGestioTaulell {
@@ -109,5 +110,30 @@ public class CtrlDominiGestioTaulell {
         txt.setEditable(false);
     }
 
+
+    public void importar(File selectedFile) {
+        CtrlFactoryDades.getcTaulell().importar(selectedFile, CtrlFactoryDomini.getcDUsuariInstance().getId());
+    }
+
+
+    public void generateKakuro(int row, int col, String dif, String name) {
+
+        TipusDificultat tipusDificultat = TipusDificultat.NORMAL;
+        switch (dif) {
+            case "easy":
+                tipusDificultat = TipusDificultat.FACIL;
+                break;
+            case "normal":
+                tipusDificultat = TipusDificultat.NORMAL;
+                break;
+            case "hard":
+                tipusDificultat = TipusDificultat.DIFICIL;
+                break;
+        }
+
+        Tauler t = new Tauler(name, new Generador().generateKakuro(row, col), row, col, tipusDificultat, true, true);
+        CtrlFactoryDades.getcTaulell().saveBoard(t, CtrlFactoryDomini.getcDUsuariInstance().getId());
+
+    }
 
 }

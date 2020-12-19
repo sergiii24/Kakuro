@@ -1,5 +1,6 @@
 package presentacio;
 
+import domini.CtrlFactoryDomini;
 import presentacio.views.LoginView;
 
 import java.awt.event.KeyAdapter;
@@ -53,10 +54,10 @@ public class ControllerLogin {
 
     private void login(){
 
-        controllerPresentacio.login();
+        //controllerPresentacio.login();
 
 
-        /*String user = loginView.getTxtUser().getText();
+        String user = loginView.getTxtUser().getText();
         String password = loginView.getTxtPassword().getText();
         if(user.isEmpty() || password.isEmpty()) controllerPresentacio.error("Falten Camps!");
         else {
@@ -66,7 +67,7 @@ public class ControllerLogin {
                 controllerPresentacio.login();
             }
             else controllerPresentacio.error("Algo ha fallat!");
-        }*/
+        }
 
     }
 

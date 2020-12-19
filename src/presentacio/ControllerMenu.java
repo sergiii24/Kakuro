@@ -35,6 +35,7 @@ public class ControllerMenu {
             carregaLlistes();
             menuView.updateView("jugar2");
         });
+        menuView.getbCrear().addActionListener(e -> menuView.updateView("crear"));
         menuView.getbBackJugar().addActionListener(e -> menuView.updateView("principal"));
 
         //MenuJugar2
@@ -49,8 +50,51 @@ public class ControllerMenu {
             publicKakuro = false;
         });
 
-        //MenuKakuroManagement
+        //MenuCrearInfiltrat
 
+        menuView.getbBackCrear2().addActionListener(e -> {
+            if (CtrlFactoryDomini.getcDUsuariInstance().isRegistrat()) menuView.updateView("management");
+            else menuView.updateView("jugar");
+        });
+        menuView.getbGenerate().addActionListener(e -> generate());
+
+
+        //MenuKakuroManagement
+        menuView.getbImportar().addActionListener(e -> importar());
+        menuView.getbBackManagement().addActionListener(e -> menuView.updateView("principal"));
+        menuView.getbGenerarKakuro().addActionListener(e -> menuView.updateView("crear"));
+        menuView.getbCrearKakuro().addActionListener(e -> crear());
+
+
+    }
+
+    private void importar() {
+        JFileChooser jf = new JFileChooser();
+        jf.showOpenDialog(menuView);
+        CtrlFactoryDomini.getcDTaulellInstance().importar(jf.getSelectedFile());
+    }
+
+    private void crear() {
+    }
+
+    private void generate() {
+
+        String dif = "";
+        for (JRadioButton b : menuView.getButtonsDificultatJugar()) {
+            if (b.isSelected()) dif = b.getName();
+        }
+
+        String mode = "";
+        for (JRadioButton b : menuView.getButtonsModerCrear()) {
+            if (b.isSelected()) mode = b.getName();
+        }
+
+        if (CtrlFactoryDomini.getcDUsuariInstance().isRegistrat())
+            CtrlFactoryDomini.getcDKakuroInstance().createGameKakuro(Integer.parseInt(menuView.getComboRow().getSelectedItem().toString()),
+                    Integer.parseInt(menuView.getComboColumns().getSelectedItem().toString()), dif, mode);
+        else
+            CtrlFactoryDomini.getcDTaulellInstance().generateKakuro(Integer.parseInt(menuView.getComboRow().getSelectedItem().toString()),
+                    Integer.parseInt(menuView.getComboColumns().getSelectedItem().toString()), dif, menuView.getTxtName().getName());
 
     }
 
@@ -82,6 +126,9 @@ public class ControllerMenu {
         menuView.getPanelUserList().setVisible(true);
         menuView.getbPerfil().setVisible(true);
         menuView.getbKakuroManagement().setVisible(true);
+        menuView.getLblName().setVisible(true);
+        menuView.getTxtName().setVisible(true);
+        menuView.getPanelModes().setVisible(false);
 
     }
 
@@ -93,6 +140,9 @@ public class ControllerMenu {
         menuView.getPanelUserList().setVisible(false);
         menuView.getbPerfil().setVisible(false);
         menuView.getbKakuroManagement().setVisible(false);
+        menuView.getLblName().setVisible(false);
+        menuView.getTxtName().setVisible(false);
+        menuView.getPanelModes().setVisible(true);
 
     }
 

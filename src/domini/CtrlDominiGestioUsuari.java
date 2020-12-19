@@ -45,14 +45,18 @@ public class CtrlDominiGestioUsuari {
 	}
 
 	public int getNKResolts() {
-		return ((Registrat)usuari).getKakuroResolts();
+		return ((Registrat) usuari).getKakuroResolts();
 	}
 
 	public int getPuntuacio() {
-		return ((Registrat)usuari).getPuntuacioTotal();
+		return ((Registrat) usuari).getPuntuacioTotal();
 	}
 
 	public boolean isRegistrat() {
 		return usuari instanceof Registrat;
+	}
+
+	public Usuari getUsuari() {
+		return usuari;
 	}
 }

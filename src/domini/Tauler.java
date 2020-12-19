@@ -1,10 +1,13 @@
 package domini;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Tauler {
 
-    private int id;
+    private String id;
     private Casella[][] casellas;
     private Casella[][] solucio;
     private int nsol;
@@ -43,11 +46,21 @@ public class Tauler {
         nsol = 0;
     }
 
-    public int getId() {
+    public Tauler(String name, Casella[][] generateKakuro, int row, int col, TipusDificultat tipusDificultat, boolean b, boolean b1) {
+        this.id = name;
+        this.casellas = generateKakuro;
+        this.fil = row;
+        this.col = col;
+        this.dificultat = tipusDificultat;
+        this.acabat = b;
+        this.publico = b1;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

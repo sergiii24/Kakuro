@@ -6,6 +6,9 @@ import domini.Negre;
 import domini.Tauler;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 public class CtrlDadesTaulell {
 
@@ -101,6 +104,42 @@ public class CtrlDadesTaulell {
         }
 
         return casella;
+    }
+
+
+    public void importar(File selectedFile, String id) {
+
+        try {
+            Files.copy(selectedFile.toPath(), Paths.get("data/users/" + id + "/kakuros/" + selectedFile.getName()), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void saveBoard(Tauler t, String id) {
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("data/users/" + id + "/kakuros/" + t.getId()))) {
+
+            bw.write(t.toString());
+
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+
+    }
+
+    public void escriureFitxer(Tauler tauler, String nom) {
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(nom))) {
+
+            bw.write(tauler.toString());
+
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+
+
     }
 
 

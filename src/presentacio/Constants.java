@@ -24,4 +24,18 @@ public class Constants {
     public static final String PUBLIC = "Publics";
 
     public static final String MODES = "Modes";
+    public static final String ROWS = "Fila:";
+    public static final String COLUMNS = "Columna:";
+    public static final String NAME = "Name of the Kakuro:";
+
+    public static final String HARD = "Hard";
+    public static final String NORMAL = "Normal";
+    public static final String EASY = "Easy";
+
+    public static final String DIFFICULT = "Difficulty";
+    public static final String TRAINING = "Training";
+    public static final String SPEED = "SpeedRun";
+
+    public static final String IMPORT = "Importar";
+
 }

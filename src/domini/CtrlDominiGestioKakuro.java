@@ -7,6 +7,9 @@ import java.util.List;
 
 public class CtrlDominiGestioKakuro {
 
+    Partida partida;
+
+
     public CtrlDominiGestioKakuro() {
     }
 
@@ -25,5 +28,22 @@ public class CtrlDominiGestioKakuro {
         return ctrlDadesKakuro.getNameKakurosUser(CtrlFactoryDomini.getcDUsuariInstance().getId());
     }
 
+
+    public void createGameKakuro(int rows, int col, String dif, String mode) {
+
+
+    }
+
+    public void createNewGame(Tauler tauler, Mode mode) {
+
+        Usuari usuari = CtrlFactoryDomini.getcDUsuariInstance().getUsuari();
+        partida = new Partida(usuari, mode, tauler);
+
+    }
+
+
+    public void generateKakuro(int parseInt, int parseInt1, String dif) {
+
+    }
 
 }

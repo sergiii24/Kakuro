@@ -5,28 +5,36 @@ public class Partida {
 	protected Mode mode;
 	protected Tauler tauler;
 	protected int temps;
-	
+	protected Usuari usuari;
+
 	public Partida() {
 		user = null;
 		mode = null;
 		tauler = null;
 		temps = 0;
 	}
-	
+
 	public Partida(String user) {
 		this.user = user;
 		mode = null;
 		tauler = null;
 		temps = 0;
 	}
-	
+
+	public Partida(Usuari usuari, Mode mode, Tauler tauler) {
+		this.usuari = usuari;
+		this.mode = mode;
+		this.tauler = tauler;
+		this.temps = temps;
+	}
+
 	public Partida(String user, Mode mode, Tauler tauler, int temps) {
 		this.user = user;
 		this.mode = mode;
 		this.tauler = tauler;
 		this.temps = temps;
 	}
-	
+
 	public void setUser(String user) {
 		this.user = user;
 	}

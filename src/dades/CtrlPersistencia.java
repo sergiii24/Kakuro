@@ -1,16 +1,11 @@
 package dades;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import domini.Partida;
 import domini.Registrat;
 import domini.Tauler;
 import domini.Usuari;
+
+import java.io.*;
 
 public class CtrlPersistencia {
 	
@@ -103,15 +98,15 @@ public class CtrlPersistencia {
     }
     
     public void addKakuro(Tauler tau) throws IOException {
-    	int id = tau.getId();
-    	String ruta = "data/kakuro/"+id+".txt";
-    	String contingut = tau.toString();
-    	
-    	File kakuro = new File(ruta);
+        String id = tau.getId();
+        String ruta = "data/kakuro/" + id + ".txt";
+        String contingut = tau.toString();
+
+        File kakuro = new File(ruta);
         if (!kakuro.exists()) {
-        	kakuro.createNewFile();
+            kakuro.createNewFile();
         }
-        
+
         FileWriter fw = new FileWriter(kakuro);
         BufferedWriter bw = new BufferedWriter(fw);
         bw.write(contingut);
@@ -182,17 +177,17 @@ public class CtrlPersistencia {
 
     
     public static void addKakuroToUser(Tauler tau, Usuari usu) throws IOException {
-    	String idu = usu.getId();
-    	int idk = tau.getId();
-    	
-    	File usuari = new File("data/users/"+idu);
-    	if (!usuari.exists()) System.out.print("La carpeta usuari no existeix");
-    	
-    	usuari = new File("data/users/"+idu+"/kakuros");
-    	if (!usuari.exists()) System.out.print("La carpeta kakuros no existeix");
-    		
-    	String ruta = "data/users/"+idu+"/kakuros/"+idk+".txt";
-    	String contingut = tau.toString();
+        String idu = usu.getId();
+        String idk = tau.getId();
+
+        File usuari = new File("data/users/" + idu);
+        if (!usuari.exists()) System.out.print("La carpeta usuari no existeix");
+
+        usuari = new File("data/users/" + idu + "/kakuros");
+        if (!usuari.exists()) System.out.print("La carpeta kakuros no existeix");
+
+        String ruta = "data/users/" + idu + "/kakuros/" + idk + ".txt";
+        String contingut = tau.toString();
     	
     	File kakuro = new File(ruta);
         if (!kakuro.exists()) {
@@ -206,19 +201,19 @@ public class CtrlPersistencia {
     }
     
     private static void addGame(Partida par) throws IOException {
-    	String idu = par.getUser();
-    	Tauler tau = par.getTauler();
-    	int idk = tau.getId();
-    	
-    	File usuari = new File("data/users/"+idu);
-    	if (!usuari.exists()) System.out.print("La carpeta usuari no existeix");
-    	
-    	usuari = new File("data/users/"+idu+"/games");
-    	if (!usuari.exists()) System.out.print("La carpeta games no existeix");
-    	
-    	File game = new File("data/users/"+idu+"/games/"+idk);
+        String idu = par.getUser();
+        Tauler tau = par.getTauler();
+        String idk = tau.getId();
+
+        File usuari = new File("data/users/" + idu);
+        if (!usuari.exists()) System.out.print("La carpeta usuari no existeix");
+
+        usuari = new File("data/users/" + idu + "/games");
+        if (!usuari.exists()) System.out.print("La carpeta games no existeix");
+
+        File game = new File("data/users/" + idu + "/games/" + idk);
         if (!game.exists()) {
-        	game.mkdirs();
+            game.mkdirs();
         }
         
         String ruta = "data/users/"+idu+"/games/"+idk+"/tauler.txt";
@@ -262,8 +257,8 @@ public class CtrlPersistencia {
 	}
     
 	public static String readKakuro(Tauler tau) throws IOException {
-		int id = tau.getId();
-		String linea;
+        String id = tau.getId();
+        String linea;
 		String res = "";
         FileReader fr = new FileReader("data/kakuro/"+id+".txt");
         BufferedReader br = new BufferedReader(fr);
@@ -292,15 +287,15 @@ public class CtrlPersistencia {
 	}
 	
 	public static String readGameKakuro(Partida par) throws IOException {
-		String idu = par.getUser();
-    	Tauler tau = par.getTauler();
-    	int idk = tau.getId();
-    	
-		String linea;
-		String res = "";
-        FileReader fr = new FileReader("data/users/"+idu+"/games/"+idk+"/tauler.txt");
+        String idu = par.getUser();
+        Tauler tau = par.getTauler();
+        String idk = tau.getId();
+
+        String linea;
+        String res = "";
+        FileReader fr = new FileReader("data/users/" + idu + "/games/" + idk + "/tauler.txt");
         BufferedReader br = new BufferedReader(fr);
-        while((linea = br.readLine()) != null) {
+        while ((linea = br.readLine()) != null) {
             linea += "\n";
             res += linea;
         }
@@ -311,8 +306,8 @@ public class CtrlPersistencia {
 	
 	public static String readGameMode(Partida par) throws IOException {
 		String idu = par.getUser();
-    	Tauler tau = par.getTauler();
-    	int idk = tau.getId();
+        Tauler tau = par.getTauler();
+        String idk = tau.getId();
     	
 		String linea;
 		String res = "";
@@ -328,8 +323,8 @@ public class CtrlPersistencia {
 	
 	public static int readGameTime(Partida par) throws IOException {
 		String idu = par.getUser();
-    	Tauler tau = par.getTauler();
-    	int idk = tau.getId();
+        Tauler tau = par.getTauler();
+        String idk = tau.getId();
     	
 		String linea;
 		String res = "";
@@ -344,10 +339,10 @@ public class CtrlPersistencia {
 	}
 	
 	public static void removeKakuro(Tauler tau) {
-		int id = tau.getId();
-		File kakuro = new File("data/kakuro/"+id+".txt");
+        String id = tau.getId();
+        File kakuro = new File("data/kakuro/" + id + ".txt");
         kakuro.delete();
-	}
+    }
 	
 	public static void removeUser(Usuari usu) {
 		String id = usu.getId();
@@ -358,17 +353,17 @@ public class CtrlPersistencia {
 	}
 	
 	public static void removeKakuroFromUser(Tauler tau, Usuari usu) {
-		String idu = usu.getId();
-    	int idk = tau.getId();
-		File kakuro = new File("data/users/"+idu+"/kakuros/"+idk+".txt");
+        String idu = usu.getId();
+        String idk = tau.getId();
+        File kakuro = new File("data/users/" + idu + "/kakuros/" + idk + ".txt");
         kakuro.delete();
 	}
 	
 	public static void removeGame(Partida par) {
 		String idu = par.getUser();
-    	Tauler tau = par.getTauler();
-    	int idk = tau.getId();
-        File game = new File("data/users/"+idu+"/games/"+idk);
+        Tauler tau = par.getTauler();
+        String idk = tau.getId();
+        File game = new File("data/users/" + idu + "/games/" + idk);
         
     	borraDirectori(game);
     	game.delete();
