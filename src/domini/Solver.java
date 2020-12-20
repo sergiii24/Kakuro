@@ -73,8 +73,7 @@ public class Solver {
 	}
 	
 	private boolean esValid(Casella[][] taula, int fila, int columna, int n) {
-		if(filValida(taula, fila, columna, n) && colValida(taula, fila, columna, n)) return true;
-		else return false;
+		return filValida(taula, fila, columna, n) && colValida(taula, fila, columna, n);
 	}
 
 	private boolean filValida(Casella[][] taula, int fila, int columna, int n) {
@@ -95,14 +94,10 @@ public class Solver {
 		}
 		
 		if(columna == taula[0].length - 1) {
-			if(sumTmp < sumTot) {
-				return false;
-			}
+			return sumTmp >= sumTot;
 		}
 		else if(taula[fila][columna + 1].isNegre()) {
-			if(sumTmp < sumTot) {
-				return false;
-			}
+			return sumTmp >= sumTot;
 		}
 		return true;
 	}
@@ -123,17 +118,12 @@ public class Solver {
 		}
 		
 		if(fila == taula.length - 1) {
-			if(sumTmp < sumTot) {
-				return false;
-			}
+			return sumTmp >= sumTot;
 		}
 		else if(taula[fila + 1][columna].isNegre()) {
-			if(sumTmp < sumTot) {
-				return false;
-			}
+			return sumTmp >= sumTot;
 		}
 		
-		//System.out.println("Columna valida");
 		return true;
 	}
 }

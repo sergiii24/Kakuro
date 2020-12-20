@@ -51,13 +51,35 @@ public class LinePanel extends JPanel {
 
     }
 
+    public LinePanel(LayoutManager layout, JTextField textFieldLEFT, JTextField textFieldRIGHT) {
+        super(layout);
+        this.setBackground(Color.black);
+
+        settingTxt(textFieldLEFT);
+        settingTxt(textFieldRIGHT);
+
+        textFieldLEFT.setHorizontalAlignment(JTextField.LEFT);
+        textFieldLEFT.setColumns(5);
+        textFieldRIGHT.setHorizontalAlignment(JTextField.RIGHT);
+        textFieldRIGHT.setColumns(5);
+
+        this.add(textFieldLEFT, BorderLayout.SOUTH);
+        this.add(textFieldRIGHT, BorderLayout.NORTH);
+
+    }
+
+
     /**
      * Creates the background black and foreground white
      *
-     * @param txt
-     *  - the JTextField reference
+     * @param txt - the JTextField reference
      */
     public void settingTxt(JLabel txt) {
+        txt.setBackground(new Color(0, 0, 0, 0));
+        txt.setForeground(Color.white);
+    }
+
+    public void settingTxt(JTextField txt) {
         txt.setBackground(new Color(0, 0, 0, 0));
         txt.setForeground(Color.white);
     }

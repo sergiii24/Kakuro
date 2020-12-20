@@ -29,7 +29,7 @@ public class CtrlDominiGestioKakuro {
     }
 
 
-    public void createGameKakuro(int rows, int col, String dif, String mode) {
+    public void createGameKakuro(int rows, int col, TipusDificultat dif, TipusMode mode) {
 
 
     }

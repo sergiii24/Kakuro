@@ -26,7 +26,6 @@ public class Main {
                     KakuroView frame = new KakuroView(loginView, signUpView, profileView, menuView, gameView, rankingView);
 
                     //Controllers
-
                     ControllerDomini domini = CtrlFactoryDomini.getcDDominiInstance();
                     ControllerLogin controllerLogin = new ControllerLogin(loginView);
                     ControllerSignUp controllerSignUp = new ControllerSignUp(signUpView);

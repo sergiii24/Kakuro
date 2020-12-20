@@ -6,15 +6,15 @@ import java.util.Random;
 
 public class Generador {
 
-    public Casella[][] generateKakuro(int a, int b) {
+    public Casella[][] generateKakuro(int a, int b, TipusDificultat dificultat) {
 
         //1r - Obté tauler bàsic de mida a*b amb la primera fila i columna negra
-        Casella[][] c = getBasic(a,b);
+        Casella[][] c = getBasic(a, b);
 
         //2n - Genera entre un 20% i un 40% de caselles negres aleatori en el tauler,
         //aquestes éstan colocades mantenint un kakuro connex i correcte amb un mínim
         // de dos caselles blanques juntes
-        generateBlackCells(c,a,b);
+        generateBlackCells(c, a, b, dificultat);
 
         //3r - Omple les caselles blanques amb números generats aleatoriament sense repeticions
         //entre files i columnes (volem modificar aquesta part per a que tingue en compte el domini)
@@ -45,17 +45,31 @@ public class Generador {
     }
 
     //Genera les caselles negres aleatoriament
-    private void generateBlackCells(Casella[][] c, int a, int b) {
+    private void generateBlackCells(Casella[][] c, int a, int b, TipusDificultat dificultat) {
 
         Random random = new Random();
         //Genera un numero que està entre el 40% i 20% del total de caselles, volem que modificant aquest
         //nombre el kakuro serà més fàcil o més díficil
-        int num =  random.nextInt((int)(a*b*0.4)-(int)(a*b*0.2))+(int)(a*b*0.2);
+        int num;
+
+        switch (dificultat) {
+            case FACIL:
+                num = random.nextInt((int) (a * b * 0.5) - (int) (a * b * 0.4)) + (int) (a * b * 0.4);
+                break;
+            case NORMAL:
+                num = random.nextInt((int) (a * b * 0.4) - (int) (a * b * 0.2)) + (int) (a * b * 0.2);
+                break;
+            case DIFICIL:
+                num = random.nextInt((int) (a * b * 0.3) - (int) (a * b * 0.2)) + (int) (a * b * 0.2);
+                break;
+            default:
+                num = random.nextInt((int) (a * b * 0.5) - (int) (a * b * 0.2)) + (int) (a * b * 0.2);
+        }
+
         int row, col;
         int aux = 0;
 
-
-        for (int i = 0; i < num && aux < 100;) {
+        for (int i = 0; i < num && aux < 100; ) {
 
             row = random.nextInt(a);
             col = random.nextInt(b);
@@ -78,9 +92,7 @@ public class Generador {
         if(col+1<b && c[row][col+1].isBlanc() && ( col+2==b || c[row][col+2].isNegre())) return false;
         if(col-1>0 && c[row][col-1].isBlanc() && (col-2==0 || c[row][col-2].isNegre())) return false;
         if(row+1<a && c[row+1][col].isBlanc() && (row+2==a || c[row+2][col].isNegre())) return false;
-        if(row-1>0 && c[row-1][col].isBlanc() && (row-2==0 || c[row-2][col].isNegre())) return false;
-
-        return true;
+        return row - 1 <= 0 || !c[row - 1][col].isBlanc() || (row - 2 != 0 && !c[row - 2][col].isNegre());
 
     }
 

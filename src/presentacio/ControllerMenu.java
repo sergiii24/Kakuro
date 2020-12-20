@@ -63,10 +63,15 @@ public class ControllerMenu {
         menuView.getbImportar().addActionListener(e -> importar());
         menuView.getbBackManagement().addActionListener(e -> menuView.updateView("principal"));
         menuView.getbGenerarKakuro().addActionListener(e -> menuView.updateView("crear"));
-        menuView.getbCrearKakuro().addActionListener(e -> crear());
+        menuView.getbCrearKakuro().addActionListener(e -> menuView.updateView("editor"));
+
+        //Editor
+        menuView.getComboRowEditor().addItemListener(e -> menuView.updateEditor());
+        menuView.getComboColumnsEditor().addItemListener(e -> menuView.updateEditor());
 
 
     }
+
 
     private void importar() {
         JFileChooser jf = new JFileChooser();
@@ -74,31 +79,29 @@ public class ControllerMenu {
         CtrlFactoryDomini.getcDTaulellInstance().importar(jf.getSelectedFile());
     }
 
-    private void crear() {
-    }
-
     private void generate() {
 
-        String dif = "";
-        for (JRadioButton b : menuView.getButtonsDificultatJugar()) {
-            if (b.isSelected()) dif = b.getName();
-        }
-
-        String mode = "";
-        for (JRadioButton b : menuView.getButtonsModerCrear()) {
-            if (b.isSelected()) mode = b.getName();
-        }
-
-        if (CtrlFactoryDomini.getcDUsuariInstance().isRegistrat())
+        if (!CtrlFactoryDomini.getcDUsuariInstance().isRegistrat())
             CtrlFactoryDomini.getcDKakuroInstance().createGameKakuro(Integer.parseInt(menuView.getComboRow().getSelectedItem().toString()),
-                    Integer.parseInt(menuView.getComboColumns().getSelectedItem().toString()), dif, mode);
-        else
-            CtrlFactoryDomini.getcDTaulellInstance().generateKakuro(Integer.parseInt(menuView.getComboRow().getSelectedItem().toString()),
-                    Integer.parseInt(menuView.getComboColumns().getSelectedItem().toString()), dif, menuView.getTxtName().getName());
+                    Integer.parseInt(menuView.getComboColumns().getSelectedItem().toString()), menuView.getT(), menuView.getM());
+        else {
+            boolean b = CtrlFactoryDomini.getcDTaulellInstance().generateKakuro(Integer.parseInt(menuView.getComboRow().getSelectedItem().toString()),
+                    Integer.parseInt(menuView.getComboColumns().getSelectedItem().toString()), menuView.getT(), menuView.getTxtName().getText());
 
+            if (b) {
+                menuView.getTxtName().setText("");
+                int input = JOptionPane.showConfirmDialog(menuView, "Do you want to play the game?");
+                if (input == 0) {
+                } //TODO falta anar a jugar
+                else if (input == 1) menuView.updateView("management");
+            } else
+                JOptionPane.showMessageDialog(menuView, "Kakuro with this name already exists", "Kakuro existent", JOptionPane.ERROR_MESSAGE);
+
+        }
     }
 
     private void logoff() {
+        CtrlFactoryDomini.getcDUsuariInstance().logoff();
         controllerPresentacio.goView("login");
     }
 

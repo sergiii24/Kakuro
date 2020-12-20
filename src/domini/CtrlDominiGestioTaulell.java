@@ -12,6 +12,8 @@ import java.text.NumberFormat;
 
 public class CtrlDominiGestioTaulell {
 
+    Tauler t;
+
     public JPanel getPublicTaulell(String nom) {
         return getBoardUI(CtrlFactoryDades.getcTaulell().getPublicKakuro(nom));
     }
@@ -20,7 +22,7 @@ public class CtrlDominiGestioTaulell {
         return getBoardUI(CtrlFactoryDades.getcTaulell().getUserKakuro(CtrlFactoryDomini.getcDUsuariInstance().getId(), nom));
     }
 
-    private JPanel getBoardUI(Tauler t) {
+    public JPanel getBoardUI(Tauler t) {
         //creating grid of cells
         JTextField[][] cells = new JTextField[t.getFil()][t.getCol()];
         JPanel panel = new JPanel(new GridLayout(t.getFil(), t.getCol()));
@@ -116,23 +118,10 @@ public class CtrlDominiGestioTaulell {
     }
 
 
-    public void generateKakuro(int row, int col, String dif, String name) {
+    public boolean generateKakuro(int row, int col, TipusDificultat dif, String name) {
 
-        TipusDificultat tipusDificultat = TipusDificultat.NORMAL;
-        switch (dif) {
-            case "easy":
-                tipusDificultat = TipusDificultat.FACIL;
-                break;
-            case "normal":
-                tipusDificultat = TipusDificultat.NORMAL;
-                break;
-            case "hard":
-                tipusDificultat = TipusDificultat.DIFICIL;
-                break;
-        }
-
-        Tauler t = new Tauler(name, new Generador().generateKakuro(row, col), row, col, tipusDificultat, true, true);
-        CtrlFactoryDades.getcTaulell().saveBoard(t, CtrlFactoryDomini.getcDUsuariInstance().getId());
+        t = new Tauler(name, new Generador().generateKakuro(row, col, dif), row, col, dif, true, true);
+        return CtrlFactoryDades.getcTaulell().saveBoard(t, CtrlFactoryDomini.getcDUsuariInstance().getId());
 
     }
 

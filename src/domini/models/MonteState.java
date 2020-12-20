@@ -9,44 +9,38 @@ import java.util.*;
 
 public class MonteState implements INmcsState<MonteState, Pair<Position, Integer>> {
 
-    private int blank;
     private final Casella[][] board;
+    private final List<Pair<Position, Integer>> _allLegalActions;
+
 
     public MonteState(Casella[][] board) {
 
-        this.board = new Casella[board.length][board[0].length];
-        this.blank = 0;
-
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
-                if (board[i][j].isNegre()) {
-                    this.board[i][j] = new Negre(((Negre) board[i][j]).getColumna(), ((Negre) board[i][j]).getFila());
-                } else {
-                    this.board[i][j] = new Blanc(((Blanc) board[i][j]).getNum());
-                    if(((Blanc)this.board[i][j]).getNum()==0) {
-                        ((Blanc) this.board[i][j]).setPossibles(((Blanc) board[i][j]).getPossibles());
-                        blank++;
-                    }
-                }
-            }
-        }
+        this.board = board;
+        _allLegalActions = this.findAllLegalActions();
 
     }
 
 
     @Override
     public double getScore() {
-        return blank;
+        int score = 0;
+
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j].isBlanc() && ((Blanc) board[i][j]).getNum() == 0) score++;
+            }
+        }
+
+        if (inconsitent()) return score + 10;
+
+        return score;
     }
 
 
     //TODO
     @Override
     public boolean isTerminalPosition() {
-        if (blank != 0) return false;
-        //if (emptyDomain()) return true;
-        if (!inconsitent()) return false;
-        return true;
+        return _allLegalActions.size() == 0;
     }
 
     private boolean inconsitent() {
@@ -100,23 +94,10 @@ public class MonteState implements INmcsState<MonteState, Pair<Position, Integer
         }
 
         if (nou)
-            if (((Negre) this.board[r][s]).getColumna() != suma) return false;
+            return ((Negre) this.board[r][s]).getColumna() == suma;
 
 
         return true;
-
-    }
-
-
-    private boolean emptyDomain() {
-
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
-                if (board[i][j].isBlanc() && ((Blanc) board[i][j]).getNum() == 0 && ((Blanc) board[i][j]).getPossibles().isEmpty()) return true;
-            }
-        }
-
-        return false;
 
     }
 
@@ -379,7 +360,7 @@ public class MonteState implements INmcsState<MonteState, Pair<Position, Integer
             }
         }
 
-        if(inconsitent()) return score+10;
+        //if(inconsitent()) return score+10;
 
         return score;
 

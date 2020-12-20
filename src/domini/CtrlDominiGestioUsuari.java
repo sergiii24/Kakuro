@@ -11,13 +11,18 @@ public class CtrlDominiGestioUsuari {
 		usuari = new Usuari();
 	}
 
+	public void logoff() {
+		usuari = new Usuari();
+	}
+
 	public boolean register(String id, String passwd) {
 
 		CtrlPersistencia ctrlPersistencia = CtrlFactoryDades.getcPersistencia();
-		if(ctrlPersistencia.addUser(id, passwd)) {
+		if (ctrlPersistencia.addUser(id, passwd)) {
 			usuari = new Registrat(id);
 			return true;
-		} return false;
+		}
+		return false;
 
 	}
 	
@@ -59,4 +64,5 @@ public class CtrlDominiGestioUsuari {
 	public Usuari getUsuari() {
 		return usuari;
 	}
+
 }

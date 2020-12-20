@@ -1,10 +1,15 @@
 package presentacio.views;
 
+import domini.TipusDificultat;
+import domini.TipusMode;
 import presentacio.Constants;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,15 +19,19 @@ public class MenuView extends JPanel {
     JButton bContinue, b2Jugar, bCrear, bBackJugar; //
     JButton bPlay, bBackJugar2, bBackCrear2, bGenerate;
     JButton bCrearKakuro, bGenerarKakuro, bImportar, bBackManagement;
-    JPanel principal, menuJugar, menuJugar2, panelUserList, menuCrear, menuManagement, panelModes;
+    JPanel principal, menuJugar, menuJugar2, panelUserList, menuCrear, menuManagement, panelModes, gamePanel, editor;
     JList listPublic, listUser;
     ButtonGroup buttonGroup_1;
     CardLayout cardLayout;
     ArrayList<JRadioButton> buttonsModeJugar;
     JTextField txtName;
     JLabel lblName;
-    JComboBox comboRow, comboColumns;
+    JComboBox comboRow, comboColumns, comboColumnsEditor, comboRowEditor;
     private ArrayList<JRadioButton> buttonsDificultatJugar, buttonsModerCrear;
+    TipusDificultat t;
+    TipusMode m;
+    boolean color;
+    JPanel[][] pEditor;
 
     public MenuView() {
 
@@ -42,6 +51,9 @@ public class MenuView extends JPanel {
 
         menuManagement = carregarMenuManagement();
         add(menuManagement, "management");
+
+        editor = editor();
+        add(editor, "editor");
 
         cardLayout.show(this, "principal");
 
@@ -456,17 +468,18 @@ public class MenuView extends JPanel {
 
         JRadioButton rdbtnNewRadioButton_3 = new JRadioButton(Constants.EASY);
         buttonGroup_1.add(rdbtnNewRadioButton_3);
-        buttonsDificultatJugar.add(rdbtnNewRadioButton_3);
         rdbtnNewRadioButton_3.setAlignmentX(Component.CENTER_ALIGNMENT);
+        rdbtnNewRadioButton_3.addItemListener(e -> t = TipusDificultat.FACIL);
         panel_8.add(rdbtnNewRadioButton_3);
 
         Component verticalStrut_2 = Box.createVerticalStrut(5);
         panel_8.add(verticalStrut_2);
 
-        JRadioButton rdbtnNormal = new JRadioButton(Constants.NORMAL);
+        JRadioButton rdbtnNormal = new JRadioButton(Constants.NORMAL, true);
         buttonGroup_1.add(rdbtnNormal);
-        buttonsDificultatJugar.add(rdbtnNormal);
         rdbtnNormal.setAlignmentX(Component.CENTER_ALIGNMENT);
+        rdbtnNormal.addItemListener(e -> t = TipusDificultat.NORMAL);
+        t = TipusDificultat.NORMAL;
         panel_8.add(rdbtnNormal);
 
 
@@ -477,6 +490,7 @@ public class MenuView extends JPanel {
         buttonGroup_1.add(rdbtnNewRadioButton_4);
         buttonsDificultatJugar.add(rdbtnNewRadioButton_4);
         rdbtnNewRadioButton_4.setAlignmentX(Component.CENTER_ALIGNMENT);
+        rdbtnNewRadioButton_4.addItemListener(e -> t = TipusDificultat.DIFICIL);
         panel_8.add(rdbtnNewRadioButton_4);
 
 
@@ -494,15 +508,18 @@ public class MenuView extends JPanel {
         buttonGroup_2.add(rdbtnNewTraining);
         buttonsModerCrear.add(rdbtnNewTraining);
         rdbtnNewTraining.setAlignmentX(Component.CENTER_ALIGNMENT);
+        rdbtnNewTraining.addItemListener(e -> m = TipusMode.TRAINING);
         panel_81.add(rdbtnNewTraining);
 
         Component verticalStru_2 = Box.createVerticalStrut(5);
         panel_81.add(verticalStru_2);
 
-        JRadioButton rdbtnNor = new JRadioButton(Constants.NORMAL);
+        JRadioButton rdbtnNor = new JRadioButton(Constants.NORMAL, true);
         buttonGroup_2.add(rdbtnNor);
         buttonsModerCrear.add(rdbtnNor);
+        m = TipusMode.NORMAL;
         rdbtnNor.setAlignmentX(Component.CENTER_ALIGNMENT);
+        rdbtnNor.addItemListener(e -> m = TipusMode.NORMAL);
         panel_81.add(rdbtnNor);
 
         Component verticalStru2 = Box.createVerticalStrut(5);
@@ -511,6 +528,7 @@ public class MenuView extends JPanel {
         JRadioButton rdbtnSpeed = new JRadioButton(Constants.SPEED);
         buttonGroup_2.add(rdbtnSpeed);
         buttonsModerCrear.add(rdbtnSpeed);
+        rdbtnSpeed.addItemListener(e -> m = TipusMode.CONTRARRELLOTGE);
         rdbtnSpeed.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel_81.add(rdbtnSpeed);
 
@@ -620,6 +638,77 @@ public class MenuView extends JPanel {
         bBackManagement = new JButton(Constants.BACK);
         bBackManagement.setPreferredSize(new Dimension(200, 25));
         panel_5.add(bBackManagement);
+
+        return p;
+
+    }
+
+    private JPanel editor() {
+
+        JPanel p = new JPanel(new BorderLayout(0, 0));
+        String[] nums = {"3", "4", "5", "6", "7", "8", "9", "10", "11"};
+
+        //Mesures
+        JPanel panel = new JPanel();
+        p.add(panel, BorderLayout.NORTH);
+
+        JLabel lblRows = new JLabel(Constants.ROWS);
+        panel.add(lblRows);
+
+        comboRowEditor = new JComboBox(nums);
+        panel.add(comboRowEditor);
+
+        JLabel lblColumns = new JLabel(Constants.COLUMNS);
+        panel.add(lblColumns);
+
+        comboColumnsEditor = new JComboBox(nums);
+        panel.add(comboColumnsEditor);
+
+        gamePanel = new JPanel();
+        gamePanel.add(generTaulell(3, 3));
+        p.add(gamePanel, BorderLayout.CENTER);
+
+
+        JPanel panelImages = new JPanel();
+        panelImages.setMinimumSize(new Dimension(70, 100));
+        panelImages.setMaximumSize(new Dimension(100, 100));
+        panelImages.setPreferredSize(new Dimension(100, 100));
+        p.add(panelImages, BorderLayout.SOUTH);
+
+        JLabel lblColor1 = new JLabel("");
+        panelImages.add(lblColor1);
+        lblColor1.setMinimumSize(new Dimension(30, 30));
+        lblColor1.setMaximumSize(new Dimension(30, 30));
+        lblColor1.setOpaque(true);
+
+        lblColor1.setBackground(Color.WHITE);
+        lblColor1.setPreferredSize(new Dimension(40, 40));
+
+        JLabel lblColor2 = new JLabel("");
+        panelImages.add(lblColor2);
+        lblColor2.setOpaque(true);
+
+        lblColor2.setBackground(Color.BLACK);
+        lblColor2.setPreferredSize(new Dimension(40, 40));
+
+
+        lblColor1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                color = true;
+                lblColor1.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+                lblColor2.setBorder(new LineBorder(new Color(0, 0, 0), 0));
+            }
+        });
+
+        lblColor2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                color = false;
+                lblColor2.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+                lblColor1.setBorder(new LineBorder(new Color(0, 0, 0), 0));
+            }
+        });
 
         return p;
 
@@ -763,5 +852,131 @@ public class MenuView extends JPanel {
     public JPanel getPanelModes() {
         return panelModes;
     }
+
+    public TipusDificultat getT() {
+        return t;
+    }
+
+    public TipusMode getM() {
+        return m;
+    }
+
+    public JPanel generTaulell(int row, int col) {
+        System.out.println(row + " " + col);
+
+        JPanel panel = new JPanel(new GridLayout(row, col));
+        pEditor = new JPanel[row][col];
+
+        panel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
+        panel.setPreferredSize(new Dimension(400, 400));
+
+        for (int i = 0; row > i; i++) {
+            for (int j = 0; col > j; j++) {
+
+                JPanel panel1 = new JPanel(new BorderLayout());
+                pEditor[i][j] = panel1;
+
+                JTextField textFieldRIGHT = new JTextField();
+                textFieldRIGHT.setBackground(new Color(0, 0, 0, 0));
+                textFieldRIGHT.setForeground(Color.white);
+                textFieldRIGHT.setHorizontalAlignment(JTextField.RIGHT);
+                textFieldRIGHT.setColumns(5);
+
+                JTextField textFieldLEFT = new JTextField();
+                textFieldLEFT.setBackground(new Color(0, 0, 0, 0));
+                textFieldLEFT.setForeground(Color.white);
+                textFieldLEFT.setHorizontalAlignment(JTextField.LEFT);
+                textFieldLEFT.setColumns(5);
+
+                panel1.add(textFieldLEFT, BorderLayout.SOUTH);
+                panel1.add(textFieldRIGHT, BorderLayout.EAST);
+
+                if (i == 0 || j == 0) {
+                    //Negre
+                    textFieldRIGHT.setVisible(true);
+                    textFieldLEFT.setVisible(true);
+                    panel1.setBackground(Color.black);
+
+                } else {
+                    textFieldRIGHT.setVisible(false);
+                    textFieldLEFT.setVisible(false);
+                    panel1.setBackground(Color.white);
+                    panel1.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+
+                            for (int i = 0; i < row; i++) {
+                                for (int j = 0; j < col; j++) {
+                                    if (e.getSource() == pEditor[i][j]) {
+                                        if (color) {
+                                            panel1.setBackground(Color.white);
+                                            for (Component c : panel1.getComponents()) {
+                                                c.setVisible(false);
+                                            }
+                                            panel1.validate();
+                                        } else {
+                                            panel1.setBackground(Color.BLACK);
+                                            for (Component c : panel1.getComponents()) {
+                                                c.setVisible(true);
+                                            }
+                                            panel1.validate();
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+                panel.add(panel1);
+            }
+        }
+
+        return panel;
+
+    }
+
+    private JPanel crearNegre() {
+        JPanel negre = new JPanel(new BorderLayout());
+        negre.setPreferredSize(new Dimension(50, 50));
+        negre.setBackground(Color.black);
+
+        JTextField textFieldRIGHT = new JTextField();
+        textFieldRIGHT.setBackground(Color.black);
+        textFieldRIGHT.setForeground(Color.white);
+        textFieldRIGHT.setHorizontalAlignment(JTextField.RIGHT);
+        textFieldRIGHT.setColumns(5);
+
+        JTextField textFieldLEFT = new JTextField();
+        textFieldLEFT.setBackground(Color.black);
+        textFieldLEFT.setForeground(Color.white);
+        textFieldLEFT.setHorizontalAlignment(JTextField.LEFT);
+        textFieldLEFT.setColumns(5);
+
+        negre.add(textFieldLEFT, BorderLayout.SOUTH);
+        negre.add(textFieldRIGHT, BorderLayout.EAST);
+        return negre;
+    }
+
+    public JPanel getGamePanel() {
+        return gamePanel;
+    }
+
+    public JComboBox getComboColumnsEditor() {
+        return comboColumnsEditor;
+    }
+
+    public JComboBox getComboRowEditor() {
+        return comboRowEditor;
+    }
+
+
+    public void updateEditor() {
+        System.out.println("Hola");
+        gamePanel.removeAll();
+        gamePanel.add(generTaulell(Integer.parseInt(comboRowEditor.getSelectedItem().toString()), Integer.parseInt(comboColumnsEditor.getSelectedItem().toString())));
+        gamePanel.validate();
+    }
+
 
 }

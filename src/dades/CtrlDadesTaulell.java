@@ -117,15 +117,21 @@ public class CtrlDadesTaulell {
 
     }
 
-    public void saveBoard(Tauler t, String id) {
+    public boolean saveBoard(Tauler t, String id) {
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("data/users/" + id + "/kakuros/" + t.getId()))) {
+        String p = "data/users/" + id + "/kakuros/" + t.getId();
+
+        if (new File(p).exists()) return false;
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(p))) {
 
             bw.write(t.toString());
 
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        return true;
 
     }
 

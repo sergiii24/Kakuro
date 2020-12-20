@@ -259,17 +259,35 @@ public class Tauler {
             for (int i = position; i < candidates.length; i++)
             {
                 if(position != i
-                        && candidates[i] == candidates[i-1])
-                {
+                        && candidates[i] == candidates[i-1]) {
                     continue;
                 }
                 list.add(candidates[i]);
-                backTrack(result, list, candidates, target, i+1, digits);
+                backTrack(result, list, candidates, target, i + 1, digits);
                 list.remove(list.size() - 1);
             }
         }
     }
 
+    public Casella[][] clonar() {
+
+        Casella[][] c = new Casella[casellas.length][casellas[0].length];
+
+        for (int i = 0; i < casellas.length; i++) {
+            for (int j = 0; j < casellas[0].length; j++) {
+                if (casellas[i][j].isNegre()) {
+                    c[i][j] = new Negre(((Negre) casellas[i][j]).getColumna(), ((Negre) casellas[i][j]).getFila());
+                } else {
+                    c[i][j] = new Blanc(((Blanc) casellas[i][j]).getNum());
+                    if (((Blanc) casellas[i][j]).getNum() == 0)
+                        ((Blanc) c[i][j]).setPossibles(((Blanc) casellas[i][j]).getPossibles());
+                }
+            }
+        }
+
+        return c;
+
+    }
 
 
 }
