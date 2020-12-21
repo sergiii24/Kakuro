@@ -26,7 +26,10 @@ public class ControllerMenu {
         menuView.getbJugar().addActionListener(e -> menuView.updateView("jugar"));
         menuView.getbKakuroManagement().addActionListener(e -> menuView.updateView("management"));
         menuView.getbPerfil().addActionListener(e -> controllerPresentacio.goToPerfil());
-        menuView.getbStatistics().addActionListener(e -> controllerPresentacio.goView("Ranking"));
+        menuView.getbStatistics().addActionListener(e -> {
+            carregaRanking();
+            menuView.updateView("ranking");
+        });
         menuView.getbLogOff().addActionListener(e -> logoff());
 
         //MenuJugar
@@ -68,6 +71,9 @@ public class ControllerMenu {
         //Editor
         menuView.getComboRowEditor().addItemListener(e -> menuView.updateEditor());
         menuView.getComboColumnsEditor().addItemListener(e -> menuView.updateEditor());
+
+        //Ranking
+        menuView.getbBackR().addActionListener(e -> menuView.updateView("principal"));
 
 
     }
@@ -180,7 +186,11 @@ public class ControllerMenu {
             List<String> p = CtrlFactoryDomini.getcDKakuroInstance().getNameUserGames();
             menuView.updateUserList(p);
         }
+    }
 
+    private void carregaRanking(){
+        List<String> ranking = CtrlFactoryDomini.getcDUsuariInstance().getNameUsersRanking();
+        menuView.updateRankingList(ranking);
     }
 
 }

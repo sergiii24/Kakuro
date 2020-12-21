@@ -84,7 +84,7 @@ public class KakuroView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public KakuroView(LoginView loginView, SignUpView signUpView, ProfileView profileView, MenuView menuView, GameView gameView, RankingView rankingView) {
+	public KakuroView(LoginView loginView, SignUpView signUpView, ProfileView profileView, MenuView menuView, GameView gameView) {
 		setPreferredSize(new Dimension(800, 600));
 		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -120,7 +120,6 @@ public class KakuroView extends JFrame {
 
 		panelJugar = gameView;
 		cardPanel.add(panelJugar, "game");
-
 
 		cardLayout.show(cardPanel, "login");
 

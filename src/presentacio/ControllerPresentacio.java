@@ -93,6 +93,4 @@ public class ControllerPresentacio {
         view.changeScreen("game");
 
     }
-
-
 }
