@@ -1,7 +1,14 @@
 package domini;
 
+import dades.CtrlDadesUsuari;
 import dades.CtrlFactoryDades;
 import dades.CtrlPersistencia;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class CtrlDominiGestioUsuari {
 
@@ -63,6 +70,20 @@ public class CtrlDominiGestioUsuari {
 
 	public Usuari getUsuari() {
 		return usuari;
+	}
+
+	private Map<String, Integer> sort(Map<String, Integer> m){
+		return m.entrySet()
+				.stream()
+				.sorted((Map.Entry.<String, Integer>comparingByValue().reversed()))
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+	}
+
+	public List<String> getNameUsersRanking(){
+		CtrlDadesUsuari ctrlDadesUsuari = CtrlFactoryDades.getcUsuari();
+		Map<String, Integer> aux = sort(ctrlDadesUsuari.getUsuarisRanking());
+		List<String> l = new ArrayList<>(aux.keySet());
+		return l;
 	}
 
 }

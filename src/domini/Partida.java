@@ -1,8 +1,10 @@
 package domini;
 
-public class Partida {
+import java.io.Serializable;
+
+public class Partida implements Serializable {
 	protected String user;
-	protected Mode mode;
+	protected TipusMode mode;
 	protected Tauler tauler;
 	protected int temps;
 	protected Usuari usuari;
@@ -21,14 +23,14 @@ public class Partida {
 		temps = 0;
 	}
 
-	public Partida(Usuari usuari, Mode mode, Tauler tauler) {
+	public Partida(Usuari usuari, TipusMode mode, Tauler tauler) {
 		this.usuari = usuari;
 		this.mode = mode;
 		this.tauler = tauler;
 		this.temps = temps;
 	}
 
-	public Partida(String user, Mode mode, Tauler tauler, int temps) {
+	public Partida(String user, TipusMode mode, Tauler tauler, int temps) {
 		this.user = user;
 		this.mode = mode;
 		this.tauler = tauler;
@@ -43,11 +45,11 @@ public class Partida {
 		return user;
 	}
 	
-	public void setMode(Mode mode) {
+	public void setMode(TipusMode mode) {
 		this.mode = mode;
 	}
 	
-	public Mode getMode() {
+	public TipusMode getMode() {
 		return mode;
 	}
 	
@@ -66,4 +68,7 @@ public class Partida {
 	public int getTemps() {
 		return this.temps;
 	}
+
+	public Usuari getUsuari() {return usuari; }
+
 }

@@ -44,7 +44,7 @@ public class DriverPartidaAcabada {
 							P = new PartidaAcabada();
 							break;
 						case "2":
-							P = new PartidaAcabada(new Partida(param[1], new Mode(), new Tauler(), Integer.parseInt(param[2])), Integer.parseInt(param[3]));
+							P = new PartidaAcabada(new Partida(param[1], TipusMode.NORMAL, new Tauler(), Integer.parseInt(param[2])), Integer.parseInt(param[3]));
 							break;
 						case "3":
 							P.setPuntuacio(Integer.parseInt(param[1]));

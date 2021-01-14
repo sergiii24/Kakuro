@@ -33,7 +33,7 @@ public class Ranquing {
 		Iterator<PartidaAcabada> it = ranking.iterator();
 		while(it.hasNext()) {
 			PartidaAcabada p = it.next();
-			if(p.getUser() == id && p.getMode().getMode() == mode.getMode() /*&& p.getTauler() == tauler*/) {
+			if(p.getUser() == id && p.getMode() == mode.getMode() /*&& p.getTauler() == tauler*/) {
 				return p;
 			}
 		}
@@ -45,7 +45,7 @@ public class Ranquing {
 		Set<PartidaAcabada> aux = new HashSet<PartidaAcabada>();
 		while(it.hasNext()) {
 			PartidaAcabada p = it.next();
-			if(p.getMode().tipus == TipusMode.NORMAL) {
+			if(p.getMode() == TipusMode.NORMAL) {
 				aux.add(p);
 			}
 		}
@@ -57,7 +57,7 @@ public class Ranquing {
 		Set<PartidaAcabada> aux = new HashSet<PartidaAcabada>();
 		while(it.hasNext()) {
 			PartidaAcabada p = it.next();
-			if(p.getMode().tipus == TipusMode.CONTRARRELLOTGE) {
+			if(p.getMode() == TipusMode.CONTRARRELLOTGE) {
 				aux.add(p);
 			}
 		}

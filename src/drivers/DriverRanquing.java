@@ -71,20 +71,20 @@ public class DriverRanquing {
 						case "6":
 							PartidaAcabada pa5 = new PartidaAcabada();
 							pa5.setUser("Pere");
-							pa5.setMode(new Mode(TipusMode.NORMAL));
+							pa5.setMode(TipusMode.NORMAL);
 							pa5.setTauler(new Tauler());
 							pa5.setTemps(10);
 							pa5.setPuntuacio(10);
 							R.afegirPartidaAcabada(pa5);
 							PartidaAcabada pa2 = R.getPartidaAcabada("Pere", new Mode(TipusMode.NORMAL), new Tauler());
 							System.out.println(pa2.getUser());
-							System.out.println(pa2.getMode().getMode());
+							System.out.println(pa2.getMode());
 							break;
 						case "7":
 							int N = Integer.parseInt(param[1]);
 							for(int i = 0; i < N; ++i) {
 								PartidaAcabada pa22 = new PartidaAcabada();
-								pa22.setMode(new Mode(TipusMode.NORMAL));
+								pa22.setMode(TipusMode.NORMAL);
 								R.afegirPartidaAcabada(pa22);
 							}
 							Set<PartidaAcabada> sm = R.filtraModeNormal();
@@ -94,7 +94,7 @@ public class DriverRanquing {
 							int N1 = Integer.parseInt(param[1]);
 							for(int i = 0; i < N1; ++i) {
 								PartidaAcabada pa21 = new PartidaAcabada();
-								pa21.setMode(new Mode(TipusMode.CONTRARRELLOTGE));
+								pa21.setMode((TipusMode.CONTRARRELLOTGE));
 								R.afegirPartidaAcabada(pa21);
 							}
 							Set<PartidaAcabada> sm1 = R.filtraModeContra();

@@ -1,6 +1,8 @@
 package domini;
 
-public abstract class Casella {
+import java.io.Serializable;
+
+public abstract class Casella implements Serializable {
 	
 	private int posx;
 	private int posy;

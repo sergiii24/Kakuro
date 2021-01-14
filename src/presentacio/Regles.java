@@ -3,10 +3,11 @@ package presentacio;
 import java.util.*;
 
 public class Regles {
-	String[] regles = { "S'ha de posar a cada casella blanca un nombre del 1 al 9.",
-						"La suma en horitzontal de cada casella blanca ha de coincidir amb el nombre superior de la casella negre.",
-						"La suma en vertical de cada casella blanca ha de coincidir amb el nombre inferior de la casella negre.",
-						"No es pot posar el mateix nombre en una fila o en una columna."};
+	String[] regles = { "You must fill in the blank white boxes with a number between 1 and 9.",
+			"The horizontal sum of each group of white boxes must match the left number of the black box they have on their left.",
+			"The vertical sum of each group of white boxes must match the bottom number of the black box they have above.",
+			"You cannot repeat a number in a group of white boxes (neither horizontally nor vertically).",
+			"Fill in all the white boxes to win!"};
 	
 	public Regles() {
 		

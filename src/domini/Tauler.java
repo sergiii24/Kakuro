@@ -1,11 +1,12 @@
 package domini;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Tauler {
+public class Tauler implements Serializable {
 
     private String id;
     private Casella[][] casellas;
@@ -287,6 +288,78 @@ public class Tauler {
 
         return c;
 
+    }
+
+    public void llimpiar() {
+
+        Casella[][] c = new Casella[casellas.length][casellas[0].length];
+
+        for (int i = 0; i < casellas.length; i++) {
+            for (int j = 0; j < casellas[0].length; j++) {
+                if (casellas[i][j].isBlanc()) {
+                    ((Blanc) casellas[i][j]).setNum(0);
+
+            }
+        }
+        }
+
+    }
+
+    public boolean check() {
+
+        int r = 0, s = 0, suma = 0;
+        boolean nou = false;
+
+        for (int i = 0; i < this.casellas.length; i++) {
+            for (int j = 0; j < this.casellas[0].length; j++) {
+                if (this.casellas[i][j].isNegre()) {
+
+                    if (nou) {
+                        if (((Negre) this.casellas[r][s]).getFila() != suma) return false;
+                        suma = 0;
+                        nou = false;
+                    }
+
+                    r = i;
+                    s = j;
+
+                } else {
+                    suma += ((Blanc) this.casellas[i][j]).getNum();
+                    nou = true;
+                }
+            }
+        }
+
+        if (nou)
+            if (((Negre) this.casellas[r][s]).getFila() != suma) return false;
+
+        r = 0;
+        s = 0;
+        suma = 0;
+        nou = false;
+
+        for (int i = 0; i < this.casellas[0].length; i++) {
+            for (int j = 0; j < this.casellas.length; j++) {
+                if (this.casellas[j][i].isNegre()) {
+                    if (nou) {
+                        if (((Negre) this.casellas[r][s]).getColumna() != suma) return false;
+                        suma = 0;
+                        nou = false;
+                    }
+                    r = j;
+                    s = i;
+                } else {
+                    suma += ((Blanc) this.casellas[j][i]).getNum();
+                    nou = true;
+                }
+            }
+        }
+
+        if (nou)
+            return ((Negre) this.casellas[r][s]).getColumna() == suma;
+
+
+        return true;
     }
 
 

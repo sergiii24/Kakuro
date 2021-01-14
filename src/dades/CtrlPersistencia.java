@@ -230,7 +230,7 @@ public class CtrlPersistencia {
         bw.close();
         
         ruta = "data/users/"+idu+"/games/"+idk+"/mode.txt";
-    	contingut = par.getMode().getMode().toString();
+    	contingut = par.getMode().toString();
     	
     	File fitxer2 = new File(ruta);
         if (!fitxer.exists()) {

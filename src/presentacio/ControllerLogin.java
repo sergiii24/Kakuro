@@ -16,6 +16,7 @@ public class ControllerLogin {
     public ControllerLogin(LoginView view) {
         loginView = view;
     }
+
     public void initController(ControllerPresentacio controllerPresentacio) {
 
         this.controllerPresentacio = controllerPresentacio;
@@ -35,13 +36,13 @@ public class ControllerLogin {
         loginView.getTxtPassword().addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode()==KeyEvent.VK_ENTER) login();
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) login();
             }
         });
         loginView.getTxtUser().addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode()==KeyEvent.VK_ENTER) login();
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) login();
             }
         });
 
@@ -52,21 +53,18 @@ public class ControllerLogin {
         controllerPresentacio.loginGuest();
     }
 
-    private void login(){
-
-        //controllerPresentacio.login();
+    private void login() {
 
 
         String user = loginView.getTxtUser().getText();
         String password = loginView.getTxtPassword().getText();
-        if(user.isEmpty() || password.isEmpty()) controllerPresentacio.error("Falten Camps!");
+        if (user.isEmpty() || password.isEmpty()) controllerPresentacio.error("Some fields are missing!");
         else {
-            if(CtrlFactoryDomini.getcDUsuariInstance().login(user,password)) {
+            if (CtrlFactoryDomini.getcDUsuariInstance().login(user, password)) {
                 loginView.getTxtUser().setText("");
                 loginView.getTxtPassword().setText("");
                 controllerPresentacio.login();
-            }
-            else controllerPresentacio.error("Algo ha fallat!");
+            } else controllerPresentacio.error("Something went wrong!");
         }
 
     }

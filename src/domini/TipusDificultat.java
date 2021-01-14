@@ -1,5 +1,7 @@
 package domini;
 
-public enum TipusDificultat {
+import java.io.Serializable;
+
+public enum TipusDificultat implements Serializable {
 	FACIL, NORMAL, DIFICIL
 }

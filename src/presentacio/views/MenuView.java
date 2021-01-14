@@ -19,19 +19,19 @@ public class MenuView extends JPanel {
     JButton bContinue, b2Jugar, bCrear, bBackJugar; //
     JButton bPlay, bBackJugar2, bBackCrear2, bGenerate;
     JButton bCrearKakuro, bGenerarKakuro, bImportar, bBackManagement;
-    JPanel principal, menuJugar, menuJugar2, panelUserList, menuCrear, menuManagement, panelModes, gamePanel, editor;
+    JPanel principal, menuJugar, menuJugar2, panelUserList, menuCrear, menuManagement, panelModes, pa, panelGen;
     JList listPublic, listUser;
     ButtonGroup buttonGroup_1;
     CardLayout cardLayout;
     ArrayList<JRadioButton> buttonsModeJugar;
     JTextField txtName;
     JLabel lblName;
-    JComboBox comboRow, comboColumns, comboColumnsEditor, comboRowEditor;
+    JComboBox comboRow, comboColumns, comboColumnsEditor, comboRowEditor, comboBlanc, comboNegres;
     private ArrayList<JRadioButton> buttonsDificultatJugar, buttonsModerCrear;
     TipusDificultat t;
     TipusMode m;
-    boolean color;
-    JPanel[][] pEditor;
+    int op = 0;
+    private JButton bRules;
 
     public MenuView() {
 
@@ -51,9 +51,6 @@ public class MenuView extends JPanel {
 
         menuManagement = carregarMenuManagement();
         add(menuManagement, "management");
-
-        editor = editor();
-        add(editor, "editor");
 
         cardLayout.show(this, "principal");
 
@@ -143,6 +140,18 @@ public class MenuView extends JPanel {
 
         Component verticalStrut_4 = Box.createVerticalStrut(10);
         panel.add(verticalStrut_4);
+
+        JPanel pane2l_5 = new JPanel();
+        panel.add(pane2l_5);
+
+        bRules = new JButton("Rules");
+        bRules.setPreferredSize(new Dimension(200, 25));
+        Image exi = new ImageIcon(this.getClass().getResource("img/help.png")).getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH);
+        bRules.setIcon(new ImageIcon(exi));
+        pane2l_5.add(bRules);
+
+        Component verticalStrut4 = Box.createVerticalStrut(10);
+        panel.add(verticalStrut4);
 
         JPanel panel_5 = new JPanel();
         panel.add(panel_5);
@@ -325,7 +334,7 @@ public class MenuView extends JPanel {
         panel_8.setLayout(new BoxLayout(panel_8, BoxLayout.Y_AXIS));
         buttonGroup_1 = new ButtonGroup();
 
-        JRadioButton rdbtnNewRadioButton_3 = new JRadioButton("Training");
+        JRadioButton rdbtnNewRadioButton_3 = new JRadioButton(String.valueOf(TipusMode.TRAINING));
         buttonGroup_1.add(rdbtnNewRadioButton_3);
         buttonsModeJugar.add(rdbtnNewRadioButton_3);
         rdbtnNewRadioButton_3.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -334,7 +343,7 @@ public class MenuView extends JPanel {
         Component verticalStrut_2 = Box.createVerticalStrut(5);
         panel_8.add(verticalStrut_2);
 
-        JRadioButton rdbtnNormal = new JRadioButton("Normal");
+        JRadioButton rdbtnNormal = new JRadioButton(String.valueOf(TipusMode.NORMAL), true);
         buttonGroup_1.add(rdbtnNormal);
         buttonsModeJugar.add(rdbtnNormal);
         rdbtnNormal.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -343,7 +352,7 @@ public class MenuView extends JPanel {
         Component verticalStrut_3 = Box.createVerticalStrut(5);
         panel_8.add(verticalStrut_3);
 
-        JRadioButton rdbtnNewRadioButton_4 = new JRadioButton("Time Trial");
+        JRadioButton rdbtnNewRadioButton_4 = new JRadioButton(String.valueOf(TipusMode.CONTRARRELLOTGE));
         buttonGroup_1.add(rdbtnNewRadioButton_4);
         buttonsModeJugar.add(rdbtnNewRadioButton_4);
         rdbtnNewRadioButton_4.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -401,7 +410,7 @@ public class MenuView extends JPanel {
         flowLayout0.setAlignment(FlowLayout.CENTER);
         panel.add(panel_0);
 
-        JLabel lblNewLabel = new JLabel(Constants.PLAY);
+        JLabel lblNewLabel = new JLabel(Constants.GENERATE);
         lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         lblNewLabel.setForeground(SystemColor.activeCaption);
         lblNewLabel.setFont(new Font("Arial", Font.BOLD, 33));
@@ -419,14 +428,11 @@ public class MenuView extends JPanel {
         lblName.setFont(new Font("Arial", Font.BOLD, 15));
         panel_1.add(lblName);
 
-        JPanel panel_2 = new JPanel();
-        panel.add(panel_2);
-
         txtName = new JTextField();
         txtName.setFont(new Font("Arial", Font.PLAIN, 15));
         txtName.setEditable(true);
         txtName.setToolTipText(Constants.USER);
-        panel_2.add(txtName);
+        panel_1.add(txtName);
         txtName.setColumns(14);
 
         Component verticalStrut_4 = Box.createVerticalStrut(15);
@@ -439,16 +445,61 @@ public class MenuView extends JPanel {
         panel_.add(lblRows);
 
         comboRow = new JComboBox(nums);
+        comboRow.addItemListener(e -> {
+            comboNegres.removeAllItems();
+            comboBlanc.removeAllItems();
+            int col = Integer.parseInt(comboColumns.getSelectedItem().toString());
+            int row = Integer.parseInt(comboRow.getSelectedItem().toString());
+            for (int i = (row+col-1); i < col*row-1; i++) comboNegres.addItem(i);
+            for (int i = 2; i < col*row -  (row+col-2); i++) comboBlanc.addItem(i);
+
+        });
         panel_.add(comboRow);
 
         JLabel lblColumns = new JLabel(Constants.COLUMNS);
         panel_.add(lblColumns);
 
         comboColumns = new JComboBox(nums);
+        comboColumns.addItemListener(e -> {
+            comboNegres.removeAllItems();
+            comboBlanc.removeAllItems();
+            int col = Integer.parseInt(comboColumns.getSelectedItem().toString());
+            int row = Integer.parseInt(comboRow.getSelectedItem().toString());
+            for (int i = (row+col-1); i < col*row; i++) comboNegres.addItem(i);
+            for (int i = 2; i < col*row - (row+col-2); i++) comboBlanc.addItem(i);
+
+        });
         panel_.add(comboColumns);
 
         Component verticalStrut4 = Box.createVerticalStrut(15);
         panel.add(verticalStrut4);
+
+        pa = new JPanel();
+        panel.add(pa);
+        pa.setLayout(new BoxLayout(pa, BoxLayout.X_AXIS));
+        buttonGroup_1 = new ButtonGroup();
+
+        JRadioButton radioButton = new JRadioButton(Constants.DIFFICULT);
+        buttonGroup_1.add(radioButton);
+        radioButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        radioButton.addItemListener(e -> op = 0);
+        pa.add(radioButton);
+
+        JRadioButton radioButton1 = new JRadioButton(Constants.WHITE, true);
+        buttonGroup_1.add(radioButton1);
+        radioButton1.setAlignmentX(Component.CENTER_ALIGNMENT);
+        radioButton1.addItemListener(e -> op = 1);
+        t = TipusDificultat.NORMAL;
+        pa.add(radioButton1);
+
+
+        JRadioButton radioButton2 = new JRadioButton(Constants.BLACK);
+        buttonGroup_1.add(radioButton2);
+        buttonsDificultatJugar.add(radioButton2);
+        radioButton2.setAlignmentX(Component.CENTER_ALIGNMENT);
+        radioButton2.addItemListener(e -> op = 2);
+        pa.add(radioButton2);
+
 
 
         JPanel pareLlistes = new JPanel();
@@ -496,7 +547,7 @@ public class MenuView extends JPanel {
 
         panelModes = new JPanel();
         panelModes.setBorder(new TitledBorder(null, Constants.MODES, TitledBorder.CENTER, TitledBorder.TOP, null, null));
-        pareLlistes.add(panelModes, BorderLayout.EAST);
+        pareLlistes.add(panelModes, BorderLayout.CENTER);
         panelModes.setLayout(new BoxLayout(panelModes, BoxLayout.X_AXIS));
 
         JPanel panel_81 = new JPanel();
@@ -532,6 +583,29 @@ public class MenuView extends JPanel {
         rdbtnSpeed.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel_81.add(rdbtnSpeed);
 
+        panelGen = new JPanel();
+        panelGen.setBorder(new TitledBorder(null, Constants.BLANQUES, TitledBorder.CENTER, TitledBorder.TOP, null, null));
+        pareLlistes.add(panelGen, BorderLayout.EAST);
+        panelGen.setLayout(new BoxLayout(panelGen, BoxLayout.X_AXIS));
+
+        JLabel lbl = new JLabel(Constants.WHITE);
+        panelGen.add(lbl);
+
+        comboBlanc = new JComboBox(nums);
+        panelGen.add(comboBlanc);
+
+        JLabel lbl1 = new JLabel(Constants.BLACK);
+        panelGen.add(lbl1);
+
+        comboNegres = new JComboBox(nums);
+        panelGen.add(comboNegres);
+
+        comboNegres.removeAllItems();
+        comboBlanc.removeAllItems();
+        int col = 3;
+        int row = 3;
+        for (int i = (row+col-1); i < col*row-1; i++) comboNegres.addItem(i);
+        for (int i = 2; i < col*row -  (row+col-2); i++) comboBlanc.addItem(i);
 
         Component verticalStru4 = Box.createVerticalStrut(15);
         panel.add(verticalStru4);
@@ -556,7 +630,12 @@ public class MenuView extends JPanel {
 
     }
 
-    //
+    public JPanel getPanelGen() {
+        return panelGen;
+    }
+
+
+//
 
     private JPanel carregarMenuManagement() {
 
@@ -599,13 +678,6 @@ public class MenuView extends JPanel {
         flowLayout.setAlignment(FlowLayout.CENTER);
         panel.add(panel_1);
 
-        bCrearKakuro = new JButton(Constants.CREAR);
-        bCrearKakuro.setPreferredSize(new Dimension(200, 25));
-        panel_1.add(bCrearKakuro);
-
-        Component verticalStrut_3 = Box.createVerticalStrut(10);
-        panel.add(verticalStrut_3);
-
         JPanel panel_2 = new JPanel();
         FlowLayout flowLayout_2 = (FlowLayout) panel_2.getLayout();
         flowLayout_2.setAlignment(FlowLayout.CENTER);
@@ -643,76 +715,6 @@ public class MenuView extends JPanel {
 
     }
 
-    private JPanel editor() {
-
-        JPanel p = new JPanel(new BorderLayout(0, 0));
-        String[] nums = {"3", "4", "5", "6", "7", "8", "9", "10", "11"};
-
-        //Mesures
-        JPanel panel = new JPanel();
-        p.add(panel, BorderLayout.NORTH);
-
-        JLabel lblRows = new JLabel(Constants.ROWS);
-        panel.add(lblRows);
-
-        comboRowEditor = new JComboBox(nums);
-        panel.add(comboRowEditor);
-
-        JLabel lblColumns = new JLabel(Constants.COLUMNS);
-        panel.add(lblColumns);
-
-        comboColumnsEditor = new JComboBox(nums);
-        panel.add(comboColumnsEditor);
-
-        gamePanel = new JPanel();
-        gamePanel.add(generTaulell(3, 3));
-        p.add(gamePanel, BorderLayout.CENTER);
-
-
-        JPanel panelImages = new JPanel();
-        panelImages.setMinimumSize(new Dimension(70, 100));
-        panelImages.setMaximumSize(new Dimension(100, 100));
-        panelImages.setPreferredSize(new Dimension(100, 100));
-        p.add(panelImages, BorderLayout.SOUTH);
-
-        JLabel lblColor1 = new JLabel("");
-        panelImages.add(lblColor1);
-        lblColor1.setMinimumSize(new Dimension(30, 30));
-        lblColor1.setMaximumSize(new Dimension(30, 30));
-        lblColor1.setOpaque(true);
-
-        lblColor1.setBackground(Color.WHITE);
-        lblColor1.setPreferredSize(new Dimension(40, 40));
-
-        JLabel lblColor2 = new JLabel("");
-        panelImages.add(lblColor2);
-        lblColor2.setOpaque(true);
-
-        lblColor2.setBackground(Color.BLACK);
-        lblColor2.setPreferredSize(new Dimension(40, 40));
-
-
-        lblColor1.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                color = true;
-                lblColor1.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-                lblColor2.setBorder(new LineBorder(new Color(0, 0, 0), 0));
-            }
-        });
-
-        lblColor2.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                color = false;
-                lblColor2.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-                lblColor1.setBorder(new LineBorder(new Color(0, 0, 0), 0));
-            }
-        });
-
-        return p;
-
-    }
 
 
     //Update Views
@@ -861,122 +863,23 @@ public class MenuView extends JPanel {
         return m;
     }
 
-    public JPanel generTaulell(int row, int col) {
-        System.out.println(row + " " + col);
-
-        JPanel panel = new JPanel(new GridLayout(row, col));
-        pEditor = new JPanel[row][col];
-
-        panel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
-        panel.setPreferredSize(new Dimension(400, 400));
-
-        for (int i = 0; row > i; i++) {
-            for (int j = 0; col > j; j++) {
-
-                JPanel panel1 = new JPanel(new BorderLayout());
-                pEditor[i][j] = panel1;
-
-                JTextField textFieldRIGHT = new JTextField();
-                textFieldRIGHT.setBackground(new Color(0, 0, 0, 0));
-                textFieldRIGHT.setForeground(Color.white);
-                textFieldRIGHT.setHorizontalAlignment(JTextField.RIGHT);
-                textFieldRIGHT.setColumns(5);
-
-                JTextField textFieldLEFT = new JTextField();
-                textFieldLEFT.setBackground(new Color(0, 0, 0, 0));
-                textFieldLEFT.setForeground(Color.white);
-                textFieldLEFT.setHorizontalAlignment(JTextField.LEFT);
-                textFieldLEFT.setColumns(5);
-
-                panel1.add(textFieldLEFT, BorderLayout.SOUTH);
-                panel1.add(textFieldRIGHT, BorderLayout.EAST);
-
-                if (i == 0 || j == 0) {
-                    //Negre
-                    textFieldRIGHT.setVisible(true);
-                    textFieldLEFT.setVisible(true);
-                    panel1.setBackground(Color.black);
-
-                } else {
-                    textFieldRIGHT.setVisible(false);
-                    textFieldLEFT.setVisible(false);
-                    panel1.setBackground(Color.white);
-                    panel1.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-
-                            for (int i = 0; i < row; i++) {
-                                for (int j = 0; j < col; j++) {
-                                    if (e.getSource() == pEditor[i][j]) {
-                                        if (color) {
-                                            panel1.setBackground(Color.white);
-                                            for (Component c : panel1.getComponents()) {
-                                                c.setVisible(false);
-                                            }
-                                            panel1.validate();
-                                        } else {
-                                            panel1.setBackground(Color.BLACK);
-                                            for (Component c : panel1.getComponents()) {
-                                                c.setVisible(true);
-                                            }
-                                            panel1.validate();
-
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
-                panel.add(panel1);
-            }
-        }
-
-        return panel;
-
+    public JPanel getPa() {
+        return pa;
     }
 
-    private JPanel crearNegre() {
-        JPanel negre = new JPanel(new BorderLayout());
-        negre.setPreferredSize(new Dimension(50, 50));
-        negre.setBackground(Color.black);
-
-        JTextField textFieldRIGHT = new JTextField();
-        textFieldRIGHT.setBackground(Color.black);
-        textFieldRIGHT.setForeground(Color.white);
-        textFieldRIGHT.setHorizontalAlignment(JTextField.RIGHT);
-        textFieldRIGHT.setColumns(5);
-
-        JTextField textFieldLEFT = new JTextField();
-        textFieldLEFT.setBackground(Color.black);
-        textFieldLEFT.setForeground(Color.white);
-        textFieldLEFT.setHorizontalAlignment(JTextField.LEFT);
-        textFieldLEFT.setColumns(5);
-
-        negre.add(textFieldLEFT, BorderLayout.SOUTH);
-        negre.add(textFieldRIGHT, BorderLayout.EAST);
-        return negre;
+    public int getOp() {
+        return op;
     }
 
-    public JPanel getGamePanel() {
-        return gamePanel;
+    public JComboBox getComboBlanc() {
+        return comboBlanc;
     }
 
-    public JComboBox getComboColumnsEditor() {
-        return comboColumnsEditor;
+    public JComboBox getComboNegres() {
+        return comboNegres;
     }
 
-    public JComboBox getComboRowEditor() {
-        return comboRowEditor;
+    public JButton getbRules() {
+        return bRules;
     }
-
-
-    public void updateEditor() {
-        System.out.println("Hola");
-        gamePanel.removeAll();
-        gamePanel.add(generTaulell(Integer.parseInt(comboRowEditor.getSelectedItem().toString()), Integer.parseInt(comboColumnsEditor.getSelectedItem().toString())));
-        gamePanel.validate();
-    }
-
-
 }

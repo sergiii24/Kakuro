@@ -4,7 +4,7 @@ import domini.Casella;
 import domini.CtrlFactoryDomini;
 import domini.Generador;
 import domini.Tauler;
-import domini.models.MonteState;
+import domini.algorismes.MonteState;
 
 import javax.swing.*;
 import java.io.FileNotFoundException;

@@ -57,7 +57,7 @@ public class DriverPartida {
 							P = new Partida(param[1]);
 							break;
 						case "3":
-							P = new Partida(param[1], new Mode(), new Tauler(), Integer.parseInt(param[2]));
+							P = new Partida(param[1], TipusMode.NORMAL, new Tauler(), Integer.parseInt(param[2]));
 							break;
 						case "4":
 							P.setUser(param[1]);
@@ -67,12 +67,12 @@ public class DriverPartida {
 							System.out.println(s);
 							break;
 						case "6":
-							if (param[1].equals("NORMAL")) P.setMode(new Mode(TipusMode.NORMAL));
-							else if (param[1].equals("CONTRA")) P.setMode(new Mode(TipusMode.CONTRARRELLOTGE));
+							if (param[1].equals("NORMAL")) P.setMode((TipusMode.NORMAL));
+							else if (param[1].equals("CONTRA")) P.setMode((TipusMode.CONTRARRELLOTGE));
 							else System.out.println("Has de triar entre NORMAL o CONTRA");
 							break;
 						case "7":
-							Mode m = P.getMode();
+							Mode m = new Mode(P.getMode());
 							System.out.println(m.getMode());
 							break;
 						case "8":

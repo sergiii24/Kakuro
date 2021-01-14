@@ -1,8 +1,9 @@
 package domini;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Usuari {
+public class Usuari implements Serializable {
 	protected String id;
 	protected Set<Partida> llista_partides;
 	

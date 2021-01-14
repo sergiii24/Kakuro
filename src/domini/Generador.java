@@ -28,6 +28,53 @@ public class Generador {
 
     }
 
+    public Casella[][] generateNumNegres(int a, int b, int num) {
+
+        //1r - Obté tauler bàsic de mida a*b amb la primera fila i columna negra
+        Casella[][] c = getBasic(a, b);
+
+        //2n - Genera entre un 20% i un 40% de caselles negres aleatori en el tauler,
+        //aquestes éstan colocades mantenint un kakuro connex i correcte amb un mínim
+        // de dos caselles blanques juntes
+        generateBlackCells(c, a, b, num);
+
+        //3r - Omple les caselles blanques amb números generats aleatoriament sense repeticions
+        //entre files i columnes (volem modificar aquesta part per a que tingue en compte el domini)
+        fillKakuro(c, a, b);
+
+        //4rt - Actualitza les caselles negres sumants les files i columnes pertinents
+        sumKakuro(c,a,b);
+
+        //5é - Genera el taulell final amb les cel·les blanques buides
+        return generate(c,a,b);
+
+    }
+
+    public Casella[][] generateNumBlanques(int a, int b, int num) {
+
+        //1r - Obté tauler bàsic de mida a*b amb la primera fila i columna negra
+        Casella[][] c = getBasic(a, b);
+
+        //2n - Genera entre un 20% i un 40% de caselles negres aleatori en el tauler,
+        //aquestes éstan colocades mantenint un kakuro connex i correcte amb un mínim
+        // de dos caselles blanques juntes
+        generateBlackCells(c, a, b, a*b - (a + b - 1) + num);
+
+        //3r - Omple les caselles blanques amb números generats aleatoriament sense repeticions
+        //entre files i columnes (volem modificar aquesta part per a que tingue en compte el domini)
+        fillKakuro(c, a, b);
+
+        //4rt - Actualitza les caselles negres sumants les files i columnes pertinents
+        sumKakuro(c,a,b);
+
+        //5é - Genera el taulell final amb les cel·les blanques buides
+        return generate(c,a,b);
+
+    }
+
+
+
+
     //Genera Bàsic
     private Casella[][] getBasic(int a, int b) {
 
@@ -65,6 +112,31 @@ public class Generador {
             default:
                 num = random.nextInt((int) (a * b * 0.5) - (int) (a * b * 0.2)) + (int) (a * b * 0.2);
         }
+
+        int row, col;
+        int aux = 0;
+
+        for (int i = 0; i < num && aux < 100; ) {
+
+            row = random.nextInt(a);
+            col = random.nextInt(b);
+            aux++;
+
+            if (c[row][col].isBlanc() && checkConstraints(c, row, col, a, b) && isConnected(c,a,b,new Position(row,col),((a-1)*(b-1)-i))) {
+                c[row][col] = new Negre();
+                i++;
+                aux=0;
+            }
+
+        }
+
+    }
+
+    private void generateBlackCells(Casella[][] c, int a, int b, int num) {
+
+        Random random = new Random();
+        //Genera un numero que està entre el 40% i 20% del total de caselles, volem que modificant aquest
+        //nombre el kakuro serà més fàcil o més díficil
 
         int row, col;
         int aux = 0;

@@ -3,6 +3,7 @@ package presentacio;
 import domini.ControllerDomini;
 import domini.CtrlDominiGestioUsuari;
 import domini.CtrlFactoryDomini;
+import domini.TipusMode;
 
 public class ControllerPresentacio {
 
@@ -40,19 +41,12 @@ public class ControllerPresentacio {
         controllerLogin.initController(this);
         controllerSignUp.initController(this);
         controllerProfile.initController(this);
-        controllerRanking.iniController();
+        controllerRanking.iniController(this);
         controllerMenu.iniController(this);
-        controllerGame.iniController();
+        controllerGame.iniController(this);
         ctrlDominiGestioUsuari = CtrlFactoryDomini.getcDUsuariInstance();
 
     }
-
-    private void jugar() {
-
-        System.out.println("Play");
-
-    }
-
 
 
     private void logoff() {
@@ -87,12 +81,17 @@ public class ControllerPresentacio {
     }
 
 
-    public void play(String nom, String mode, boolean publicKakuro) {
+    public void play(String nom, TipusMode mode, boolean publicKakuro) {
 
         controllerGame.setUpGame(nom, mode, publicKakuro);
         view.changeScreen("game");
-
+        controllerGame.startTimer();
     }
 
 
+    public void playGuest(TipusMode m) {
+        controllerGame.setUpGameGuest(m);
+        view.changeScreen("game");
+        controllerGame.startTimer();
+    }
 }

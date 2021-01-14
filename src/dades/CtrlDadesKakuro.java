@@ -1,7 +1,8 @@
 package dades;
 
-import java.io.File;
-import java.io.IOException;
+import domini.Partida;
+
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -80,4 +81,38 @@ public class CtrlDadesKakuro {
         return nameFiles;
 
     }
+
+    public void guardar(Partida partida) {
+
+        File users = new File("data/users/" + partida.getUsuari().getId() + "/continue/"+partida.getTauler().getId()+".bin");
+        if (!users.exists()) {
+            try {
+                users.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try (ObjectOutputStream salida=new ObjectOutputStream(new FileOutputStream(users))) {
+
+            salida.writeObject(partida);
+
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+
+
+    }
+
+    public Partida llegirPartidaComençada(String user, String nom) {
+        try ( ObjectInputStream entrada=new ObjectInputStream(new FileInputStream("data/users/" + user + "/continue/"+nom ))) {
+
+            return (Partida) entrada.readObject();
+
+        } catch (IOException | ClassNotFoundException ioException) {
+            ioException.printStackTrace();
+        }
+        return null;
+    }
+
 }

@@ -13,20 +13,20 @@ public class Constants {
     public static final String PLAY = "Play";
     public static final String PROFILE = "Profile";
     public static final String CONFIRMPASSWORD = "Confirm Password" ;
-    public static final String GENERATE = "Generar";
+    public static final String GENERATE = "Generate";
     public static final String MANAGEMENT = "Kakuro Management";
-    public static final String STADISTICS = "Stadistics";
-    public static final String MAIN = "Main Menu";
+    public static final String STADISTICS = "Statistics";
+    public static final String MAIN = "Menu";
     public static final String CREAR = "Crear";
     public static final String CONTINUE = "Continue";
 
-    public static final String YOURS = "Els teus kakuros";
+    public static final String YOURS = "Your Kakuros";
     public static final String PUBLIC = "Publics";
 
     public static final String MODES = "Modes";
-    public static final String ROWS = "Fila:";
-    public static final String COLUMNS = "Columna:";
-    public static final String NAME = "Name of the Kakuro:";
+    public static final String ROWS = "Row:";
+    public static final String COLUMNS = "Column:";
+    public static final String NAME = "Name of Kakuro:";
 
     public static final String HARD = "Hard";
     public static final String NORMAL = "Normal";
@@ -36,6 +36,11 @@ public class Constants {
     public static final String TRAINING = "Training";
     public static final String SPEED = "SpeedRun";
 
-    public static final String IMPORT = "Importar";
+    public static final String IMPORT = "Import";
 
+    public static final String BLANQUES = "Cells Quantity";
+    public static final String WHITE = "White cells";
+    public static final String BLACK = "Black cells";
+
+    public static final String RANKING = "Ranking";
 }

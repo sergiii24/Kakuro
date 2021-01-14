@@ -1,6 +1,7 @@
 package presentacio;
 
 import domini.CtrlFactoryDomini;
+import domini.TipusMode;
 import presentacio.views.MenuView;
 
 import javax.swing.*;
@@ -26,8 +27,9 @@ public class ControllerMenu {
         menuView.getbJugar().addActionListener(e -> menuView.updateView("jugar"));
         menuView.getbKakuroManagement().addActionListener(e -> menuView.updateView("management"));
         menuView.getbPerfil().addActionListener(e -> controllerPresentacio.goToPerfil());
-        menuView.getbStatistics().addActionListener(e -> controllerPresentacio.goView("Ranking"));
+        menuView.getbStatistics().addActionListener(e -> controllerPresentacio.goView("ranking"));
         menuView.getbLogOff().addActionListener(e -> logoff());
+        menuView.getbRules().addActionListener(e -> rules());
 
         //MenuJugar
         menuView.getbContinue().addActionListener(e -> continueGame());
@@ -63,13 +65,12 @@ public class ControllerMenu {
         menuView.getbImportar().addActionListener(e -> importar());
         menuView.getbBackManagement().addActionListener(e -> menuView.updateView("principal"));
         menuView.getbGenerarKakuro().addActionListener(e -> menuView.updateView("crear"));
-        menuView.getbCrearKakuro().addActionListener(e -> menuView.updateView("editor"));
-
-        //Editor
-        menuView.getComboRowEditor().addItemListener(e -> menuView.updateEditor());
-        menuView.getComboColumnsEditor().addItemListener(e -> menuView.updateEditor());
 
 
+    }
+
+    private void rules() {
+        JOptionPane.showMessageDialog(menuView, new Regles().getRegles(), "Rules", JOptionPane.INFORMATION_MESSAGE, null);
     }
 
 
@@ -81,18 +82,25 @@ public class ControllerMenu {
 
     private void generate() {
 
-        if (!CtrlFactoryDomini.getcDUsuariInstance().isRegistrat())
+        if (!CtrlFactoryDomini.getcDUsuariInstance().isRegistrat()) {
             CtrlFactoryDomini.getcDKakuroInstance().createGameKakuro(Integer.parseInt(menuView.getComboRow().getSelectedItem().toString()),
                     Integer.parseInt(menuView.getComboColumns().getSelectedItem().toString()), menuView.getT(), menuView.getM());
-        else {
-            boolean b = CtrlFactoryDomini.getcDTaulellInstance().generateKakuro(Integer.parseInt(menuView.getComboRow().getSelectedItem().toString()),
+            controllerPresentacio.playGuest(menuView.getM());
+        } else {
+
+            boolean b;
+             if(menuView.getOp() == 0) b = CtrlFactoryDomini.getcDTaulellInstance().generateKakuro(Integer.parseInt(menuView.getComboRow().getSelectedItem().toString()),
                     Integer.parseInt(menuView.getComboColumns().getSelectedItem().toString()), menuView.getT(), menuView.getTxtName().getText());
+             else if(menuView.getOp() == 1) b = CtrlFactoryDomini.getcDTaulellInstance().generateKakuro(Integer.parseInt(menuView.getComboRow().getSelectedItem().toString()),
+                     Integer.parseInt(menuView.getComboColumns().getSelectedItem().toString()), Integer.parseInt(menuView.getComboBlanc().getSelectedItem().toString()), menuView.getTxtName().getText());
+             else  b = CtrlFactoryDomini.getcDTaulellInstance().generateKakuroBlanc(Integer.parseInt(menuView.getComboRow().getSelectedItem().toString()),
+                         Integer.parseInt(menuView.getComboColumns().getSelectedItem().toString()),Integer.parseInt(menuView.getComboNegres().getSelectedItem().toString()), menuView.getTxtName().getText());
 
             if (b) {
                 menuView.getTxtName().setText("");
                 int input = JOptionPane.showConfirmDialog(menuView, "Do you want to play the game?");
-                if (input == 0) {
-                } //TODO falta anar a jugar
+                if (input == 0) { controllerPresentacio.playGuest(TipusMode.NORMAL);
+                }
                 else if (input == 1) menuView.updateView("management");
             } else
                 JOptionPane.showMessageDialog(menuView, "Kakuro with this name already exists", "Kakuro existent", JOptionPane.ERROR_MESSAGE);
@@ -112,13 +120,7 @@ public class ControllerMenu {
         if (publicKakuro) nom = menuView.getListPublic().getSelectedValue().toString();
         else nom = menuView.getListUser().getSelectedValue().toString();
 
-        String mode = "";
-
-        for (JRadioButton b : menuView.getButtonsModeJugar()) {
-            if (b.isSelected()) mode = b.getName();
-        }
-
-        controllerPresentacio.play(nom, mode, publicKakuro);
+        controllerPresentacio.play(nom, menuView.getM(), publicKakuro);
     }
 
     public void vistaRegistrat() {
@@ -132,7 +134,8 @@ public class ControllerMenu {
         menuView.getLblName().setVisible(true);
         menuView.getTxtName().setVisible(true);
         menuView.getPanelModes().setVisible(false);
-
+        menuView.getPanelGen().setVisible(true);
+        menuView.getPa().setVisible(true);
     }
 
     public void vistaGuest() {
@@ -146,7 +149,8 @@ public class ControllerMenu {
         menuView.getLblName().setVisible(false);
         menuView.getTxtName().setVisible(false);
         menuView.getPanelModes().setVisible(true);
-
+        menuView.getPanelGen().setVisible(false);
+        menuView.getPa().setVisible(false);
     }
 
     private void continueGame() {
@@ -164,7 +168,11 @@ public class ControllerMenu {
                     0
             );
 
-            if (!result.isEmpty()) System.out.println(result);
+            if (!result.isEmpty()) {
+
+                CtrlFactoryDomini.getcDKakuroInstance().carregar(result);
+                controllerPresentacio.playGuest(menuView.getM());
+            }
 
         }
 
